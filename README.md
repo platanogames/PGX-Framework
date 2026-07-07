@@ -6,6 +6,24 @@
 
 ---
 
+> ### About This Repository
+>
+> **This is the public presentation of PGX Framework, not the code drop.** PGX is a
+> mature framework built over 2 years (Copyright 2024-2026 Platano Games): 25 modular
+> plugins, 13 production-ready systems and 1,300+ source files, developed as a single
+> **monorepo**.
+>
+> **License: Apache-2.0** — the framework is free and open source, including for
+> commercial use. Revenue comes from professional services and the Platano Games
+> Academy (training, support, premium docs), never from the code itself.
+>
+> **The full monorepo goes public in ~2 months.** This repository is the README, wiki
+> and documentation shopfront while we finish the v1.0 polish pass and prepare the
+> open release. Everything described below is real, verified against the codebase, and
+> available now to Academy members — the public source drop is the last step.
+
+---
+
 ## What Is PGX?
 
 **PGX (Professional Game Extensions)** is a modular C++ framework for Unreal Engine 5. It provides a complete, production-ready architectural layer between raw UE5 and your game code.
@@ -258,9 +276,9 @@ Every classification decision (which properties are visible, which are advanced)
 
 ## Repository Structure
 
-PGX is developed as a **monorepo** containing all 25 plugins. The source code, documentation, editor tooling, and automation scripts live together in a single private repository.
+PGX is developed as a **monorepo** containing all 25 plugins. The source code, documentation, editor tooling, and automation scripts live together in a single repository — the single source of truth. Individual plugin repositories have been consolidated and archived.
 
-Individual plugin repositories have been consolidated and archived. The monorepo is the single source of truth.
+The monorepo is currently in private access while we finish the v1.0 polish pass. **Its full public open-source release (Apache-2.0) is planned within ~2 months.** This repository is the public presentation ahead of that drop; Academy members already have source access today.
 
 ### Multi-Engine Version Strategy
 
@@ -306,37 +324,42 @@ PGX supports multiple Unreal Engine versions through a branch strategy:
 
 ## Licensing
 
-PGX Framework uses an **Open Core** model with a **Source-Available Proprietary** license. Full source code is provided to licensees -- this is not obfuscated middleware. Access is granted by invitation to the private GitHub repository.
+**PGX Framework is licensed under Apache-2.0.** Full source code, free to use, modify,
+redistribute and ship in commercial products, with no fees and no revenue thresholds.
+This is genuine open source, not source-available: you own what you build with it.
 
-| Tier | Revenue Threshold | Annual Fee | What You Get |
-|------|-------------------|------------|-------------|
-| **Community** | Under EUR 50,000/year | **Free** | Full framework, all updates, community support |
-| **Growth** | EUR 50,000 -- EUR 100,000/year | Contact us | Full framework + priority support + extended license |
-| **Studio** | Over EUR 100,000/year | Contact us | Full framework + priority support + custom terms |
+Apache-2.0 was chosen deliberately — the same permissive footing that made Django,
+Next.js and Rails ecosystem foundations. A framework meant to be the shared architectural
+layer for Unreal Engine has to be free to adopt without friction or legal review.
 
-Revenue means **gross revenue from products using PGX** -- not total company revenue. The EUR 50,000 threshold means most independent projects will never pay a license fee.
+**How Platano Games sustains it:** revenue comes from *services around* the framework,
+never from the code. The Apache-2.0 core stays free forever; the Platano Games Academy
+offers optional paid training, priority support, premium documentation and professional
+services for studios that want them. Educational use is, and remains, free.
 
-Key terms: source code in full (not compiled), modify freely, cannot redistribute the framework, per-studio license covering all team members, all engine version updates included. Educational licenses available at no cost for academic institutions.
-
-Full licensing details, vertical extension policy, and professional services information are available on the **[Licensing & Distribution](../../wiki/Licensing-and-Distribution)** wiki page.
+Copyright (c) 2024-2026 Platano Games. See [`LICENSE.md`](LICENSE.md) for the full
+Apache-2.0 text.
 
 ---
 
 ## How to Access
 
-PGX Framework is available through the **Platano Games Academy**.
+The PGX Framework source will be **freely available under Apache-2.0** when the monorepo
+opens publicly (~2 months). Until then, and afterwards, the **Platano Games Academy** is
+the home for everything around it.
 
 **Website:** [www.platanogames.es](https://www.platanogames.es)
 
 The academy provides:
-- **Full source code** of PGX Framework via private GitHub repository
+- **Early source access** to the monorepo ahead of the public release
 - **Documentation** (90+ files) through the academy platform
+- **Optional paid** training, priority support and premium docs (never required to use PGX)
 - **Updates** as new systems reach production status
-- **Support** and community access
 
 ### For Studios and Teams
 
-Institutional licenses, team access, and professional services available. Contact us through the academy website.
+Professional services, team onboarding and custom engineering are available. The framework
+itself is Apache-2.0 and free; these are optional. Contact us through the academy website.
 
 ---
 
@@ -355,11 +378,14 @@ Open-source Markdown to HTML/PDF/DOCX/EPUB converter with Pandoc and PySide6 das
 
 ## License
 
-PGX Framework is proprietary software. All rights reserved.
+PGX Framework is licensed under the **Apache License 2.0**.
 
 **Copyright (c) 2024-2026 Platano Games.**
 
-The framework, source code, documentation, editor tools, and all associated materials are distributed exclusively through the Platano Games Academy. See the **[Licensing & Distribution](../../wiki/Licensing-and-Distribution)** wiki page for full terms.
+You may use, modify, distribute and build commercial products on top of PGX, free of
+charge, subject to the terms of the Apache-2.0 license. See [`LICENSE.md`](LICENSE.md)
+for the full text. Optional paid training, support and professional services are offered
+through the [Platano Games Academy](https://www.platanogames.es).
 
 ---
 
@@ -401,7 +427,7 @@ Decidi que era momento de construir lo que deberia haber existido desde el princ
 
 ### Licencia
 
-Modelo **Open Core, Source-Available Propietario**. Gratis para desarrolladores independientes (ingresos menores a 50.000 EUR/ano). Acceso por invitacion al repositorio privado. Detalles completos en la **[wiki de Licensing & Distribution](../../wiki/Licensing-and-Distribution)**.
+**Licencia Apache-2.0.** Codigo abierto y libre, incluido uso comercial, sin cuotas ni umbrales de ingresos. Los ingresos provienen de servicios alrededor del framework (formacion, soporte y documentacion premium de la Platano Games Academy), nunca del codigo. El monorepo completo se abrira publicamente en ~2 meses; este repositorio es la presentacion previa. Ver [`LICENSE.md`](LICENSE.md) para el texto completo.
 
 ### Acceso
 
