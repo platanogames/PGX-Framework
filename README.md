@@ -1,23 +1,26 @@
 # PGX Framework
 
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE.md)
+[![Documentation](https://img.shields.io/badge/docs-GitHub_Wiki-blue.svg)](https://github.com/platanogames/PGX-Framework/wiki)
+
 ### Professional Game Extensions for Unreal Engine 5
 
-> **v0.4.0** | **UE 5.6.1** | **25 modular plugins** | **13 production-ready systems** | **1,300+ source files**
+> **v0.4.0** | **UE 5.6.1** | **Modular C++ framework** | **13 production-ready systems**
 
 ---
 
 > ### About This Repository
 >
 > **This is the public presentation of PGX Framework, not the code drop.** PGX is a
-> mature framework built over 2 years (Copyright 2024-2026 Platano Games): 25 modular
-> plugins, 13 production-ready systems and 1,300+ source files, developed as a single
+> mature framework built over 2 years (Copyright 2024-2026 Platano Games): a modular
+> plugin ecosystem with 13 production-ready systems, developed as a single
 > **monorepo**.
 >
 > **License: Apache-2.0** — the framework is free and open source, including for
 > commercial use. Revenue comes from professional services and the Platano Games
 > Academy (training, support, premium docs), never from the code itself.
 >
-> **The full monorepo goes public in ~2 months.** This repository is the README, wiki
+> **The full monorepo will be published after its release-readiness checks.** This repository is the README, wiki
 > and documentation shopfront while we finish the v1.0 polish pass and prepare the
 > open release. Everything described below is real, verified against the codebase, and
 > available now to Academy members — the public source drop is the last step.
@@ -36,14 +39,14 @@ Think of it as the missing layer between "empty UE5 project" and "production-rea
 
 ## Documentation
 
-Comprehensive documentation is available through the **[PGX Wiki](../../wiki)**:
+Comprehensive documentation is available through the **[PGX Wiki](https://github.com/platanogames/PGX-Framework/wiki)**:
 
 | Page | Description |
 |------|-------------|
-| **[FAQ](../../wiki/FAQ)** | Common questions from evaluators and potential users |
-| **[Statistics](../../wiki/Statistics)** | Hard numbers verified against the current codebase |
-| **[Glossary](../../wiki/Glossary)** | Key terms used throughout PGX documentation |
-| **[Licensing & Distribution](../../wiki/Licensing-and-Distribution)** | Full license model, tiers, terms, and professional services |
+| **[FAQ](https://github.com/platanogames/PGX-Framework/wiki/FAQ)** | Common questions from evaluators and potential users |
+| **[Statistics](https://github.com/platanogames/PGX-Framework/wiki/Statistics)** | Current implementation statistics and their evidence boundary |
+| **[Glossary](https://github.com/platanogames/PGX-Framework/wiki/Glossary)** | Key terms used throughout PGX documentation |
+| **[Licensing & Distribution](https://github.com/platanogames/PGX-Framework/wiki/Licensing-and-Distribution)** | Full license model, terms, and professional services |
 
 Licensed users also receive 90+ documentation files, including architecture documents, usage guides, testing guides, extension guides, and 18 bilingual interactive tutorials.
 
@@ -235,29 +238,20 @@ Every classification decision (which properties are visible, which are advanced)
 
 ---
 
-## The Numbers
+## Project Snapshot
 
-| Metric | Value |
-|--------|-------|
-| Total plugins | **25** |
-| Source files | **1,300+** |
+| Item | Current public baseline |
+|---|---|
+| Framework version | **v0.4.0** |
+| Engine | **Unreal Engine 5.6.1** |
+| Architecture | **Foundational core, modular systems, and editor tools** |
 | Production-ready systems | **13** |
-| UE modules | **28+** |
-| Data Asset types | **58** |
-| Editor panels (NomadTabs) | **22** |
-| Console commands | **95+** |
-| Blueprint nodes | **170+** |
-| Gameplay tags | **180+** |
-| Test functions | **95+** |
-| Custom SVG icons | **26** |
-| Quick access pins | **19** |
-| Hub dashboard cards | **12** |
-| Design tokens | **60+** |
-| Atomic widget instances | **167** |
-| Overridable Blueprint events | **79** |
-| Documentation files | **90+** |
-| clang-tidy warnings fixed | **957** |
-| Panel UX audits completed | **22** |
+| Primary API | **C++ with Blueprint-facing interfaces** |
+| Source availability | **Private release-candidate monorepo; public release pending readiness checks** |
+
+Fast-changing implementation counts are maintained in the
+[wiki statistics page](https://github.com/platanogames/PGX-Framework/wiki/Statistics)
+rather than duplicated in the repository overview.
 
 ---
 
@@ -276,9 +270,12 @@ Every classification decision (which properties are visible, which are advanced)
 
 ## Repository Structure
 
-PGX is developed as a **monorepo** containing all 25 plugins. The source code, documentation, editor tooling, and automation scripts live together in a single repository — the single source of truth. Individual plugin repositories have been consolidated and archived.
+PGX is developed as a **monorepo** containing the framework plugin ecosystem. The source code, documentation, editor tooling, and automation scripts live together in a single repository — the single source of truth. Individual plugin repositories have been consolidated and archived.
 
-The monorepo is currently in private access while we finish the v1.0 polish pass. **Its full public open-source release (Apache-2.0) is planned within ~2 months.** This repository is the public presentation ahead of that drop; Academy members already have source access today.
+The monorepo remains private while the v1.0 release-readiness work is completed.
+Its public Apache-2.0 release has no promised calendar date. This repository and
+the public wiki document the framework before the source drop; Academy members
+may have early-access builds under separate access terms.
 
 ### Multi-Engine Version Strategy
 
@@ -345,7 +342,7 @@ Apache-2.0 text.
 ## How to Access
 
 The PGX Framework source will be **freely available under Apache-2.0** when the monorepo
-opens publicly (~2 months). Until then, and afterwards, the **Platano Games Academy** is
+passes its release-readiness gates. Until then, and afterwards, the **Platano Games Academy** is
 the home for everything around it.
 
 **Website:** [www.platanogames.es](https://www.platanogames.es)
@@ -400,7 +397,7 @@ through the [Platano Games Academy](https://www.platanogames.es).
 
 ## Version en Espanol
 
-PGX (Professional Game Extensions) es un framework modular profesional C++ para Unreal Engine 5. 25 plugins, 13 sistemas production-ready, 1,300+ archivos fuente, y herramientas de editor integradas en Slate nativo.
+PGX (Professional Game Extensions) es un framework modular profesional C++ para Unreal Engine 5, con 13 sistemas production-ready y herramientas de editor integradas en Slate nativo.
 
 No es un template -- es la capa arquitectonica entre UE5 y tu juego. Cada sistema wrappea el subsistema UE5 correspondiente con una fachada limpia, documentada y observable.
 
@@ -416,7 +413,7 @@ Decidi que era momento de construir lo que deberia haber existido desde el princ
 
 ### Ecosistema completo
 
-- **PGX Framework** -- 25 plugins C++ para UE 5.6.1
+- **PGX Framework** -- ecosistema modular C++ para UE 5.6.1
 - **22 paneles de editor** integrados en Slate nativo
 - **95+ comandos de consola** para inspeccion en runtime
 - **170+ nodos Blueprint** para disenadores
@@ -427,7 +424,7 @@ Decidi que era momento de construir lo que deberia haber existido desde el princ
 
 ### Licencia
 
-**Licencia Apache-2.0.** Codigo abierto y libre, incluido uso comercial, sin cuotas ni umbrales de ingresos. Los ingresos provienen de servicios alrededor del framework (formacion, soporte y documentacion premium de la Platano Games Academy), nunca del codigo. El monorepo completo se abrira publicamente en ~2 meses; este repositorio es la presentacion previa. Ver [`LICENSE.md`](LICENSE.md) para el texto completo.
+**Licencia Apache-2.0.** Codigo abierto y libre, incluido uso comercial, sin cuotas ni umbrales de ingresos. Los ingresos provienen de servicios alrededor del framework (formacion, soporte y documentacion premium de la Platano Games Academy), nunca del codigo. El monorepo completo se publicara cuando supere los gates de release; este repositorio es la presentacion previa. Ver [`LICENSE.md`](LICENSE.md) para el texto completo.
 
 ### Acceso
 
