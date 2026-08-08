@@ -1,0 +1,54 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.4.0",
+	"FriendlyName": "PGX Core",
+	"Description": "Core architectural foundation for the PGX framework. Provides base types, interfaces, and subsystems for modular game development.",
+	"Category": "PGX Framework",
+	"CreatedBy": "PGX",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"EnabledByDefault": true,
+	"Plugins": [
+		{
+			"Name": "SlateIM",
+			"Enabled": true
+		},
+		{
+			"Name": "StructUtils",
+			"Enabled": true
+		}
+	],
+	"Modules": [
+		{
+			"Name": "PGXCoreRuntime",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "PGXCoreEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "PGXCoreNodes",
+			"Type": "UncookedOnly",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "PGXCoreDeveloper",
+			"Type": "DeveloperTool",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "PGXRegistryEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}

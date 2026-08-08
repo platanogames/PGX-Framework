@@ -1,32 +1,52 @@
 # Contributing to PGX Framework
 
-The public repository currently contains the project overview, license, and
-public documentation links while the source monorepo is prepared for release.
-Contributions at this stage should focus on documentation quality, reproducible
-questions, and clearly scoped proposals.
+Thank you for helping improve PGX during its Development Preview.
 
 ## Before contributing
 
-1. Read the [README](README.md) and the public wiki.
-2. Search existing issues before opening a new one.
-3. Distinguish a documentation defect from a source-code request.
-4. Remove project-private code, logs, assets, and credentials from examples.
+1. Read the [README](README.md), [known issues](KNOWN_ISSUES.md), and the notes
+   for the release you are using.
+2. Search existing issues and pull requests.
+3. Keep the change focused on one problem.
+4. Remove credentials, private source, licensed assets, complete project
+   archives, and unrelated logs from every report and fixture.
 
-## Documentation changes
+## Issues
 
-- Use factual, testable wording.
-- Keep Unreal Engine versions and subsystem status explicit.
-- Prefer relative links for files in this repository and stable wiki links for
-  longer technical material.
-- Explain why a structural change improves navigation or accuracy.
+A useful report includes:
 
-## Source contributions
+- the exact PGX revision or tag;
+- Unreal Engine version and target platform;
+- the smallest reproducible example;
+- expected and observed behaviour;
+- sanitized logs, screenshots, or call stacks when relevant.
 
-The source contribution workflow will be published with the monorepo. Until
-then, do not submit reconstructed, copied, or third-party PGX source through
-this documentation repository.
+Use a [security report](SECURITY.md), not a public issue, for suspected
+vulnerabilities.
 
 ## Pull requests
 
-Use a concise imperative title. In the description, state the problem, scope,
-files changed, and how links or rendered Markdown were verified.
+Public pull requests are welcome for the source and documentation present in
+this repository.
+
+- Use a concise imperative title.
+- Explain the problem, scope, design trade-offs, and compatibility impact.
+- Add or update focused tests for the changed API or behavior.
+- Document breaking changes and migration steps.
+- Keep generated output, editor caches, binaries, and unrelated formatting out
+  of the diff.
+- Confirm that you have the right to contribute every included file.
+
+PGX uses a private canonical development monorepo and publishes reviewed public
+release snapshots. Accepted public contributions are reconciled with that line
+while preserving their authorship, then included in a later release after the
+same validation gates.
+
+## Review expectations
+
+Preview APIs may change, but every change should still be testable and
+traceable. Maintainers may request a smaller reproduction, additional tests,
+or a revised publication scope before merging.
+
+By contributing, you agree that your contribution is licensed under the
+repository's [Apache License 2.0](LICENSE.md).

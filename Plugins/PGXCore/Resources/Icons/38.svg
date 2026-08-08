@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- PGX Cinematic icon: clapboard (film slate) -->
+  <rect x="3" y="9" width="18" height="12" rx="1"/>
+  <path d="M3 9 L21 4"/>
+  <path d="M7 9 L9 4"/>
+  <path d="M11 9 L13 4"/>
+  <path d="M15 9 L17 4"/>
+</svg>

@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
+#pragma once
+#include "CoreMinimal.h"
+#include "EventHandler/PGXEventHandlerBase.h"
+#include "PGXNotLoadingCondition.generated.h"
+
+/**
+ * EN: Condition handler that succeeds only when the game is NOT in a loading state.
+ *     Used as a guard in ExecuteSequence to prevent actions during level transitions.
+ *     Lifecycle: Singleton. Category: Core.
+ *     CONTRACT: Caller must add PGX.State.Loading to Context.SourceTags when loading
+ *     is in progress. If the tag is absent, execution is ALLOWED (pass-through).
+ * ES: Handler de condicion que tiene exito solo cuando el juego NO esta en estado de carga.
+ *     Usado como guard en ExecuteSequence para prevenir acciones durante transiciones de nivel.
+ *     Ciclo de vida: Singleton. Categoria: Core.
+ *     CONTRATO: El llamador debe agregar PGX.State.Loading a Context.SourceTags cuando
+ *     loading esta en progreso. Si el tag no esta, la ejecucion es PERMITIDA (pass-through).
+ */
+UCLASS(BlueprintType)
+class PGXCORERUNTIME_API UPGXNotLoadingCondition : public UPGXEventHandlerBase
+{
+	GENERATED_BODY()
+
+public:
+	bool CanExecute_Implementation(const FPGXEventContext& Context) const override;
+	EPGXEventResult Execute_Implementation(const FPGXEventContext& Context, const FInstancedStruct& Payload) override;
+};

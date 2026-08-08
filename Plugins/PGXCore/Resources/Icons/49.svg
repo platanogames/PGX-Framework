@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- PGX Spawn icon: portal emitting waves (spawn point) -->
+  <ellipse cx="12" cy="12" rx="4" ry="6"/>
+  <path d="M16 6 a 9 9 0 0 1 0 12"/>
+  <path d="M19 4 a 13 13 0 0 1 0 16"/>
+  <circle cx="9" cy="12" r="1.1" fill="currentColor"/>
+</svg>

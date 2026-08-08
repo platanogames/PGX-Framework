@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"FriendlyName": "PGX Loading",
+	"Description": "Level transition management with data-driven profiles, async loading, deterministic timing, and GameFlow integration.",
+	"Category": "PGX Framework",
+	"CreatedBy": "PGX",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"EnabledByDefault": false,
+	"Modules": [
+		{ "Name": "PGXLoadingRuntime", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "PGXLoadingEditor",  "Type": "Editor",  "LoadingPhase": "Default" }
+	],
+	"Plugins": [
+		{ "Name": "PGXCore", "Enabled": true }
+	]
+}

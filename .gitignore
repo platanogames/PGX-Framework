@@ -1,0 +1,35 @@
+# Unreal Engine generated output
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# IDE and generated project files
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.user
+*.vcxproj
+*.vcxproj.filters
+*.VC.db*
+compile_commands.json
+
+# Package output
+Dist/
+Releases/
+PackagedBuilds/
+
+# Python/tool caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local release-control receipt (not part of the public repository)
+/export-report.json

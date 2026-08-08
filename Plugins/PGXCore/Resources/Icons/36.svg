@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- PGX Animation icon: motion curve (keyframe interpolation) -->
+  <path d="M3 18 C 6 18, 8 6, 12 6 C 16 6, 18 18, 21 18"/>
+  <circle cx="3" cy="18" r="1.2" fill="currentColor"/>
+  <circle cx="12" cy="6" r="1.2" fill="currentColor"/>
+  <circle cx="21" cy="18" r="1.2" fill="currentColor"/>
+</svg>

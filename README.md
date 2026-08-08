@@ -1,431 +1,192 @@
 # PGX Framework
 
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE.md)
-[![Documentation](https://img.shields.io/badge/docs-GitHub_Wiki-blue.svg)](https://github.com/platanogames/PGX-Framework/wiki)
+**Professional Game Extensions for Unreal Engine 5**
 
-### Professional Game Extensions for Unreal Engine 5
+## Development Preview
 
-> **v0.4.0** | **UE 5.6.1** | **Modular C++ framework** | **13 production-ready systems**
-
----
-
-> ### About This Repository
+> [!WARNING]
+> **PGX is under active development.** This public preview is available so
+> Unreal Engine developers can inspect the architecture and APIs, evaluate the
+> included systems, and provide useful technical feedback.
 >
-> **This is the public presentation of PGX Framework, not the code drop.** PGX is a
-> mature framework built over 2 years (Copyright 2024-2026 Platano Games): a modular
-> plugin ecosystem with 13 production-ready systems, developed as a single
-> **monorepo**.
->
-> **License: Apache-2.0** — the framework is free and open source, including for
-> commercial use. Revenue comes from professional services and the Platano Games
-> Academy (training, support, premium docs), never from the code itself.
->
-> **The full monorepo will be published after its release-readiness checks.** This repository is the README, wiki
-> and documentation shopfront while we finish the v1.0 polish pass and prepare the
-> open release. Everything described below is real, verified against the codebase, and
-> available now to Academy members — the public source drop is the last step.
+> APIs, packaging, compatibility boundaries, and contributor workflows may
+> change between `0.x` releases. PGX is intended for evaluation and development
+> use at this stage and is **not yet recommended for production projects**.
 
----
+[![Status: Development Preview](https://img.shields.io/badge/status-development_preview-orange.svg)](#development-preview)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
 
-## What Is PGX?
+English | [Español](README.es.md)
 
-**PGX (Professional Game Extensions)** is a modular C++ framework for Unreal Engine 5. It provides a complete, production-ready architectural layer between raw UE5 and your game code.
+PGX is a set of Unreal Engine 5 plugins for projects that need shared
+configuration, messaging, persistence, loading, audio, and editor diagnostics.
+It uses Unreal subsystems, Data Assets, and Gameplay Tags directly, and keeps
+its C++ extension points visible.
 
-PGX is **NOT** a game template -- it's **middleware**. Every system wraps the corresponding UE5 subsystem with a clean, documented, observable facade. You bring the game design; PGX provides the engineering foundation.
+## Preview status
 
-Think of it as the missing layer between "empty UE5 project" and "production-ready game architecture."
+| Area | Current policy |
+|---|---|
+| Release stage | Development Preview (`0.x`) |
+| Intended use | Architecture and API evaluation, learning, testing, and feedback |
+| API stability | Breaking changes may occur between preview releases |
+| Production use | Not currently recommended |
+| License | Apache-2.0, subject to the notices and third-party terms described in this repository |
 
----
+Supported engine versions, installation steps, and build results are published
+only when they have been validated for a specific release. Consult that
+release's notes before evaluating PGX in an Unreal Engine project.
+
+The current release candidate has been compiled from a clean exported tree with
+the Unreal Engine 5.6 Windows editor toolchain. That result is evidence for this
+candidate only; it is not yet a cross-platform or packaged-game compatibility
+claim.
+
+## Development and release model
+
+Day-to-day development takes place in a private canonical monorepo. This public
+repository receives curated, reviewed release snapshots containing only the
+source, documentation, tests, and project files approved for public
+distribution.
+
+Published release tags are treated as immutable snapshots. Fixes and changes
+move forward through a new release instead of rewriting an existing one.
+
+Private working material, unfinished components, generated files, caches, and
+content without a verified redistribution boundary are excluded from the public
+distribution.
+
+Public issues and pull requests remain part of the project feedback loop. After
+review, accepted changes are reconciled with the canonical development line and
+included in a subsequent public release.
+
+## What the public monorepo contains
+
+```text
+PGX-Framework/
+├── Plugins/              Curated PGX runtime and editor plugins
+├── docs/                 Versioned public guides
+├── .github/              Contribution and repository workflows
+├── README.md             English project overview
+├── README.es.md          Spanish project overview
+├── CHANGELOG.md          Public change history
+├── CONTRIBUTING.md       Contribution guidance
+├── SECURITY.md           Vulnerability reporting policy
+├── SUPPORT.md            Support request guidance
+├── LICENSE.md            Apache License 2.0
+└── NOTICE                Attribution and third-party boundary
+```
+
+The contents of `Plugins/` define the scope of each public snapshot. Components
+that are not present in a tagged release are not part of that release's public
+API or support boundary.
+
+## Included plugins
+
+The first public candidate contains **12 plugins and 23 Unreal modules**.
+
+| Layer | Plugins |
+|---|---|
+| Foundation | `PGXCore` |
+| Runtime systems | `PGXAudio`, `PGXGameFlow`, `PGXLoading`, `PGXMGOS`, `PGXPSO`, `PGXSave` |
+| Editor tools | `PGXDocs`, `PGXEditorTools`, `PGXScaffold`, `PGXTutorials`, `PGXVersionControl` |
+
+Most feature plugins depend on `PGXCore`. `PGXEditorTools` is an editor-only
+aggregation layer that brings the inspectors for the selected runtime systems
+together. Consult the [plugin catalog](docs/plugins/catalog.md) and
+[dependency map](docs/architecture/modules-and-dependencies.md) before enabling
+a subset.
+
+## Architecture at a glance
+
+PGX is organized as Unreal Engine plugins rather than an all-or-nothing game
+template.
+
+- Runtime code and editor tools live in separate modules.
+- Configuration and communication use Unreal Data Assets, subsystems, and
+  Gameplay Tags.
+- The source exposes C++ and Blueprint APIs together with inspectors and
+  validators for the included systems.
+
+Plugins have explicit dependency boundaries, but this candidate was built only
+as the complete 12-plugin set. Validate any smaller selection against its
+descriptors and module rules.
+
+## Explore the preview
+
+1. Browse the [`Plugins/`](Plugins/) directory.
+2. Open a plugin descriptor to inspect its modules and dependencies.
+3. Review its `Source/` tree and any documentation shipped with that plugin.
+4. Check the public [`CHANGELOG`](CHANGELOG.md) for release-level changes.
+5. Use the repository issue forms for reproducible questions or findings.
+
+For the verified Windows editor-build path, follow the
+[Quickstart](docs/getting-started/quickstart.md). A maintained example project
+and packaged-build guide are still in preparation.
 
 ## Documentation
 
-Comprehensive documentation is available through the **[PGX Wiki](https://github.com/platanogames/PGX-Framework/wiki)**:
+Documentation distributed with a release lives beside the relevant public
+source whenever possible. This keeps architectural and API guidance tied to the
+snapshot it describes.
 
-| Page | Description |
-|------|-------------|
-| **[FAQ](https://github.com/platanogames/PGX-Framework/wiki/FAQ)** | Common questions from evaluators and potential users |
-| **[Statistics](https://github.com/platanogames/PGX-Framework/wiki/Statistics)** | Current implementation statistics and their evidence boundary |
-| **[Glossary](https://github.com/platanogames/PGX-Framework/wiki/Glossary)** | Key terms used throughout PGX documentation |
-| **[Licensing & Distribution](https://github.com/platanogames/PGX-Framework/wiki/Licensing-and-Distribution)** | Full license model, terms, and professional services |
+Start with:
 
-Licensed users also receive 90+ documentation files, including architecture documents, usage guides, testing guides, extension guides, and 18 bilingual interactive tutorials.
+- [`docs/getting-started/quickstart.md`](docs/getting-started/quickstart.md): preview evaluation checklist
+- [`docs/architecture/overview.md`](docs/architecture/overview.md): monorepo and plugin boundaries
+- [`docs/architecture/system-map.md`](docs/architecture/system-map.md): layers and cross-plugin flows
+- [`docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): exact plugin and module topology
+- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): responsibilities and extension points for all 12 plugins
+- [`docs/validation/verification.md`](docs/validation/verification.md): verified checks and their limits
+- [Project Wiki](https://github.com/platanogames/PGX-Framework/wiki): extended architecture and workflow guides
+- [`Plugins/`](Plugins/): plugin descriptors, source, and included plugin docs
+- [`CHANGELOG.md`](CHANGELOG.md): public changes and release history
+- [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md): verified preview limitations
+- [`ROADMAP.md`](ROADMAP.md): public milestones toward a stable contract
+- [`docs/releasing/public-release-model.md`](docs/releasing/public-release-model.md): release gates and snapshot policy
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): contribution workflow
+- [`SUPPORT.md`](SUPPORT.md): information for useful support requests
+- [`SECURITY.md`](SECURITY.md): private vulnerability reporting guidance
 
----
+## Toward 1.0
 
-## Why PGX Exists
+The `0.x` series is the period in which PGX will consolidate its public
+contract. Work toward `1.0` includes:
 
-I built PGX because after years of developing products for clients and auditing codebases across studios of every size, I kept seeing the same thing: every single project reinvents the same foundational systems from scratch. Save systems, audio management, loading screens, state machines, configuration pipelines -- rebuilt from zero, every time, by every team.
+- reproducible installation from a clean clone;
+- a tested Unreal Engine compatibility matrix;
+- maintained examples and validation workflows;
+- a documented public API and deprecation policy;
+- stable contributor and release processes;
+- migration notes for breaking changes.
 
-It frustrated me. In other ecosystems this was solved long ago. Python developers have Django. JavaScript developers have Next.js. Ruby developers have Rails. These frameworks handle the repetitive architectural work so you can focus on what makes your product unique. But Unreal Engine -- despite being one of the most powerful engines in the world -- had no equivalent. No middleware layer. No shared foundation.
+`1.0` will mean that the selected public contract is stable. It will not mean
+that every possible PGX system or future extension is finished.
 
-And the cost of that gap is something I saw firsthand, project after project:
+## Contributing
 
-- **No architectural parity between studios.** Every team builds their own conventions, their own patterns, their own solutions to the same problems. A developer switching studios has to relearn everything from scratch.
-- **Accumulated technical debt.** Custom implementations of common systems rarely get the polish, testing, and documentation they deserve under production pressure. They work "well enough" until they don't.
-- **Slow onboarding.** New team members spend weeks understanding proprietary systems that could have been standardized from the start.
-- **The same bugs, rediscovered.** Save corruption edge cases. Loading screens that destroy themselves during level transitions. Shader compilation hitches in the first 30 seconds. I kept seeing the same problems solved poorly in different ways.
+PGX is being published before `1.0` so developers can review its architecture
+and APIs before those interfaces become costly to change.
 
-I decided it was time to build what should have existed from the beginning: a standardized, extensible, production-tested layer that sits **on top of** Unreal Engine -- never replacing it, always complementing and expanding it. Every PGX system wraps the corresponding UE5 subsystem with a clean, documented, observable facade. The architecture, the patterns, the tooling, the documentation -- built once, built right, so every team that uses it can skip the years of foundational work and focus entirely on what makes their game different.
+Before opening an issue or pull request, read [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Keep reports reproducible and remove credentials, private project code,
+licensed assets, and unrelated logs from examples.
 
-### Who Benefits
+## Security and support
 
-**For solo developers:** PGX gives you the architecture of a 20-person studio from day one.
+Do not disclose suspected vulnerabilities in a public issue. Follow
+[`SECURITY.md`](SECURITY.md) for the private reporting path.
 
-**For teams:** PGX provides a shared foundation so everyone speaks the same language -- same patterns, same conventions, same tools.
+For integration questions and support requests, follow [`SUPPORT.md`](SUPPORT.md)
+and include the exact PGX revision, Unreal Engine version, target platform,
+reproduction steps, expected result, and observed result.
 
-**For studios:** PGX is a reusable investment. Build once, use across every project.
+## License and provenance
 
----
+PGX Framework is distributed under the [Apache License 2.0](LICENSE.md).
 
-## The Plugin Ecosystem
+Third-party material, when present, remains governed by its respective terms.
+See [`NOTICE`](NOTICE) and the headers in individual files for the applicable
+attribution and licensing boundary.
 
-### Foundation
-
-| Plugin | Description |
-|--------|-------------|
-| **PGXCore** | Base classes, message bus, event handler bus, state machine, configuration, data registry, object pool, interfaces, construction system |
-| **PGXEditorTools** | Asset auditing, system observer, test dashboard, editor productivity tools |
-
-### Production-Ready Systems
-
-| Plugin | What It Does |
-|--------|-------------|
-| **PGXGameFlow** | Multi-channel game state machine with GameplayTag-driven phases and validation rules |
-| **PGXSave** | Complete save/load with slots, auto-save, versioning, compression, migration chains, async I/O |
-| **PGXAudio** | Dual-backend audio (Legacy + Audio Modulation), 5-layer mix, ducking, HDR, music manager, dialogue, sound pool |
-| **PGXPSO** | Pipeline State Object management with automatic Loading screen coordination -- eliminates shader compilation hitches during level transitions. Includes recording tools and optional catalog-based pre-warming for dynamic spawn scenarios |
-| **PGXLoading** | Loading screen system with PSO-aware progress tracking, configurable visual profiles via DataAsset, and deterministic timing. Widget persists across level transitions -- zero code required |
-| **PGXProfile** | Platform profile system -- capabilities, budgets, features, build validation, platform overrides |
-| **PGXLog** | Polymorphic observability -- 13 domain renderers, structured log entries, domain filter bar, Live/Manual modes |
-| **PGXDocs** | In-editor Markdown documentation viewer with native Slate rendering, full-text search, live reload |
-| **PGXMGOS** | Garbage collection observability -- inference-based monitoring, leak detection, behavioral profiling |
-| **PGXVersionControl** | Git integration with editor workflow, changelists, version management |
-
-### Infrastructure Systems (L1 Core)
-
-| System | What It Does |
-|--------|-------------|
-| **Message Bus** | Typed pub/sub messaging with GameplayTag channels, template-based broadcast, async listeners, history recording |
-| **Event Handler** | Data-driven behavior resolution bus with GameplayTag routing, typed payloads, lifecycle management (Singleton/Cached/Ephemeral), telemetry and blackbox |
-| **Data Registry** | DataTable-first persistent store with compiled queries, cache management, and runtime statistics |
-| **Construction** | Actor assembly system with 8 DA types covering actors, components, widgets, game modes, and more |
-
-### Tool Plugins
-
-| Plugin | What It Does |
-|--------|-------------|
-| **PGXSimHarness** | Simulation harness -- injects realistic test data across all 13 systems (~160 API calls, ~90% coverage) |
-| **PGXScaffold** | Automated project scaffolding -- templates, folder creation, Data Asset generation, guided workflow |
-
-### Scaffolded Systems (Coming Soon)
-
-| Plugin | What It Does |
-|--------|-------------|
-| **PGXInput** | Enhanced Input abstraction, input contexts via Data Assets |
-| **PGXCamera** | Camera modes, transitions, data-driven configuration |
-| **PGXUI** | Screen management, widget pool, notifications, loading screens |
-| **PGXAbility** | GAS facade with developer-friendly API and observability |
-| **PGXInventory** | Items, containers, equipment |
-| **PGXInteraction** | Component-based world interaction |
-| **PGXSpawn** | Spawn management, wave definitions |
-| **PGXAI** | AI controllers, behavior tree library |
-| **PGXAnimation** | AnimInstance base, data-driven montages |
-| **PGXMaterials** | Material management, dynamic parameters |
-| **PGXVFX** | Visual effects management (Niagara wrapper) |
-| **PGXCinematic** | Cinematic system (Level Sequence wrapper) |
-| **PGXMultiplayer** | Replication framework, state sync |
-| **PGXOnline** | Online services abstraction (EOS, Steam) |
-
----
-
-## Every System Follows the Same Pattern
-
-Each PGX system implements a consistent, proven architecture:
-
-| Component | What It Provides |
-|-----------|-----------------|
-| **Subsystem** | Core logic (GameInstance, World, or Engine scope) |
-| **Config Data Asset** | All configuration via Data Assets -- no hardcoded values. Deterministic resolution via Project Settings with one-click DA assignment |
-| **Console Commands** | Runtime inspection and debugging |
-| **Blueprint Library** | Full Blueprint access with tiered categories (Core, Query, Advanced, Debug) |
-| **Test Utility** | Standardized test functions per system |
-| **Editor Inspector** | Dockable panel with live PIE data, built on shared visual tokens |
-| **Base Classes** | 10 L1-integrated base classes with 79 overridable Blueprint events |
-| **Documentation** | Architecture + Usage + Testing + Extension guides |
-
-This pattern has been validated across **13 production systems** and **8 Construction DA types**.
-
----
-
-## Editor Integration
-
-PGX integrates deeply into the Unreal Editor with native Slate UI:
-
-| Feature | Count |
-|---------|-------|
-| **Editor Inspector Panels** | 22 dockable NomadTabs |
-| **Data Asset Factories** | 58 (with distinct colors per system) |
-| **Blueprint Factories** | 23 |
-| **Quick Access Pins** | 19 |
-| **Custom SVG Icons** | 26 |
-| **Console Commands** | 95+ across all systems |
-| **Blueprint Nodes** | 170+ across all BP Libraries |
-| **Gameplay Tags** | 180+ production tags with branch ownership |
-| **Test Functions** | 95+ (standardized per system + domain tests) |
-
-### Editor Panels
-
-- **Hub Dashboard** -- Central navigation with 12 system cards and quick status overview
-- **System Observer** -- Live dashboard showing all subsystem states with sparkline graphs
-- **Test Dashboard** -- Run all system tests with color-coded results and history
-- **Log Viewer** -- Polymorphic domain rendering, 13 domain renderers, domain filter bar, detail windows, Live/Manual modes
-- **Save Inspector** -- Slot browser, data viewer, version inspector
-- **GameFlow Inspector** -- 8-channel state visualization with transition rate graphs
-- **PSO Inspector** -- Pipeline status, configs, recording, progress visualization
-- **LevelFlow Inspector** -- Loading pipeline with color-coded states and progress graphs
-- **Loading Inspector** -- Transition management with PSO coordination view
-- **Profile Inspector** -- 6 panels with platform simulation controls
-- **Audio Inspector** -- 12 sections covering all audio subsystems
-- **Data Registry Browser** -- Database explorer with search, stats, and cache management
-- **Config Dashboard** -- System grouping with validation and quick navigation
-- **Message Inspector** -- Live pub/sub channel monitoring, listener tracking, message history
-- **Event Debugger** -- Handler browser, telemetry dashboard, blackbox recorder, execution graphs
-- **Platform Health Dashboard** -- Per-system budget overview, platform comparison, simulation
-- **Documentation Viewer** -- Full Markdown rendering with search and navigation
-- **Visual Showcase** -- Design token and atomic widget reference panel
-- **Simulation Harness** -- Test data injection controls with live simulation ticker
-- **Scaffold** -- Guided project scaffolding with template selection and preview
-- **MGOS Inspector** -- GC observability with memory graphs and health indicators
-- **Registry Validation** -- Data integrity checks and cross-reference analysis
-
----
-
-## Design Principles
-
-### UE5-First
-We never reinvent what Epic provides. Every PGX system wraps the corresponding UE5 system with a clean facade. Enhanced Input, GAS, Audio Modulation, Niagara, Level Sequence -- all wrapped, never replaced.
-
-### Data-Driven
-Configuration through Data Assets, not hardcoded values. Every system is configurable without recompilation. Two DA contexts: **Config DAs** (system settings, assigned via Project Settings) and **Object DAs** (game content). Deterministic config resolution -- one slot per system, zero ambiguity.
-
-### Blueprint-Friendly
-Over 170 Blueprint nodes cover the full API surface with progressive disclosure. C++ for architecture, Blueprints for content. 10 base classes with 79 overridable events ensure Blueprint developers have first-class access.
-
-### Decoupled
-Systems communicate through a three-bus model (Message Bus, Event Handler, Data Registry), not direct references. You can remove any plugin without affecting others.
-
-### Observable
-Every system has console commands, editor inspectors, and traceability. Debug any subsystem at runtime without code changes. The Log system provides 13 domain-specific renderers for structured visualization.
-
-### Zero-Configuration Start
-Every system works out of the box with sensible defaults. Create a Data Asset, configure it in the Details panel, done. No documentation required to get started.
-
-### Progressive Disclosure -- UX at Every Layer
-
-PGX follows the same progressive disclosure philosophy that Epic uses throughout Unreal Engine. A developer who opens PGX for the first time should find the essentials immediately -- without noise, without intimidation, without reading documentation.
-
-This principle is applied systematically across three layers:
-
-| Layer | Problem | PGX Solution |
-|-------|---------|-------------|
-| **Blueprint Palette** | Dozens of nodes per system, impossible to find the 3 you need | Tiered categories: Core shows daily-use nodes, Query/Advanced/Debug subcategories for the rest |
-| **Blueprint Nodes** | Too many pins on commonly-used nodes | Minimal signatures for core operations, following the same pattern as Lyra's messaging |
-| **Data Asset Properties** | 20+ properties per Config DA overwhelm new users | Non-essential properties hidden by default -- same pattern Epic uses on Actor, Component, and every UE base class |
-
-The result: a junior developer can create a save system by filling 3 visible fields on a Data Asset. A senior developer expands "Advanced" and finds full control over slots, versioning, compression, and migration chains. **Same asset, two experiences, zero compromises.**
-
-Every classification decision (which properties are visible, which are advanced) is documented with explicit reasoning so the intent survives across the project's lifetime.
-
----
-
-## Project Snapshot
-
-| Item | Current public baseline |
-|---|---|
-| Framework version | **v0.4.0** |
-| Engine | **Unreal Engine 5.6.1** |
-| Architecture | **Foundational core, modular systems, and editor tools** |
-| Production-ready systems | **13** |
-| Primary API | **C++ with Blueprint-facing interfaces** |
-| Source availability | **Private release-candidate monorepo; public release pending readiness checks** |
-
-Fast-changing implementation counts are maintained in the
-[wiki statistics page](https://github.com/platanogames/PGX-Framework/wiki/Statistics)
-rather than duplicated in the repository overview.
-
----
-
-## Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| **Engine** | Unreal Engine 5.6.1 |
-| **Language** | C++20 (UE5 standard) |
-| **Configuration** | Data Assets (Data-Driven) |
-| **Editor** | Native Slate UI |
-| **Visual System** | Design tokens + 11 atomic widget types |
-| **Platforms** | Windows (primary), expandable |
-
----
-
-## Repository Structure
-
-PGX is developed as a **monorepo** containing the framework plugin ecosystem. The source code, documentation, editor tooling, and automation scripts live together in a single repository — the single source of truth. Individual plugin repositories have been consolidated and archived.
-
-The monorepo remains private while the v1.0 release-readiness work is completed.
-Its public Apache-2.0 release has no promised calendar date. This repository and
-the public wiki document the framework before the source drop; Academy members
-may have early-access builds under separate access terms.
-
-### Multi-Engine Version Strategy
-
-PGX supports multiple Unreal Engine versions through a branch strategy:
-
-- **`main`** -- Always targets the active development UE version
-- **`ue/5.6`** -- Frozen snapshot when a new UE version is adopted
-- **Release tags**: `v0.4.0-ue5.6`, `v0.5.0-ue5.7`, etc.
-
----
-
-## Development Status
-
-| Phase | Status | Key Deliverable |
-|-------|--------|-----------------|
-| 0-1 | Complete | Project structure + Core infrastructure |
-| 2 | Complete | Log System v1.0 |
-| 3 | Complete | Save System v1.0 |
-| 4 | Complete | GameFlow v1.0 |
-| 5 | Complete | PSO System v2.0 |
-| 6 | Complete | Infrastructure Upgrades (Path + Trace + Observer) |
-| 7.5 | Complete | LevelFlow v1.0 |
-| 8.1 | Complete | Profile System v1.0 |
-| 8.1.5 | Complete | PGXDocs v1.1 (in-editor Markdown viewer) |
-| 8.2 | Complete | Audio v1.1 + Data Registry v2.0 + Construction v1.3 |
-| 8.5 | Complete | Test Dashboard + Quality Audit Remediation |
-| 8.6 | Complete | Test Harness v1.0 |
-| 8.7 | Complete | Monorepo Workspace + CI/CD |
-| 8.8 | Complete | Message Bus v1.0 + Event Handler v1.0 |
-| 8.9 | Complete | Profile v2.0 -- Platform-Aware Configuration |
-| 9.0 | Complete | GameplayTags Standardization + Branch Ownership |
-| 9.5 | Complete | Simulation Harness v2.0 (13-system injection, ~160 API calls) |
-| 9.6 | Complete | Panel UX Refactoring (22 panels, standardized professional UX) |
-| 9.7 | Complete | Log v3.0 -- Polymorphic Observability (13 domain renderers) |
-| 9.8 | Complete | Visual Construction -- Design tokens, 11 atomic widgets, 27 panel migrations |
-| 9.9 | Complete | Interactive Tutorials -- 18 bilingual tutorials (5 onboarding + 13 per-system) |
-| 10 | Complete | L1 Integration + Blueprint Reflection Pass + clang-tidy Remediation |
-| 10.3 | Complete | Settings-first Config Resolution (deterministic DA discovery for 11 subsystems) |
-| 11 | Planned | Template integration |
-| 12 | Planned | Polish + v1.0 release |
-
----
-
-## Licensing
-
-**PGX Framework is licensed under Apache-2.0.** Full source code, free to use, modify,
-redistribute and ship in commercial products, with no fees and no revenue thresholds.
-This is genuine open source, not source-available: you own what you build with it.
-
-Apache-2.0 was chosen deliberately — the same permissive footing that made Django,
-Next.js and Rails ecosystem foundations. A framework meant to be the shared architectural
-layer for Unreal Engine has to be free to adopt without friction or legal review.
-
-**How Platano Games sustains it:** revenue comes from *services around* the framework,
-never from the code. The Apache-2.0 core stays free forever; the Platano Games Academy
-offers optional paid training, priority support, premium documentation and professional
-services for studios that want them. Educational use is, and remains, free.
-
-Copyright (c) 2024-2026 Platano Games. See [`LICENSE.md`](LICENSE.md) for the full
-Apache-2.0 text.
-
----
-
-## How to Access
-
-The PGX Framework source will be **freely available under Apache-2.0** when the monorepo
-passes its release-readiness gates. Until then, and afterwards, the **Platano Games Academy** is
-the home for everything around it.
-
-**Website:** [www.platanogames.es](https://www.platanogames.es)
-
-The academy provides:
-- **Early source access** to the monorepo ahead of the public release
-- **Documentation** (90+ files) through the academy platform
-- **Optional paid** training, priority support and premium docs (never required to use PGX)
-- **Updates** as new systems reach production status
-
-### For Studios and Teams
-
-Professional services, team onboarding and custom engineering are available. The framework
-itself is Apache-2.0 and free; these are optional. Contact us through the academy website.
-
----
-
-## Also by Platano Games
-
-### [Lyra Architectural Study](https://github.com/platanogames/Lyra-Architectural-Study)
-Complete architectural dissection of Epic's LyraStarterGame -- 668 C++ files commented, 29 textbook chapters, 106 documentation files.
-
-### VRScan3D
-Professional 3D scanning simulator built on UE 5.5 for technical training, with cloud integration via PlayFab.
-
-### [Docs Converter](https://github.com/platanogames/docsconverter)
-Open-source Markdown to HTML/PDF/DOCX/EPUB converter with Pandoc and PySide6 dashboard.
-
----
-
-## License
-
-PGX Framework is licensed under the **Apache License 2.0**.
-
-**Copyright (c) 2024-2026 Platano Games.**
-
-You may use, modify, distribute and build commercial products on top of PGX, free of
-charge, subject to the terms of the Apache-2.0 license. See [`LICENSE.md`](LICENSE.md)
-for the full text. Optional paid training, support and professional services are offered
-through the [Platano Games Academy](https://www.platanogames.es).
-
----
-
-<p align="center">
-  <strong><a href="https://www.platanogames.es">www.platanogames.es</a></strong><br>
-  <em>Professional game development tools and education</em>
-</p>
-
----
-
-<!-- ES: Seccion en Espanol -->
-
-## Version en Espanol
-
-PGX (Professional Game Extensions) es un framework modular profesional C++ para Unreal Engine 5, con 13 sistemas production-ready y herramientas de editor integradas en Slate nativo.
-
-No es un template -- es la capa arquitectonica entre UE5 y tu juego. Cada sistema wrappea el subsistema UE5 correspondiente con una fachada limpia, documentada y observable.
-
-### Por que existe PGX
-
-Cree PGX porque tras anos desarrollando productos para clientes y auditando codebases de estudios de todos los tamanos, seguia viendo lo mismo: cada proyecto reinventa los mismos sistemas fundamentales desde cero. Guardado, audio, pantallas de carga, maquinas de estado, configuracion -- reconstruidos de cero, cada vez, por cada equipo.
-
-Me frustraba. En otros ecosistemas esto se resolvio hace anos. Python tiene Django. JavaScript tiene Next.js. Ruby tiene Rails. Pero Unreal Engine -- pese a ser uno de los motores mas potentes del mundo -- no tenia equivalente. Sin capa de middleware. Sin fundacion compartida.
-
-Y el coste de esa carencia lo vi de primera mano, proyecto tras proyecto: no hay paridad arquitectonica entre estudios, cada equipo inventa sus patrones, la deuda tecnica se acumula porque las implementaciones custom nunca reciben el pulido que merecen bajo presion de produccion, el onboarding de nuevos miembros es lento, y los mismos bugs -- corrupcion de saves, pantallas de carga que se autodestruyen, hitches de compilacion de shaders -- se redescubren una y otra vez.
-
-Decidi que era momento de construir lo que deberia haber existido desde el principio: una capa estandarizada, extensible y probada en produccion que se situa **encima de** Unreal Engine -- nunca lo reemplaza, siempre lo complementa y amplia. La arquitectura, los patrones, las herramientas, la documentacion -- construidos una vez, construidos bien, para que cada equipo que lo use pueda saltarse anos de trabajo fundacional y enfocarse en lo que hace unico a su juego.
-
-### Ecosistema completo
-
-- **PGX Framework** -- ecosistema modular C++ para UE 5.6.1
-- **22 paneles de editor** integrados en Slate nativo
-- **95+ comandos de consola** para inspeccion en runtime
-- **170+ nodos Blueprint** para disenadores
-- **58 tipos de Data Asset** configurables sin recompilacion
-- **180+ gameplay tags** nativos con branch ownership
-- **60+ design tokens** y 11 tipos de widgets atomicos
-- **18 tutoriales interactivos** bilingues (EN/ES)
-
-### Licencia
-
-**Licencia Apache-2.0.** Codigo abierto y libre, incluido uso comercial, sin cuotas ni umbrales de ingresos. Los ingresos provienen de servicios alrededor del framework (formacion, soporte y documentacion premium de la Platano Games Academy), nunca del codigo. El monorepo completo se publicara cuando supere los gates de release; este repositorio es la presentacion previa. Ver [`LICENSE.md`](LICENSE.md) para el texto completo.
-
-### Acceso
-
-Disponible a traves de la academia: [www.platanogames.es](https://www.platanogames.es)
+Copyright 2024-2026 Platano Games.
