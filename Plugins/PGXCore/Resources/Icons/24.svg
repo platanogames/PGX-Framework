@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- EN: Bridge/connection icon — two endpoints with connecting arc -->
+  <!-- ES: Icono de puente/conexion — dos endpoints con arco conector -->
+  <circle cx="5" cy="12" r="2.5"/>
+  <circle cx="19" cy="12" r="2.5"/>
+  <path d="M7.5 12 C10 5, 14 5, 16.5 12"/>
+  <path d="M7.5 12 C10 19, 14 19, 16.5 12"/>
+  <line x1="5" y1="9.5" x2="5" y2="6"/>
+  <line x1="19" y1="9.5" x2="19" y2="6"/>
+  <circle cx="5" cy="5" r="1" fill="#ffffff" stroke="none"/>
+  <circle cx="19" cy="5" r="1" fill="#ffffff" stroke="none"/>
+</svg>

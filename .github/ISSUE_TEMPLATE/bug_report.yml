@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible defect in a tagged PGX Development Preview.
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: input
+    id: pgx_version
+    attributes:
+      label: PGX version or commit
+      placeholder: Tag or full commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Unreal Engine version and platform
+      placeholder: Unreal Engine version, OS, target, and toolchain
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List the smallest deterministic sequence that exposes the defect.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs or call stack
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Publication checks
+      options:
+        - label: I checked the release notes and known issues for this revision.
+          required: true
+        - label: I removed credentials, private source, licensed assets, and unrelated logs.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

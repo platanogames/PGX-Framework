@@ -1,0 +1,25 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.4.0",
+  "FriendlyName": "PGX Editor Tools",
+  "Description": "Editor productivity tools: asset auditing, level validation, blueprint analysis, and PGX dashboard.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "EnabledByDefault": false,
+  "Modules": [
+    { "Name": "PGXEditorToolsEditor", "Type": "Editor", "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true },
+    { "Name": "PGXVersionControl", "Enabled": true },
+    { "Name": "PGXGameFlow", "Enabled": true },
+    { "Name": "PGXSave", "Enabled": true },
+    { "Name": "PGXPSO", "Enabled": true },
+    { "Name": "PGXLoading", "Enabled": true },
+    { "Name": "PGXMGOS", "Enabled": true },
+    { "Name": "PGXAudio", "Enabled": true }
+  ]
+}

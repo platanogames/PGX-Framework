@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- TestDashboard icon — clipboard with checkmark + test indicator marks -->
+  <rect x="5" y="4" width="14" height="17" rx="1.5"/>
+  <rect x="9" y="2" width="6" height="3" rx="0.5" fill="#ffffff"/>
+  <polyline points="8.5,12 11,14.5 15.5,10"/>
+  <line x1="8" y1="17" x2="13" y2="17"/>
+  <line x1="8" y1="19.5" x2="11" y2="19.5"/>
+</svg>

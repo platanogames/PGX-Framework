@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- EN: Git branch fork icon for PGX Version Control / ES: Icono de branch fork de Git para PGX Version Control -->
+  <circle cx="32" cy="12" r="6" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="20" cy="52" r="6" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="44" cy="52" r="6" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <line x1="32" y1="18" x2="32" y2="32" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32 32 Q32 44 20 46" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32 32 Q32 44 44 46" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+</svg>

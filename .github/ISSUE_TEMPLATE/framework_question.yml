@@ -28,7 +28,7 @@ body:
     attributes:
       label: Scope confirmation
       options:
-        - label: I understand that the complete source monorepo is not yet public.
+        - label: I checked the documentation and known issues for the release I am using.
           required: true
         - label: I removed private source, logs, credentials, and licensed assets.
           required: true
