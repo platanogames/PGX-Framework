@@ -1302,8 +1302,7 @@ void UPGXLevelFlowSubsystem::ApplyProfileConstraints(const FPGXResolvedProfile& 
 	// EN: Read the platform-profile level-flow budget
 	//     LevelFlowBudgets and ASSIGN them to subsystem members so the runtime
 	//     gate (RequestSubLevel for MaxLoadedSubLevels; CVar r.Streaming.PoolSize
-	//     for StreamingPool_MB) can enforce them. Prior impl read the budgets
-	//     into local vars and only logged them, leaving the gate on the table.
+	//     for StreamingPool_MB) enforces them through the active runtime gates.
 	// ES: Leer LevelFlowBudgets del perfil de plataforma
 	//     de plataforma y ASIGNARLOS a miembros del subsistema para que el gate
 	//     runtime (RequestSubLevel para MaxLoadedSubLevels; CVar r.Streaming.

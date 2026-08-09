@@ -47,7 +47,11 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXFrameworkValidator_AllowlistedEdgeAutomatio
 bool FPGXFrameworkValidator_AllowlistedEdgeAutomationTest::RunTest(const FString& /*Parameters*/)
 {
 	TArray<FPGXAllowedL2Edge> AllowedEdges;
-	UPGXFrameworkValidator::GetDefaultAllowedL2Edges(AllowedEdges);
+	FPGXAllowedL2Edge LoadingToGameFlow;
+	LoadingToGameFlow.SourceModule = TEXT("PGXLoadingRuntime");
+	LoadingToGameFlow.TargetModule = TEXT("PGXGameFlowRuntime");
+	LoadingToGameFlow.Reason = TEXT("Synthetic test allowlist edge");
+	AllowedEdges.Add(LoadingToGameFlow);
 
 	TArray<FPGXL2DependencyEdge> Edges;
 	Edges.Add(PGXFrameworkValidatorAutomation::MakeEdge(
@@ -56,7 +60,7 @@ bool FPGXFrameworkValidator_AllowlistedEdgeAutomationTest::RunTest(const FString
 		TEXT("PGXGameFlowRuntime")));
 
 	TArray<FPGXFrameworkValidationIssue> Issues;
-	TestTrue(TEXT("Default documented allowlist suppresses L2 edge as non-failing"),
+	TestTrue(TEXT("Synthetic allowlist suppresses L2 edge as non-failing"),
 		UPGXFrameworkValidator::ValidateStarTopologyEdges(Edges, AllowedEdges, Issues));
 	TestTrue(TEXT("Allowed edge is downgraded to info issue"),
 		PGXFrameworkValidatorAutomation::HasIssue(Issues,

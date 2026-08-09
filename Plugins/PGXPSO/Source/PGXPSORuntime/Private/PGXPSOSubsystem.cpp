@@ -131,7 +131,7 @@ void UPGXPSOSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 		ProfileSS->OnProfileChangedNative.AddUObject(this, &ThisClass::HandleProfileChanged);
 	}
 
-	// EN: Compute Effective budgets after Profile setup (single source of truth, P0 G1).
+	// EN: Compute Effective budgets after Profile setup (single source of truth).
 	// ES: Computar presupuestos efectivos tras setup de Profile (fuente unica de verdad).
 	RecomputeEffectiveBudgets();
 
@@ -296,9 +296,9 @@ bool UPGXPSOSubsystem::RequestWarmUp(FGameplayTag ContextTag)
 		return false;
 	}
 
-	// EN: Apply Profile-derived hard cap on entry count (P0 G1). EffectiveMaxEntries==0 means
+	// EN: Apply Profile-derived hard cap on entry count. EffectiveMaxEntries==0 means
 	//     unbounded (no platform-side clamp). Positive values truncate the merged entries with
-	//     a warning so production divergence stays visible. the effective history-cap pattern.
+	//     a warning so production divergence stays visible.
 	// ES: Aplicar tope duro por entry count derivado del Profile. 0 = sin clamp.
 	if (EffectiveMaxEntries > 0 && FilteredEntries.Num() > EffectiveMaxEntries)
 	{
@@ -344,8 +344,8 @@ bool UPGXPSOSubsystem::RequestWarmUpAll()
 		return false;
 	}
 
-	// EN: Apply Profile-derived hard cap on entry count (P0 G1). EffectiveMaxEntries==0 means
-	//     unbounded. the effective history-cap pattern.
+	// EN: Apply Profile-derived hard cap on entry count. EffectiveMaxEntries==0 means
+	//     unbounded.
 	// ES: Aplicar tope duro por entry count derivado del Profile. 0 = sin clamp.
 	if (EffectiveMaxEntries > 0 && AllEntries.Num() > EffectiveMaxEntries)
 	{
@@ -815,7 +815,7 @@ void UPGXPSOSubsystem::SubmitEntries(const TArray<FPGXPSOEntry>& EntriesToSubmit
 
 void UPGXPSOSubsystem::SubmitSingleEntry(const FPGXPSOEntry& Entry)
 {
-	// EN: Skip non-Material entries (RawCache handled in future phases)
+	// EN: Skip non-Material entries; RawCache is not handled by this path.
 	// ES: Omitir entradas no-Material (RawCache se maneja en fases futuras)
 	if (Entry.EntryType != EPGXPSOEntryType::Material)
 	{
@@ -1825,13 +1825,11 @@ void UPGXPSOSubsystem::SetState(EPGXPSOWarmUpState NewState)
 
 void UPGXPSOSubsystem::ApplyProfileConstraints(const FPGXResolvedProfile& Profile)
 {
-	// EN: Profile clamp materializes via RecomputeEffectiveBudgets (single source of truth, P0 G1).
-	//     Pre-fix this method calculated EnforcedXxx locally and only logged — Profile clamp dead
-	//     path. Now: budgets resolve into EffectiveMaxEntries/TimeBudgetMs/MaxShaders members and
-	//     RequestWarmUp/All apply them as hard caps. Uses the same effective-cap rule as the runtime request path
-	//     EffectiveMaxHistory pattern.
+	// EN: Profile clamp materializes via RecomputeEffectiveBudgets (single source of truth).
+	//     Budgets resolve into EffectiveMaxEntries/TimeBudgetMs/MaxShaders members, and
+	//     RequestWarmUp/All apply them as hard caps using the runtime request path's effective-cap rule.
 	// ES: El clamp por Profile se materializa via RecomputeEffectiveBudgets (fuente unica de verdad).
-	//     Pre-fix solo logueaba; ahora los presupuestos resuelven a EffectiveXxx y RequestWarmUp/All
+	//     Los presupuestos resuelven a EffectiveXxx y RequestWarmUp/All
 	//     los aplican como tope duro.
 	RecomputeEffectiveBudgets();
 

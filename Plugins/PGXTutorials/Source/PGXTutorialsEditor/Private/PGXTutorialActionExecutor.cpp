@@ -59,11 +59,11 @@ static bool IsPathUnderTutorialRoot(const FString& Path)
 
 FPGXTutorialActionResult FPGXTutorialActionExecutor::Execute(const FPGXTutorialStep& Step, const FString& BasePath)
 {
-	// EN: C3 fix — record the BasePath as the current tutorial root BEFORE
+	// EN: Record BasePath as the current tutorial root BEFORE
 	//     any action runs. Subsequent CleanupTutorialAssets() will use this
 	//     as the path-whitelist anchor; tracked paths outside this root
 	//     will be refused (defensive against stale array state).
-	// ES: Fix C3 — registrar BasePath como root del tutorial actual ANTES
+	// ES: Registrar BasePath como root del tutorial actual ANTES
 	//     de cualquier action. CleanupTutorialAssets() lo usara como anchor
 	//     del whitelist; paths tracked fuera de este root seran rechazados.
 	CurrentTutorialRoot = BasePath;
@@ -103,9 +103,9 @@ void FPGXTutorialActionExecutor::ResetTracking()
 {
 	CreatedAssetPaths.Empty();
 	CreatedFolderPaths.Empty();
-	// EN: C3 fix — clear the path-whitelist root on reset. A subsequent
+	// EN: Clear the path-whitelist root on reset. A subsequent
 	// Execute() must set it again before cleanup can run safely.
-	// ES: Fix C3 — limpiar el root del path-whitelist al reset. Un
+	// ES: Limpiar el root del path-whitelist al reset. Un
 	// Execute() subsecuente debe setearlo antes de que cleanup corra safe.
 	CurrentTutorialRoot.Empty();
 }
@@ -299,14 +299,14 @@ FPGXTutorialActionResult FPGXTutorialActionExecutor::CleanupTutorialAssets()
 	{
 		const FString& AssetPath = CreatedAssetPaths[i];
 
-		// EN: C3 fix — refuse to delete assets outside the current tutorial root.
+		// EN: Refuse to delete assets outside the current tutorial root.
 		//     Defensive against stale array state (e.g., a previous tutorial's
 		//     paths leaking into this run after ResetTracking was missed).
-		// ES: Fix C3 — rechazar borrar assets fuera del root del tutorial.
+		// ES: Rechazar borrar assets fuera del root del tutorial.
 		if (!IsPathUnderTutorialRoot(AssetPath))
 		{
 			PGX_LOG_WARNING(LogPGXTutorialAction,
-				TEXT("[C3 fix] Refused asset delete outside tutorial root: %s (current root=%s)"),
+				TEXT("Refused asset delete outside tutorial root: %s (current root=%s)"),
 				*AssetPath, *CurrentTutorialRoot);
 			continue;
 		}
@@ -341,16 +341,16 @@ FPGXTutorialActionResult FPGXTutorialActionExecutor::CleanupTutorialAssets()
 
 	for (const FString& FolderPath : CreatedFolderPaths)
 	{
-		// EN: C3 fix — refuse to delete folders outside the current tutorial root.
+		// EN: Refuse to delete folders outside the current tutorial root.
 		//     CRITICAL: DeleteDirectory with Tree=true is RECURSIVE, so a stale
 		//     path would cascade into unexpected subtree deletion. The guard
 		//     is the only thing standing between stale data and disk loss.
-		// ES: Fix C3 — rechazar borrar carpetas fuera del root. CRITICO:
+		// ES: Rechazar borrar carpetas fuera del root. CRITICO:
 		//     DeleteDirectory con Tree=true es RECURSIVO.
 		if (!IsPathUnderTutorialRoot(FolderPath))
 		{
 			PGX_LOG_WARNING(LogPGXTutorialAction,
-				TEXT("[C3 fix] Refused folder delete outside tutorial root: %s (current root=%s)"),
+				TEXT("Refused folder delete outside tutorial root: %s (current root=%s)"),
 				*FolderPath, *CurrentTutorialRoot);
 			continue;
 		}

@@ -10,14 +10,14 @@
  *
  *     v2.0: Uses FCriticalSection (mutex) for thread safety.
  *     v2.1 upgrade path: MPSC lock-free queue (multi-producer=worker threads,
- *     single-consumer=GameThread). Documented here for future optimization.
+ *     single-consumer=GameThread). This is the required concurrency contract.
  *
  * ES: Buffer circular thread-safe para entradas de log.
  *     Sobrescribe las mas antiguas cuando esta lleno. Capacidad configurada por perfil Config DA.
  *
  *     v2.0: Usa FCriticalSection (mutex) para thread safety.
  *     v2.1 upgrade path: Cola MPSC lock-free (multi-producer=worker threads,
- *     single-consumer=GameThread). Documentado aqui para optimizacion futura.
+ *     single-consumer=GameThread). Este es el contrato de concurrencia requerido.
  */
 class PGXCORERUNTIME_API FPGXLogRingBuffer
 {

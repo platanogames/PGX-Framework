@@ -21,12 +21,12 @@ struct FPSOPrecacheParams;
  * EN: Central PSO warm-up subsystem.
  *     Discovers Config DAs via AssetRegistry, manages the warm-up pipeline
  *     (batched loading -> PrecachePSOs -> compilation tracking -> GC release),
- *     and provides recording for Active Audit workflows.
+ *     and provides recording for runtime capture workflows.
  *     One instance per GameInstance (UPGXGameInstanceSubsystem).
  * ES: Subsistema central de warm-up de PSO.
  *     Descubre Config DAs via AssetRegistry, gestiona el pipeline de warm-up
  *     (carga por lotes -> PrecachePSOs -> seguimiento de compilacion -> liberacion GC),
- *     y proporciona grabacion para flujos de Active Audit.
+ *     y proporciona grabacion para flujos de captura runtime.
  *     Una instancia por GameInstance (UPGXGameInstanceSubsystem).
  */
 UCLASS(BlueprintType)
@@ -339,11 +339,11 @@ private:
 	int32 PeakLoadedMaterialCount = 0;
 
 	// ========================================================================
-	// EN: Effective Profile Budgets (single source of truth, P0 G1)
+	// EN: Effective Profile Budgets (single source of truth)
 	//     Resolved from Profile.PSOBudgets via RecomputeEffectiveBudgets() on Init
 	//     and on profile change. 0 means "no clamp" (no platform-side limit
 	//     declared); positive values are hard caps applied by RequestWarmUp/
-	//     RequestWarmUpAll. Mirrors the effective history-cap pattern.
+	//     RequestWarmUpAll. This keeps one effective-cap rule for all request paths.
 	// ES: Presupuestos efectivos del Profile (fuente unica de verdad). 0 = sin
 	//     clamp; positivos son tope duro aplicado por RequestWarmUp/All.
 	// ========================================================================
@@ -362,7 +362,7 @@ private:
 	 *     the active PlatformConfig.PSOBudgets. Single source of truth for clamps.
 	 *     Called on Initialize after profile setup, on ApplyProfileConstraints, and on
 	 *     HandleProfileChanged. Logs transitions when values change so production
-	 *     divergence stays visible (the effective history-cap pattern).
+	 *     divergence stays visible.
 	 * ES: Recomputar los presupuestos efectivos desde PlatformConfig.PSOBudgets activo.
 	 *     Llamado en Initialize, ApplyProfileConstraints y HandleProfileChanged.
 	 */

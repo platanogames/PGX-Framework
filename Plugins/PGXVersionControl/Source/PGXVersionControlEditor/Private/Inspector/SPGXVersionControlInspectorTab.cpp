@@ -32,9 +32,8 @@
 
 #define LOCTEXT_NAMESPACE "PGXVersionControlInspector"
 
-// EN: VCS system color — migrated to PGX::System::VersionControl token (PGXVisualTokens.h:116)
-// ES: Color del sistema VCS — migrado a token PGX::System::VersionControl (PGXVisualTokens.h:116)
-// Bucket VT fix 2026-05-21: anonymous namespace PGX::System::VersionControl removed; all consumers updated to PGX::System::VersionControl direct token reference.
+// EN: VCS system color uses the shared PGX::System::VersionControl token.
+// ES: El color del sistema VCS usa el token compartido PGX::System::VersionControl.
 
 // ============================================================================
 // EN: Construct / Destructor / ES: Construccion / Destructor

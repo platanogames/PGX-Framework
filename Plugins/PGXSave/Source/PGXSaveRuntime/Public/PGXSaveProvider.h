@@ -107,8 +107,8 @@ public:
 	virtual FString GetBaseSaveDirectory() const PURE_VIRTUAL(UPGXSaveProvider::GetBaseSaveDirectory, return TEXT(""););
 
 	// ========================================================================
-	// EN: Cloud sync (future, default = not supported)
-	// ES: Sincronizacion cloud (futuro, default = no soportado)
+	// EN: Cloud sync (default = not supported)
+	// ES: Sincronizacion cloud (default = no soportado)
 	// ========================================================================
 
 	/** EN: Whether this provider supports cloud sync / ES: Si este provider soporta sincronizacion cloud */

@@ -1,0 +1,19 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.0.1",
+  "FriendlyName": "PGX Spawn",
+  "Description": "Actor spawning and pool reuse with budget controls and wave bookkeeping.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "EnabledByDefault": false,
+  "Modules": [
+    { "Name": "PGXSpawnRuntime", "Type": "Runtime", "LoadingPhase": "Default" },
+    { "Name": "PGXSpawnEditor", "Type": "Editor", "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true }
+  ]
+}

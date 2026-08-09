@@ -4,9 +4,9 @@
 #pragma once
 
 // EN: IPGXObservable helper namespace for PGXPSO.
-//     Mirror of canonical recipe (PGXEnvironment R1 / PGXAudio / PGXMGOS / PGXGameFlow).
+//     Implements the shared observable-helper contract used by PGX runtime modules.
 // ES: namespace helper IPGXObservable para PGXPSO.
-//     Mirror de la receta canonica (PGXEnvironment R1 / PGXAudio / PGXMGOS / PGXGameFlow).
+//     Implementa el contrato compartido de helpers observables de los modulos runtime PGX.
 
 #include "CoreMinimal.h"
 #include "Observability/PGXObservable.h"

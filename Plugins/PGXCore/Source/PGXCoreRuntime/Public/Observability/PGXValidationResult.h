@@ -131,7 +131,7 @@ struct PGXCORERUNTIME_API FPGXValidationResult
 	 *     the int32 to FName (via FString::FromInt) and the FString to FText
 	 *     (via FText::FromString) and emits a single error. Path is left empty.
 	 *
-	 *     Use this when migrating a Phase 2-audited plugin that has its own
+	 *     Use this to adapt a plugin-specific result type that has its own
 	 *     `FPgxResult` (bSuccess + int32 Code + FString Message) —
 	 *     `MakeFromCode(existingCode, existingMsg)` gives
 	 *     a one-liner bridge into FPGXValidationResult.

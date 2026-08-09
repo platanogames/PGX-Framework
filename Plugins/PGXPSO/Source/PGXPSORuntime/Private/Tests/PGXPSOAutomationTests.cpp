@@ -8,54 +8,103 @@
 
 #include "CoreMinimal.h"
 #include "Engine/Engine.h"
+#include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "GameplayTagContainer.h"
 #include "Misc/AutomationTest.h"
+#include "PGXPSOSubsystem.h"
 #include "PGXPSOTestUtility.h"
+#include "PGXPSOWarmUpConfig.h"
 #include "Tags/PGXPSOTags.h"
 
 #if WITH_DEV_AUTOMATION_TESTS
 
 namespace PGXPSOAutomationTestsInternal
 {
-	// EN: Acquire a UWorld from the engine's contexts (PIE > Game > Editor priority). In
-	//     headless commandlet mode without an active map this returns nullptr; the wrapper
-	//     surfaces a SKIP via AddInfo (test discovered but not exercised) rather than failing
-	//     spuriously, since the empirical pass/fail surface is PIE for these tests.
-	// ES: Obtener un UWorld desde los WorldContexts del engine. Sin mapa activo retorna nullptr;
-	//     el wrapper publica SKIP via AddInfo en vez de fallar espureamente.
-	static UWorld* AcquireTestWorld()
+	struct FScopedGameInstanceFixture
 	{
-		if (!GEngine)
+		explicit FScopedGameInstanceFixture(FAutomationTestBase& InTest)
+			: Test(InTest)
 		{
-			return nullptr;
+			if (!GEngine)
+			{
+				Test.AddError(TEXT("PGXPSO automation setup failed: engine is unavailable."));
+				return;
+			}
+
+			GameInstance = NewObject<UGameInstance>(GEngine, UGameInstance::StaticClass(), NAME_None, RF_Transient);
+			if (!GameInstance)
+			{
+				Test.AddError(TEXT("PGXPSO automation setup failed: could not create transient GameInstance."));
+				return;
+			}
+
+			GameInstance->AddToRoot();
+			GameInstance->InitializeStandalone(TEXT("PGXPSOAutomationWorld"));
+			if (!GameInstance->GetWorld())
+			{
+				Test.AddError(TEXT("PGXPSO automation setup failed: standalone GameInstance has no World."));
+				return;
+			}
+
+			UPGXPSOSubsystem* PSO = GameInstance->GetSubsystem<UPGXPSOSubsystem>();
+			if (!PSO)
+			{
+				Test.AddError(TEXT("PGXPSO automation setup failed: UPGXPSOSubsystem missing."));
+				return;
+			}
+
+			Config = NewObject<UPGXPSOWarmUpConfig>(
+				GetTransientPackage(),
+				UPGXPSOWarmUpConfig::StaticClass(),
+				FName(TEXT("PGXPSOAutomationConfig")),
+				RF_Transient);
+			if (!Config)
+			{
+				Test.AddError(TEXT("PGXPSO automation setup failed: could not create transient PSO config."));
+				return;
+			}
+
+			Config->bSaveCacheAfterWarmUp = false;
+			Config->BatchSize = 1;
+			Config->BatchDelaySeconds = 60.0f;
+			FPGXPSOEntry Entry;
+			Entry.ContextTag = TAG_PGX_PSO_Context_Global.GetTag();
+			Entry.Label = TEXT("PGXPSOAutomationSyntheticEntry");
+			Config->Entries.Add(Entry);
+			PSO->InjectTestConfigForTesting(Config);
 		}
 
-		const auto& WorldContexts = GEngine->GetWorldContexts();
-		UWorld* PIEWorld = nullptr;
-		UWorld* GameWorld = nullptr;
-		UWorld* EditorWorld = nullptr;
-
-		for (const FWorldContext& Ctx : WorldContexts)
+		~FScopedGameInstanceFixture()
 		{
-			UWorld* W = Ctx.World();
-			if (!W)
+			Shutdown();
+		}
+
+		void Shutdown()
+		{
+			if (!GameInstance || bShutdown)
 			{
-				continue;
+				return;
 			}
-			switch (Ctx.WorldType)
+			GameInstance->Shutdown();
+			bShutdown = true;
+			if (GameInstance->IsRooted())
 			{
-			case EWorldType::PIE:    PIEWorld = W; break;
-			case EWorldType::Game:   GameWorld = W; break;
-			case EWorldType::Editor: EditorWorld = W; break;
-			default: break;
+				GameInstance->RemoveFromRoot();
 			}
 		}
 
-		if (PIEWorld)    return PIEWorld;
-		if (GameWorld)   return GameWorld;
-		return EditorWorld;
-	}
+		FScopedGameInstanceFixture(const FScopedGameInstanceFixture&) = delete;
+		FScopedGameInstanceFixture& operator=(const FScopedGameInstanceFixture&) = delete;
+
+		UWorld* GetWorld() const { return GameInstance ? GameInstance->GetWorld() : nullptr; }
+
+	private:
+		FAutomationTestBase& Test;
+		UGameInstance* GameInstance = nullptr;
+		UPGXPSOWarmUpConfig* Config = nullptr;
+		bool bShutdown = false;
+	};
 
 	// EN: Resolve the canonical Global PSO context tag. Native tag handle is registered at
 	//     module load (UE_DEFINE_GAMEPLAY_TAG) so the lookup is deterministic from first run
@@ -74,7 +123,14 @@ namespace PGXPSOAutomationTestsInternal
 	{
 		for (const FString& Issue : OutIssues)
 		{
-			Test.AddInfo(Issue);
+			if (Issue.StartsWith(TEXT("[FAIL]")) || Issue.Contains(TEXT("FAIL:")))
+			{
+				Test.AddError(Issue);
+			}
+			else
+			{
+				Test.AddInfo(Issue);
+			}
 		}
 	}
 }
@@ -89,10 +145,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_QuickTestAutomationTest,
 
 bool FPGXPSO_QuickTestAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	TArray<FString> OutIssues;
@@ -107,10 +163,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_SingleEntryWarmUpAutomationTest,
 
 bool FPGXPSO_SingleEntryWarmUpAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();
@@ -126,10 +182,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_BatchWarmUpAutomationTest,
 
 bool FPGXPSO_BatchWarmUpAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();
@@ -145,13 +201,13 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_ContextFilteringAutomationTest,
 
 bool FPGXPSO_ContextFilteringAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
-	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();
+	const FGameplayTag ContextTag = TAG_PGX_PSO_Context_Menu.GetTag();
 	TArray<FString> OutIssues;
 	const bool bPassed = UPGXPSOTestUtility::TestContextFiltering(World, OutIssues, ContextTag);
 	PGXPSOAutomationTestsInternal::ForwardIssues(*this, OutIssues);
@@ -164,10 +220,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_WarmUpControlAutomationTest,
 
 bool FPGXPSO_WarmUpControlAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();
@@ -183,10 +239,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_StressTestAutomationTest,
 
 bool FPGXPSO_StressTestAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();
@@ -203,10 +259,10 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXPSO_SimulateGameSessionAutomationTest,
 
 bool FPGXPSO_SimulateGameSessionAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXPSOAutomationTestsInternal::AcquireTestWorld();
+	PGXPSOAutomationTestsInternal::FScopedGameInstanceFixture Fixture(*this);
+	UWorld* World = Fixture.GetWorld();
 	if (!World)
 	{
-		AddInfo(TEXT("SKIP: no UWorld available (headless commandlet without map). Empirical pass/fail deferred to PIE / M5 Testing Harness."));
 		return true;
 	}
 	const FGameplayTag ContextTag = PGXPSOAutomationTestsInternal::GetGlobalContextTag();

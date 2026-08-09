@@ -5,6 +5,7 @@
 #include "EventHandler/PGXEventHandlerConfig.h"
 #include "EventHandler/PGXEventHandlerSettings.h"
 #include "EventHandler/PGXEventHandlerLog.h"
+#include "EventHandler/Tags/PGXEventHandlerTags.h"
 #include "Messages/PGXMessageSubsystem.h"
 #include "Profile/PGXProfileSubsystem.h"
 #include "Profile/PGXPlatformConfig.h"
@@ -15,7 +16,6 @@
 #include "Engine/DataTable.h"
 #include "HAL/IConsoleManager.h"
 #include "AssetRegistry/AssetRegistryModule.h"
-#include "GameplayTagsManager.h"
 
 namespace
 {
@@ -57,9 +57,39 @@ bool PGXPayloadTypeMatchesExpected(const UScriptStruct* PayloadStruct, const FSt
 
 FGameplayTag PGXReasonTag(FName ReasonName)
 {
-	return ReasonName.IsNone()
-		? FGameplayTag()
-		: UGameplayTagsManager::Get().AddNativeGameplayTag(ReasonName, TEXT("PGX EventHandler failure taxonomy"));
+	if (ReasonName == PGXEventHandlerReason::ValidationInvalidEventTag)
+	{
+		return TAG_PGX_EventHandler_Validation_InvalidEventTag.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ValidationPayloadMismatch)
+	{
+		return TAG_PGX_EventHandler_Validation_PayloadMismatch.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ValidationHandlerDisabled)
+	{
+		return TAG_PGX_EventHandler_Validation_HandlerDisabled.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ValidationCanExecuteFalse)
+	{
+		return TAG_PGX_EventHandler_Validation_CanExecuteFalse.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ResultHandlerNotFound)
+	{
+		return TAG_PGX_EventHandler_Result_HandlerNotFound.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ResultAcquireHandlerFailed)
+	{
+		return TAG_PGX_EventHandler_Result_AcquireHandlerFailed.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ResultChainBudgetExceeded)
+	{
+		return TAG_PGX_EventHandler_Result_ChainBudgetExceeded.GetTag();
+	}
+	if (ReasonName == PGXEventHandlerReason::ResultChainCycle)
+	{
+		return TAG_PGX_EventHandler_Result_ChainCycle.GetTag();
+	}
+	return FGameplayTag();
 }
 
 FString PGXReasonString(FName ReasonName)

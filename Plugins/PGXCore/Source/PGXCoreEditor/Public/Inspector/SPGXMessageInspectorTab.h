@@ -24,10 +24,10 @@ struct FPGXMessageChannelEntry
 /**
  * EN: Listener lifecycle event inferred from polled listener-count deltas.
  *     Type encodes whether the delta was positive (Registered) or negative
- *     (Unregistered). Workaround for OnListenerRegistered being DYNAMIC-only.
+ *     (Unregistered). Polling is required because OnListenerRegistered is DYNAMIC-only.
  * ES: Evento de listener lifecycle inferido desde deltas polled del count de
  *     listeners. Type codifica si el delta fue positivo (Registered) o negativo
- *     (Unregistered). Workaround porque OnListenerRegistered es DYNAMIC-only.
+ *     (Unregistered). El polling es necesario porque OnListenerRegistered es DYNAMIC-only.
  */
 enum class EPGXMessageLifecycleEventType : uint8
 {
@@ -159,13 +159,13 @@ private:
 
 	// EN: Last-broadcast info touched by HandleBroadcast — GameThread-only per
 	//     GameThread-only message-bus invariant; FString / double / int32 are NOT atomic in
-	//     the C++ memory model, so any future background dispatch must marshal
+	//     the C++ memory model, so background dispatch must marshal
 	//     to GameThread before invoking the callback. HandleBroadcast asserts
 	//     IsInGameThread() to enforce the invariant.
 	// ES: Info de ultimo broadcast tocada por HandleBroadcast — GameThread-only
 	//     por el invariante GameThread-only del bus de mensajes; FString / double / int32 NO son
 	//     atomic en el modelo de memoria C++, asi que cualquier dispatch
-	//     futuro en background debe marshal a GameThread antes de invocar el
+	//     en background debe marshal a GameThread antes de invocar el
 	//     callback. HandleBroadcast assertea IsInGameThread() para enforcear
 	//     el invariante.
 	FString LastBroadcastChannelName;

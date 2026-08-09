@@ -27,7 +27,8 @@ its C++ extension points visible.
 
 | Area | Current policy |
 |---|---|
-| Release stage | Development Preview (`0.x`) |
+| Release | `0.1.0` (`v0.1.0`), published 2026-08-09 |
+| Release stage | Pre-release / Development Preview (`0.x`) |
 | Intended use | Architecture and API evaluation, learning, testing, and feedback |
 | API stability | Breaking changes may occur between preview releases |
 | Production use | Not currently recommended |
@@ -37,10 +38,16 @@ Supported engine versions, installation steps, and build results are published
 only when they have been validated for a specific release. Consult that
 release's notes before evaluating PGX in an Unreal Engine project.
 
-The current release candidate has been compiled from a clean exported tree with
-the Unreal Engine 5.6 Windows editor toolchain. That result is evidence for this
-candidate only; it is not yet a cross-platform or packaged-game compatibility
-claim.
+The verified `v0.1.0` preview snapshot contains
+**26 plugins, 48 Unreal modules and 1,305 exported plugin files**. On Unreal
+Engine 5.6 with Windows Development targets, its exported tree passed these
+gates:
+
+- clean Editor rebuild: 778/778 actions, pass;
+- clean Game rebuild: 417/417 actions, pass;
+- Editor Automation: 232/232 passed, 0 failed and 0 skipped;
+- Game Automation: 112/112 passed, 0 failed and 0 skipped;
+- combined Automation: 344/344 passed.
 
 ## Development and release model
 
@@ -52,9 +59,10 @@ distribution.
 Published release tags are treated as immutable snapshots. Fixes and changes
 move forward through a new release instead of rewriting an existing one.
 
-Private working material, unfinished components, generated files, caches, and
-content without a verified redistribution boundary are excluded from the public
-distribution.
+Private working material, nonfunctional shells, generated files, caches and
+content without a verified redistribution boundary are excluded. Incomplete
+plugins may be included when their implemented scope and limitations are stated
+explicitly as part of the Development Preview.
 
 Public issues and pull requests remain part of the project feedback loop. After
 review, accepted changes are reconciled with the canonical development line and
@@ -83,13 +91,17 @@ API or support boundary.
 
 ## Included plugins
 
-The first public candidate contains **12 plugins and 23 Unreal modules**.
+The `v0.1.0` public preview contains **26 plugins and 48 Unreal modules**.
+The repository mixes established systems with deliberately early previews; a
+plugin being present does not mean that every planned capability is implemented.
 
-| Layer | Plugins |
+| Maturity group | Plugins |
 |---|---|
 | Foundation | `PGXCore` |
-| Runtime systems | `PGXAudio`, `PGXGameFlow`, `PGXLoading`, `PGXMGOS`, `PGXPSO`, `PGXSave` |
-| Editor tools | `PGXDocs`, `PGXEditorTools`, `PGXScaffold`, `PGXTutorials`, `PGXVersionControl` |
+| Established preview systems | `PGXAudio`, `PGXGameFlow`, `PGXLoading`, `PGXMGOS`, `PGXPSO`, `PGXSave` |
+| Functional previews | `PGXAbility`, `PGXCrafting`, `PGXInput`, `PGXInteraction`, `PGXInventory`, `PGXSpawn`, `PGXTrade` |
+| Structured previews | `PGXAI`, `PGXCamera`, `PGXColony`, `PGXEnvironment`, `PGXUI`, `PGXVehicles` |
+| Editor and verification tools | `PGXDocs`, `PGXEditorTools`, `PGXScaffold`, `PGXSimHarness`, `PGXTutorials`, `PGXVersionControl` |
 
 Most feature plugins depend on `PGXCore`. `PGXEditorTools` is an editor-only
 aggregation layer that brings the inspectors for the selected runtime systems
@@ -108,9 +120,11 @@ template.
 - The source exposes C++ and Blueprint APIs together with inspectors and
   validators for the included systems.
 
-Plugins have explicit dependency boundaries, but this candidate was built only
-as the complete 12-plugin set. Validate any smaller selection against its
-descriptors and module rules.
+Plugins have explicit dependency boundaries. The complete 26-plugin snapshot
+has passed the documented Editor and Game validation gates, but arbitrary
+subsets must still be checked against their descriptors and module rules. See
+[Verification](docs/validation/verification.md) for the exact evidence and its
+limits.
 
 ## Explore the preview
 
@@ -120,7 +134,7 @@ descriptors and module rules.
 4. Check the public [`CHANGELOG`](CHANGELOG.md) for release-level changes.
 5. Use the repository issue forms for reproducible questions or findings.
 
-For the verified Windows editor-build path, follow the
+For the current Windows editor evaluation path, follow the
 [Quickstart](docs/getting-started/quickstart.md). A maintained example project
 and packaged-build guide are still in preparation.
 
@@ -136,7 +150,7 @@ Start with:
 - [`docs/architecture/overview.md`](docs/architecture/overview.md): monorepo and plugin boundaries
 - [`docs/architecture/system-map.md`](docs/architecture/system-map.md): layers and cross-plugin flows
 - [`docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): exact plugin and module topology
-- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): responsibilities and extension points for all 12 plugins
+- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): implemented responsibilities and limits for all 26 plugins
 - [`docs/validation/verification.md`](docs/validation/verification.md): verified checks and their limits
 - [Project Wiki](https://github.com/platanogames/PGX-Framework/wiki): extended architecture and workflow guides
 - [`Plugins/`](Plugins/): plugin descriptors, source, and included plugin docs

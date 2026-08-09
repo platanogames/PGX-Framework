@@ -1,0 +1,74 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "PGX Sim Harness",
+	"Description": "Editor verification harness for the implemented PGX constellation. Demonstrates available systems and reports partial, missing, or not-applicable coverage without treating optional capabilities as complete.",
+	"Category": "PGX Framework",
+	"CreatedBy": "PGX",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"EnabledByDefault": true,
+	"Modules": [
+		{
+			"Name": "PGXSimHarnessEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "PGXCore",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXEditorTools",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXGameFlow",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXSave",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXPSO",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXLoading",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXMGOS",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXAudio",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXSpawn",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXAI",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXAbility",
+			"Enabled": true
+		},
+		{
+			"Name": "PGXDocs",
+			"Enabled": true
+		}
+	]
+}

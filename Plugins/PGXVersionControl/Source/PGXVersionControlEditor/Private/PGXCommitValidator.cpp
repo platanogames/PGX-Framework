@@ -229,15 +229,22 @@ void FPGXCommitValidator::ValidateUPropertyAnnotation(const FString& InFilePath,
 	{
 		const FString Match = Matcher.GetCaptureGroup(0);
 
-		const int32 MatchIdx = Matcher.GetMatchBeginning();
-		if (MatchIdx == INDEX_NONE)
+		const int32 MatchBeginning = Matcher.GetMatchBeginning();
+		if (MatchBeginning == INDEX_NONE)
 		{
 			continue;
 		}
 
-		if (!PGXHasImmediateUPropertyAnnotation(InContent, MatchIdx))
+		int32 DeclarationOffset = 0;
+		while (DeclarationOffset < Match.Len() && FChar::IsWhitespace(Match[DeclarationOffset]))
 		{
-			const int32 LineNum = PGXCalculateLineNumber(InContent, MatchIdx);
+			++DeclarationOffset;
+		}
+		const int32 DeclarationIdx = MatchBeginning + DeclarationOffset;
+
+		if (!PGXHasImmediateUPropertyAnnotation(InContent, DeclarationIdx))
+		{
+			const int32 LineNum = PGXCalculateLineNumber(InContent, DeclarationIdx);
 			FPGXValidationIssue Issue;
 			Issue.Severity = EPGXValidationSeverity::Warning;
 			Issue.Confidence = EPGXValidationConfidence::HeuristicPartial;

@@ -117,16 +117,16 @@ namespace PGXSaveTestHelpers
 		//     private. For automation tests we resolve via the default project save dir
 		//     pattern used by UPGXSaveProvider_Default — tests run in editor/dev
 		//     contexts where this resolves to FPaths::ProjectSavedDir() / "SaveGames".
-		//     If a future test needs a different provider's path, expose a helper on
-		//     the subsystem then.
+		//     Providers with alternate paths require an explicit subsystem helper; this helper
+		//     intentionally covers the default provider.
 		// ES: NO tenemos un accesor publico de BaseSaveDirectory en el subsistema.
 		//     El provider lo expone via GetBaseSaveDirectory(); obtenemos el nombre de
 		//     clase del provider activo via debug snapshot pero la instancia del
 		//     provider es privada. Para tests de automation resolvemos via el patron default
 		//     del project save dir usado por UPGXSaveProvider_Default — los tests
 		//     corren en contextos editor/dev donde eso resuelve a
-		//     FPaths::ProjectSavedDir() / "SaveGames". Si un test futuro necesita un
-		//     path de provider distinto, expone un helper en el subsistema entonces.
+		//     FPaths::ProjectSavedDir() / "SaveGames". Providers con rutas alternativas
+		//     requieren un helper explicito; este helper cubre el provider por defecto.
 		const FString BasePath = FPaths::ProjectSavedDir() / TEXT("SaveGames");
 
 		const FPGXSaveDomainEntry& FirstDomain = Config->SaveDomains[0];

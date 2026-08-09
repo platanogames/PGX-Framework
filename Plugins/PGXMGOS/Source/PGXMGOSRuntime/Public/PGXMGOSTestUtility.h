@@ -12,7 +12,7 @@
  * EN: Test utility for the MGOS (GC Observability System).
  *     Provides 7 test functions covering initialization, mode switching,
  *     snapshot capture, baseline management, history, stress, and leak detection.
- *     Uses forced GC (CollectGarbage) and W_Test window for deterministic testing [R2].
+ *     Uses forced GC (CollectGarbage) and deterministic observation window for deterministic testing.
  *
  *     **Shipping gate (UHT-safe form)**:
  *     UHT forbids placing UCLASS/UFUNCTION declarations inside arbitrary
@@ -32,7 +32,7 @@
  * ES: Utilidad de test para el MGOS (Sistema de Observabilidad GC).
  *     Proporciona 7 funciones de test cubriendo inicializacion, cambio de modo,
  *     captura de snapshot, gestion de baseline, historial, stress y deteccion de leaks.
- *     Usa GC forzado (CollectGarbage) y ventana W_Test para testing deterministico [R2].
+ *     Usa GC forzado (CollectGarbage) y ventana de observacion determinista para testing deterministico.
  *
  *     **Gate de shipping**: la declaracion reflejada
  *     queda visible por restricciones UHT, pero en Shipping todas las funciones
@@ -61,15 +61,15 @@ public:
 	static bool TestModeSwitch();
 
 	/**
-	 * EN: Test snapshot capture — forces GC [R2], verifies snapshot has valid data including ProcessMemoryMB [R1].
-	 * ES: Test de captura de snapshot — fuerza GC [R2], verifica que el snapshot tiene datos validos incluyendo ProcessMemoryMB [R1].
+	 * EN: Test snapshot capture — forces GC, verifies snapshot has valid data including ProcessMemoryMB.
+	 * ES: Test de captura de snapshot — fuerza GC, verifica que el snapshot tiene datos validos incluyendo ProcessMemoryMB.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS|Test", meta = (DisplayName = "MGOS: Test Snapshot Capture"))
 	static bool TestSnapshotCapture();
 
 	/**
-	 * EN: Test baseline management — capture baseline, verify Valid, reset, verify Uninitialized. Uses W_Test [R2].
-	 * ES: Test de gestion de baseline — capturar baseline, verificar Valid, resetear, verificar Uninitialized. Usa W_Test [R2].
+	 * EN: Test baseline management — capture baseline, verify Valid, reset, verify Uninitialized. Uses the deterministic observation window.
+	 * ES: Test de gestion de baseline — capturar baseline, verificar Valid, resetear, verificar Uninitialized. Usa la ventana de observacion determinista.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS|Test", meta = (DisplayName = "MGOS: Test Baseline Management"))
 	static bool TestBaselineManagement();
@@ -89,9 +89,9 @@ public:
 	static bool RunStressTest();
 
 	/**
-	 * EN: Simulate leak detection — spawns persistent actors, forces GC with W_Test window [R2],
+	 * EN: Simulate leak detection — spawns persistent actors, forces GC with deterministic observation window,
 	 *     runs enough cycles, compares final snapshot vs baseline, verifies profile state transitions.
-	 * ES: Simular deteccion de leak — crea actores persistentes, fuerza GC con ventana W_Test [R2],
+	 * ES: Simular deteccion de leak — crea actores persistentes, fuerza GC con ventana de observacion determinista,
 	 *     ejecuta suficientes ciclos, compara snapshot final vs baseline, verifica transiciones de estado de perfil.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS|Test", meta = (DisplayName = "MGOS: Simulate Leak Detection"))

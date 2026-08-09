@@ -39,7 +39,7 @@ public:
 	static void InjectComponents(AActor* Actor, const UPGXClassConstruction* Construction);
 
 	/**
-	 * EN: Apply granted tags from a construction DA (for future tag-aware actors).
+	 * EN: Apply granted tags from a construction DA to tag-aware actors.
 	 * ES: Aplicar tags otorgados de un DA de construccion.
 	 */
 	static FGameplayTagContainer GetGrantedTags(const UPGXClassConstruction* Construction);

@@ -26,10 +26,10 @@
  *     **initial observability scaffold**: the reflection-driven default implementations are
  *     scaffolded with the correct method signatures + reflection iteration shape, but the
  *     concrete JSON parser library binding (UE FJsonValue vs nlohmann::json vs custom)
- *     remains an explicit future extension. In the current implementation,
+ *     is outside the current contract. In this implementation,
  *     `ToJson()` returns a populated `FPGXJsonValue` envelope with type +
  *     schema version + plugin metadata; full UPROPERTY-to-JSON value reflection is the
- *     future property-serialization implementation.
+ *     an optional property-serialization implementation.
  *
  *     Auto-registration: `UPGXObservableBase` subclasses are discovered via
  *     `TObjectIterator<UClass>` filter at module startup (`FPGXObservabilityRegistry`).
@@ -39,7 +39,7 @@
  * ES: Clase base abstracta default para tipos observables definidos por PGX. Implementa los
  *     4 metodos de IPGXObservable usando reflexion UE sobre la superficie UPROPERTY de la
  *     subclase. El scaffold inicial de observabilidad difiere la reflexion completa
- *     de valores UPROPERTY-to-JSON a una extension futura.
+ *     de valores UPROPERTY-to-JSON fuera del contrato actual.
  */
 UCLASS(Abstract, BlueprintType)
 class PGXCORERUNTIME_API UPGXObservableBase : public UObject, public IPGXObservable

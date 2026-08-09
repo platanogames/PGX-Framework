@@ -142,7 +142,7 @@ private:
 	bool bIsPIEActive = false;
 	// EN: Tracks whether subsystem delegates are currently bound (Delegate mode). Read in
 	//     the destructor instead of the virtual GetBindMode() — the vtable is no longer the
-	//     derived class's during destruction (AMBER-1 fix).
+	//     derived class's during destruction.
 	// ES: Rastrea si los delegates estan bound. Leido en el destructor en vez del virtual
 	//     GetBindMode() (el vtable ya no es del derivado en destruccion).
 	bool bDelegatesBound = false;

@@ -45,7 +45,7 @@ FPGXJsonValue PGXCoreObservability::MakeJsonEnvelope(const UObject* Object, FNam
 
 	// EN: Mirror PGXCore 8.3.A baseline + PGXEnvironment / PGXAI 8.3.C / PGXUI 8.3.C reference
 	//     envelope shape. UPROPERTY-to-JSON value reflection deferred to 8.3.B+ implementation
-	//     contract while property-level serialization remains a future extension.
+	//     contract; property-level serialization is not provided by this adapter.
 	// ES: Mirror baseline PGXCore 8.3.A + referencias PGXEnvironment / PGXAI / PGXUI 8.3.C.
 	Out.JsonString = FString::Printf(
 		TEXT("{\"schema\":{\"type\":\"%s\",\"version\":\"%s\",\"plugin\":\"%s\"},\"data\":{}}"),
@@ -95,6 +95,7 @@ FPGXSchemaDescriptor PGXCoreObservability::MakeSchemaDescriptor(const UObject* O
 		Field.bRequired = !Property->HasAnyPropertyFlags(CPF_Transient);
 
 		FString ConstraintBuffer;
+#if WITH_METADATA
 		if (Property->HasMetaData(TEXT("ClampMin")))
 		{
 			ConstraintBuffer += FString::Printf(TEXT("ClampMin=%s "), *Property->GetMetaData(TEXT("ClampMin")));
@@ -107,6 +108,7 @@ FPGXSchemaDescriptor PGXCoreObservability::MakeSchemaDescriptor(const UObject* O
 		{
 			ConstraintBuffer += FString::Printf(TEXT("Categories=%s "), *Property->GetMetaData(TEXT("Categories")));
 		}
+#endif
 
 		Field.Constraints = FText::FromString(ConstraintBuffer);
 		Descriptor.Fields.Add(Field);

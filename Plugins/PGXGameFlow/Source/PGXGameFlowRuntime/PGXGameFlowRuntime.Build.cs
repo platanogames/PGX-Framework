@@ -24,11 +24,11 @@ public class PGXGameFlowRuntime : ModuleRules
 			"AssetRegistry"
 		});
 
-		// EN: Automation test infrastructure — editor builds only.
+		// EN: Automation test infrastructure — editor or explicit automation-test builds.
 		//     PGXCoreDeveloper hosts the PGX_TEST macro family + FPGXTestUtils.
-		// ES: Infraestructura de tests de automation — solo builds editor.
+		// ES: Infraestructura de tests de automation — builds editor o con automation tests.
 		//     PGXCoreDeveloper aloja macros PGX_TEST + FPGXTestUtils.
-		if (Target.bBuildEditor)
+		if (Target.bBuildEditor || Target.WithAutomationTests)
 		{
 			PrivateDependencyModuleNames.AddRange(new string[]
 			{

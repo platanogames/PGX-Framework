@@ -37,11 +37,11 @@ namespace PGX
 		/**
 		 * EN: Builds a deferred card — semantic alias of MakeCard used to mark deferred
 		 *     PASS2/PASS3 surfaces. Kept as separate symbol for grep-friendliness and to
-		 *     allow future visual differentiation (e.g. muted text color) without touching
+		 *     allow visual differentiation (e.g. muted text color) without touching
 		 *     callers.
 		 * ES: Construye una card deferred — alias semantico de MakeCard para marcar
 		 *     superficies diferidas a PASS2/PASS3. Simbolo separado para grep + para permitir
-		 *     diferenciacion visual futura (e.g. color muted) sin tocar callers.
+		 *     diferenciacion visual (e.g. color muted) sin tocar callers.
 		 */
 		PGXCOREEDITOR_API TSharedRef<SWidget> MakeDeferredCard(const FText& Label, const FText& Detail);
 

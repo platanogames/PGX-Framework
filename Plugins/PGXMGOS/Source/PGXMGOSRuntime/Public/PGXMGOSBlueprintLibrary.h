@@ -41,7 +41,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS", meta = (DisplayName = "Reset Baseline"))
 	static void ResetBaseline();
 
-	/** EN: Set suppression mode [R4] / ES: Establecer modo de supresion [R4] */
+	/** EN: Set suppression mode / ES: Establecer modo de supresion */
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS", meta = (DisplayName = "Set Suppressed"))
 	static void SetSuppressed(bool bSuppress);
 
@@ -69,7 +69,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "PGX|MGOS|Query", meta = (DisplayName = "Get GC Cycle Count"))
 	static int64 GetCycleCount();
 
-	/** EN: Check if in suppressed phase [R4] / ES: Verificar si esta en fase de supresion [R4] */
+	/** EN: Check if in suppressed phase / ES: Verificar si esta en fase de supresion */
 	UFUNCTION(BlueprintPure, Category = "PGX|MGOS|Query", meta = (DisplayName = "Is Suppressed"))
 	static bool IsInSuppressedPhase();
 

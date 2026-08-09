@@ -9,7 +9,6 @@
 #include "PGXSaveConfig.h"
 #include "PGXSaveGame.h"
 #include "Engine/GameInstance.h"
-#include "GameplayTagsManager.h"
 #include "Misc/Paths.h"
 
 /**
@@ -38,15 +37,10 @@ PGX_TEST_GAME(FPGXSave_CorruptionDetection_CorruptionDetection)
 		return false;
 	}
 
-	// EN: Register transient test tags via the gameplay tags manager. Idempotent —
-	//     subsequent runs reuse the same tag.
-	// ES: Registrar tags de test transitorios via el manager de gameplay tags.
-	//     Idempotente — runs subsiguientes reusan el mismo tag.
-	UGameplayTagsManager& TagManager = UGameplayTagsManager::Get();
-	const FGameplayTag TestContextTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Context.AutomationTest_CorruptionDetection"));
-	const FGameplayTag TestDomainTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Domain.AutomationTest_CorruptionDetection"));
+	// EN: Reuse deterministic tags registered by the plugin before automation starts.
+	// ES: Reusar tags deterministas registrados por el plugin antes de iniciar automation.
+	const FGameplayTag TestContextTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Context"));
+	const FGameplayTag TestDomainTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Domain"));
 
 	if (!TestContextTag.IsValid() || !TestDomainTag.IsValid())
 	{
@@ -130,6 +124,7 @@ PGX_TEST_GAME(FPGXSave_CorruptionDetection_CorruptionDetection)
 	//     Expected: EPGXSaveResult::Corrupted (not Success).
 	// ES: Phase 3 — cargar payload mutado. CONTRATO bajo test.
 	//     Esperado: EPGXSaveResult::Corrupted (no Success).
+	AddExpectedError(TEXT("Checksum mismatch"), EAutomationExpectedErrorFlags::Contains, 1);
 	const EPGXSaveResult LoadResult = SaveSubsystem->LoadContext(TestContextTag, TestSlot);
 
 	TestEqual(

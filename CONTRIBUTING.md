@@ -18,7 +18,7 @@ A useful report includes:
 - the exact PGX revision or tag;
 - Unreal Engine version and target platform;
 - the smallest reproducible example;
-- expected and observed behaviour;
+- expected and observed behavior;
 - sanitized logs, screenshots, or call stacks when relevant.
 
 Use a [security report](SECURITY.md), not a public issue, for suspected

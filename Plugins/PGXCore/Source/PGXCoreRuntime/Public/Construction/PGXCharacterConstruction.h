@@ -9,9 +9,9 @@
 
 /**
  * EN: Construction DA for Character. Defines movement defaults and
- *     future ability system config slot.
+ *     optional ability-system config slot.
  * ES: DA de construccion para Character. Define valores de movimiento
- *     por defecto y slot futuro de config de sistema de habilidades.
+ *     por defecto y slot opcional de config del sistema de habilidades.
  */
 UCLASS(BlueprintType, Blueprintable)
 class PGXCORERUNTIME_API UPGXCharacterConstruction : public UPGXClassConstruction
@@ -19,7 +19,7 @@ class PGXCORERUNTIME_API UPGXCharacterConstruction : public UPGXClassConstructio
 	GENERATED_BODY()
 
 public:
-	/** EN: Ability system config (future) / ES: Config del sistema de habilidades (futuro) */
+	/** EN: Optional ability-system config / ES: Config opcional del sistema de habilidades */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|Construction|Character")
 	TSoftObjectPtr<UPGXConfigDataAsset> AbilityConfig;
 

@@ -51,8 +51,21 @@ reports incidents and diagnostics through its own subsystem and Core
 observability contracts. It has no direct runtime dependency on Audio or the
 other feature systems.
 
+## Early preview systems
+
+The expanded source preview also includes focused domain services for ability,
+AI, camera state, colony registration, crafting, environment, input,
+interaction, inventory, spawning, trade, UI state and vehicles. These plugins
+depend inward on Core rather than on one another.
+
+Their current boundaries differ. Some perform gameplay operations, while
+Camera and Colony primarily expose structured state. The [plugin catalog](../plugins/catalog.md)
+and [Known Issues](../../KNOWN_ISSUES.md) identify those limits explicitly.
+
 ## Editor inspection
 
 Feature editor modules expose focused inspectors. `PGXEditorTools` composes the
 selected inspectors into an editor hub, while `PGXDocs`, `PGXScaffold`,
 `PGXTutorials` and `PGXVersionControl` retain separate workflows.
+`PGXSimHarness` provides editor-side demo population and verification across a
+declared subset, including explicit partial and missing states.

@@ -6,22 +6,17 @@
 #include "EventHandler/PGXEventHandlerConfig.h"
 #include "EventHandler/PGXEventHandlerSubsystem.h"
 #include "EventHandler/PGXEventHandlerTypes.h"
+#include "EventHandler/Tags/PGXEventHandlerTags.h"
 #include "../PGXEventHandlerTestHelpers.h"
 #include "Engine/DataTable.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
-#include "GameplayTagsManager.h"
 #include "InstancedStruct.h"
 #include "Misc/AutomationTest.h"
 
 namespace PGXEventHandlerAutomation
 {
-	FGameplayTag AddTestTag(const TCHAR* TagName)
-	{
-		return UGameplayTagsManager::Get().AddNativeGameplayTag(FName(TagName), FString(TEXT("PGX EventHandler automation test tag")));
-	}
-
 	UGameInstance* FindGameInstance()
 	{
 		if (!GEngine)
@@ -90,7 +85,7 @@ namespace PGXEventHandlerAutomation
 		Row.EventTag = EventTag;
 		Row.HandlerClass = HandlerClass;
 		Row.Lifecycle = EPGXHandlerLifecycle::Ephemeral;
-		Row.CategoryTag = AddTestTag(TEXT("PGX.Test.EventHandler.Automation.Category"));
+		Row.CategoryTag = TAG_PGX_EventHandler_Category_Core.GetTag();
 		Row.bEnabled = bEnabled;
 		Row.ExpectedPayloadType = ExpectedPayloadType;
 		Row.Description = TEXT("PGX EventHandler automation row");
@@ -137,9 +132,9 @@ bool FPGXEventHandler_P0ContractAutomationTest::RunTest(const FString& /*Paramet
 		return true;
 	}
 
-	const FGameplayTag DisabledTag = PGXEventHandlerAutomation::AddTestTag(TEXT("PGX.Test.EventHandler.Automation.Disabled"));
-	const FGameplayTag PayloadMismatchTag = PGXEventHandlerAutomation::AddTestTag(TEXT("PGX.Test.EventHandler.Automation.PayloadMismatch"));
-	const FGameplayTag MissingTag = PGXEventHandlerAutomation::AddTestTag(TEXT("PGX.Test.EventHandler.Automation.Missing"));
+	const FGameplayTag DisabledTag = TAG_PGX_Event_Item.GetTag();
+	const FGameplayTag PayloadMismatchTag = TAG_PGX_Event_Interact.GetTag();
+	const FGameplayTag MissingTag = TAG_PGX_Event_Flow.GetTag();
 
 	UDataTable* Table = PGXEventHandlerAutomation::MakeHandlerTable(TEXT("PGXEventHandler_P0ContractAutomationTable"),
 		{
@@ -152,13 +147,18 @@ bool FPGXEventHandler_P0ContractAutomationTest::RunTest(const FString& /*Paramet
 #endif
 	EventHandler->RegisterHandlerTable(Table);
 
-	UObject* SensitiveObject = NewObject<UObject>(GetTransientPackage(), FName(TEXT("PGXSecretActor_Automation")), RF_Transient);
+	UPGXTestSuccessHandler* SensitiveObject = NewObject<UPGXTestSuccessHandler>(
+		GetTransientPackage(),
+		UPGXTestSuccessHandler::StaticClass(),
+		FName(TEXT("PGXSecretActor_Automation")),
+		RF_Transient);
 	FPGXEventContext Context;
 	Context.Instigator = SensitiveObject;
 	Context.Target = SensitiveObject;
 	const FInstancedStruct EmptyPayload;
 
 	TestEqual(TEXT("Disabled handler is skipped"), EventHandler->ResolveAndExecuteWithContext(DisabledTag, Context, EmptyPayload), EPGXEventResult::Skipped);
+	AddExpectedError(TEXT("ResolveAndExecute: PayloadMismatch for PGX.Event.Interact"), EAutomationExpectedErrorFlags::Contains, 1, false);
 	TestEqual(TEXT("Payload mismatch is rejected"), EventHandler->ResolveAndExecuteWithContext(PayloadMismatchTag, Context, EmptyPayload), EPGXEventResult::Failed);
 	TestEqual(TEXT("Missing handler reports NotFound"), EventHandler->ResolveAndExecuteWithContext(MissingTag, Context, EmptyPayload), EPGXEventResult::NotFound);
 
@@ -208,8 +208,8 @@ bool FPGXEventHandler_RAIIAndDepthAutomationTest::RunTest(const FString& /*Param
 		return true;
 	}
 
-	const FGameplayTag ConditionalTag = PGXEventHandlerAutomation::AddTestTag(TEXT("PGX.Test.EventHandler.Automation.Conditional"));
-	const FGameplayTag SuccessTag = PGXEventHandlerAutomation::AddTestTag(TEXT("PGX.Test.EventHandler.Automation.Success"));
+	const FGameplayTag ConditionalTag = TAG_PGX_Event_UI.GetTag();
+	const FGameplayTag SuccessTag = TAG_PGX_Event_System.GetTag();
 
 	UDataTable* Table = PGXEventHandlerAutomation::MakeHandlerTable(TEXT("PGXEventHandler_RAIIAutomationTable"),
 		{
@@ -231,6 +231,7 @@ bool FPGXEventHandler_RAIIAndDepthAutomationTest::RunTest(const FString& /*Param
 
 #if WITH_EDITOR
 	EventHandler->InjectTestConfig(PGXEventHandlerAutomation::MakeConfig(TEXT("PGXEventHandler_DepthAutomationConfig"), 0, false));
+	AddExpectedError(TEXT("ResolveAndExecute: Max recursion depth (0) reached for PGX.Event.System"), EAutomationExpectedErrorFlags::Contains, 1, false);
 	TestEqual(TEXT("Depth budget blocks execution when max depth is exhausted"), EventHandler->ResolveAndExecuteWithContext(SuccessTag, EmptyContext, EmptyPayload), EPGXEventResult::Blocked);
 
 	const FPGXBlackboxEntry* DepthEntry = PGXEventHandlerAutomation::FindLastEntry(EventHandler, SuccessTag);

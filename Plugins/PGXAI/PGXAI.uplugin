@@ -1,0 +1,19 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.0.1",
+  "FriendlyName": "PGX AI",
+  "Description": "Agent registry with Behavior Tree dispatch and runtime status tracking.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "EnabledByDefault": false,
+  "Modules": [
+    { "Name": "PGXAIRuntime", "Type": "Runtime", "LoadingPhase": "Default" },
+    { "Name": "PGXAIEditor", "Type": "Editor", "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true }
+  ]
+}

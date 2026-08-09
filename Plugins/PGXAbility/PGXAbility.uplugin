@@ -1,0 +1,20 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.0.1",
+  "FriendlyName": "PGX Ability",
+  "Description": "Experimental facade layer over Unreal's Gameplay Ability System for abilities, attributes, and effects. Projects retain ActorInfo and replication ownership.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "EnabledByDefault": false,
+  "Modules": [
+    { "Name": "PGXAbilityRuntime", "Type": "Runtime", "LoadingPhase": "Default" },
+    { "Name": "PGXAbilityEditor",  "Type": "Editor",  "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true },
+    { "Name": "GameplayAbilities", "Enabled": true }
+  ]
+}

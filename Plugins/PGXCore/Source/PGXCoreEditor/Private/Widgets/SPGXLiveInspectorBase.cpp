@@ -22,7 +22,7 @@ SPGXLiveInspectorBase::~SPGXLiveInspectorBase()
 		FEditorDelegates::EndPIE.Remove(PIEEndedHandle);
 	}
 	// EN: Use the tracked flag, NOT the virtual GetBindMode() — during destruction the
-	//     vtable is the base's, so the derived override would not run (AMBER-1 fix).
+	//     vtable is the base's, so the derived override would not run.
 	// ES: Usar el flag rastreado, NO el virtual GetBindMode() (vtable es del base en dtor).
 	if (bDelegatesBound)
 	{
@@ -143,7 +143,7 @@ FReply SPGXLiveInspectorBase::OnRefreshClicked()
 
 void SPGXLiveInspectorBase::RefreshAll()
 {
-	// EN: RETENTION GUARD (BLOCKER-2 fix): only re-pull while PIE is active. Outside PIE
+	// EN: Only re-pull while PIE is active. Outside PIE
 	//     (e.g. clicking Refresh after PIE ended) RebuildPanels would reset the rows before
 	//     it can read a live subsystem, wiping the retained data the base promises. Skip the
 	//     rebuild so the last frame's data is preserved.

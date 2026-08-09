@@ -1,0 +1,18 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.0.1",
+	"FriendlyName": "PGX Colony",
+	"Description": "Survivor registry, stable handles, configuration, and gameplay-tag foundations.",
+	"Category": "PGX Framework",
+	"CreatedBy": "PGX",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"EnabledByDefault": false,
+	"Modules": [
+		{ "Name": "PGXColonyRuntime", "Type": "Runtime", "LoadingPhase": "Default" }
+	],
+	"Plugins": [
+		{ "Name": "PGXCore", "Enabled": true }
+	]
+}

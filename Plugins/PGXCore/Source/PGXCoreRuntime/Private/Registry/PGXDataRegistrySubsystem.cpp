@@ -1249,7 +1249,7 @@ void UPGXDataRegistrySubsystem::UnregisterConsoleCommands()
 
 void UPGXDataRegistrySubsystem::HandleProfileChanged(const FPGXResolvedProfile& /*OldProfile*/, const FPGXResolvedProfile& /*NewProfile*/)
 {
-	// EN: DataRegistry has no platform budgets — bind-only for future extension.
-	// ES: DataRegistry no tiene budgets de plataforma — bind-only para extension futura.
+	// EN: DataRegistry has no platform budgets; the binding is notification-only.
+	// ES: DataRegistry no tiene budgets de plataforma; el binding solo notifica.
 	UE_LOG(LogPGXRegistry, Log, TEXT("[DataRegistry] Profile changed — no platform budgets to enforce."));
 }

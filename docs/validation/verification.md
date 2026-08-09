@@ -1,28 +1,43 @@
 # Verification and Compatibility
 
-## Evidence for the current candidate
+## Evidence for the verified preview snapshot
 
-The current 12-plugin candidate has passed these bounded checks:
+The `v0.1.0` preview snapshot contains
+**26 plugins, 48 Unreal modules and 1,305 exported plugin files**. On Unreal
+Engine 5.6 with Windows Development targets, the exact exported tree completed:
 
-- explicit file allowlist and internal-provenance scan;
-- PGX descriptor and module dependency-closure validation;
-- JSON and YAML parsing for public descriptors and repository forms;
-- local Markdown-link validation;
-- deterministic source inventory and file hashes;
-- a clean exported-tree `PGXPublicRCEditor` build on Windows with Unreal Engine
-  5.6, including UnrealHeaderTool and 514 build actions.
+- clean Editor rebuild: 778/778 actions, pass;
+- clean Game rebuild: 417/417 actions, pass;
+- Editor Automation: 232/232 passed, 0 failed and 0 skipped;
+- Game Automation: 112/112 passed, 0 failed and 0 skipped;
+- combined Automation: 344/344 passed.
 
-The build result applies to the exact candidate tree from which it was produced.
-A tagged release should carry its own revision and release notes so this evidence
-can be correlated to published bytes.
+The release preparation also completed:
+
+- explicit plugin and file allowlists;
+- forbidden-content and internal-provenance scans;
+- descriptor parsing and static dependency-closure review;
+- JSON, YAML and Markdown-link validation;
+- focused UnrealBuildTool and UnrealHeaderTool builds for selected plugin lanes.
+
+`PGXSimHarness` is supporting evidence only. It reports implemented, partial and
+missing coverage; it is not a completeness certificate.
+
+The SimHarness `LogRoundtrip` and `EnvironmentSmoke` paths report environmental
+N/A in commandlet or headless contexts without a live game world. Compilation,
+linking and a passing suite do not turn those paths into runtime coverage.
+
+The Registry 10k, 50k and 100k benchmark entrypoints require the integrating
+project to provision their corresponding Gameplay Tags. The Registry
+intentionally rejects inventing tags at runtime.
 
 ## What this does not establish
 
 - packaged Development or Shipping builds;
 - runtime behavior in a complete sample game;
-- platforms other than the validated Windows editor target;
+- platforms other than the current Windows editor evaluation environment;
 - compatibility with every Unreal Engine 5 release;
-- arbitrary subsets of the 12-plugin set;
+- arbitrary plugin subsets;
 - stable ABI or source compatibility between `0.x` releases.
 
 ## Reporting a result

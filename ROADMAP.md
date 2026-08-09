@@ -5,12 +5,13 @@ The roadmap describes outcomes rather than fixed dates.
 
 ## Public Preview
 
-- Publish the curated 12-plugin monorepo as a tagged preview.
+- Publish the curated 26-plugin monorepo as a tagged preview.
 - Preserve the verified clean exported-tree editor build for each release.
 - Publish a minimal example project and verification walkthrough.
 - Establish public issue, contribution, security, and release workflows.
 - Document known limitations and migration notes for every preview.
 - Expand the bilingual Wiki from the versioned architecture sources.
+- Mature early previews without representing unfinished capabilities as complete.
 
 ## Stabilization
 

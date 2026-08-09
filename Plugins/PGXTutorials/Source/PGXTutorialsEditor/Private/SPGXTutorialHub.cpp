@@ -337,7 +337,7 @@ TSharedRef<SWidget> SPGXTutorialHub::BuildTutorialCard(
 	const FText BadgeText = bIsConstructor
 		? (bSpanish ? LOCTEXT("ConstructorES", "Constructor") : LOCTEXT("ConstructorEN", "Constructor"))
 		: (bSpanish ? LOCTEXT("GuideES", "Gu\u00eda") : LOCTEXT("GuideEN", "Guide"));
-	// EN: Badge background — dimmed variants of PGX::Semantic tokens (constructor=Good=green, guide=Info=blue) per Bucket VT fix 2026-05-21
+	// EN: Badge background uses dimmed PGX::Semantic tokens (constructor=Good=green, guide=Info=blue).
 	// ES: Fondo del badge — variantes dimmed de tokens PGX::Semantic (constructor=Good=verde, guide=Info=azul)
 	FLinearColor BadgeBg = bIsConstructor
 		? PGX::Semantic::Good * 0.4f

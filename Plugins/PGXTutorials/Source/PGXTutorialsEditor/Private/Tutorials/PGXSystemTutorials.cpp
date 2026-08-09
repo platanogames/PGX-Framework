@@ -3173,9 +3173,8 @@ TArray<FPGXTutorialStep> PGXSystemTutorials::GetS14_Trade(EPGXTutorialLanguage L
 // ============================================================================
 // S15: Crafting System (9 steps) — Constructor (register-driven model)
 // ============================================================================
-// NOTE: PGX::System::Crafting token does not exist in PGXVisualTokens.h; steps use
-//       PGX::System::Tutorials (the canonical default accent). A dedicated Crafting
-//       token can be added in a future VT pass.
+// Crafting steps use PGX::System::Tutorials as their canonical accent because no
+// dedicated PGX::System::Crafting token is exposed.
 TArray<FPGXTutorialStep> PGXSystemTutorials::GetS15_Crafting(EPGXTutorialLanguage Lang)
 {
 	const bool bES = (Lang == EPGXTutorialLanguage::Spanish);

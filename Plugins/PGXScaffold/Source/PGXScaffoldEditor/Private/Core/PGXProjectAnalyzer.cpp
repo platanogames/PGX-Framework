@@ -20,7 +20,7 @@ FPGXScaffoldProjectInfo FPGXProjectAnalyzer::Analyze()
 
 	FPGXScaffoldProjectInfo Info;
 	Info.ProjectName = FApp::GetProjectName();
-	Info.ContentDir = FPaths::ProjectContentDir();
+	Info.ContentDir = FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir());
 
 	DetectProjectType(Info);
 	CollectModules(Info);
@@ -85,7 +85,7 @@ void FPGXProjectAnalyzer::CollectExistingStructure(FPGXScaffoldProjectInfo& OutI
 {
 	// EN: Recursively collect all folders under Content/
 	// ES: Recolectar recursivamente todas las carpetas bajo Content/
-	const FString ContentDir = FPaths::ProjectContentDir();
+	const FString& ContentDir = OutInfo.ContentDir;
 	TArray<FString> Dirs;
 	IFileManager::Get().FindFilesRecursive(Dirs, *ContentDir, TEXT("*"), false, true);
 

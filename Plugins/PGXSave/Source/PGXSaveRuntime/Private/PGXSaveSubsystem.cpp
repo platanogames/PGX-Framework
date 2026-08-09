@@ -2328,6 +2328,11 @@ void UPGXSaveSubsystem::InjectTestConfig(UPGXSaveConfig* Config)
 		DomainBindings.Add(DomainEntry.DomainTag, Binding);
 	}
 
+	if (Config->SaveProviderClass)
+	{
+		ActiveProvider = NewObject<UPGXSaveProvider>(this, Config->SaveProviderClass);
+	}
+
 	PGX_LOG_INFO(LogPGXSave, TEXT("[TestHarness] Injected test SaveConfig: %s (context=%s, %d domains)"),
 		*Config->GetName(), *Config->ContextTag.ToString(), Config->SaveDomains.Num());
 }
@@ -2373,6 +2378,8 @@ void UPGXSaveSubsystem::ClearTestConfigs()
 	{
 		return IsValid(Cfg) && Cfg->HasAnyFlags(RF_Transient);
 	});
+
+	CreateProvider();
 
 	PGX_LOG_INFO(LogPGXSave, TEXT("[TestHarness] ClearTestConfigs — removed %d transient configs, %d domain bindings"),
 		Before - DiscoveredConfigs.Num(), DomainsToRemove.Num());

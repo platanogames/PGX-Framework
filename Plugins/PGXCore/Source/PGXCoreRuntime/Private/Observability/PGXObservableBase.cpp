@@ -13,7 +13,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogPGXObservable, Log, All);
 // ============================================================================
 // EN: UPGXObservableBase — abstract default implementations for IPGXObservable.
 //     initial observability scaffolds the reflection-driven shape; concrete JSON
-//     library binding remains an explicit future extension.
+//     library binding is outside the current module contract.
 // ES: Implementaciones default abstractas para IPGXObservable. Scaffold de la
 //     forma reflejada por UPROPERTY; binding concreto de libreria JSON diferido.
 // ============================================================================
@@ -31,7 +31,7 @@ FPGXJsonValue UPGXObservableBase::ToJson() const
 
 	// EN: initial observability baseline — emit the canonical envelope (type + version + plugin)
 	//     plus a placeholder data section. Full UPROPERTY-to-JSON value reflection is the
-	//     future observability extension implementation contract.
+	//     optional observability extension contract.
 	const FName TypeName = ThisClass->GetFName();
 	const FName SchemaVersion = GetDeclaredSchemaVersion();
 	const FName OwningPlugin = GetOwningPluginName();
@@ -48,7 +48,7 @@ FPGXJsonValue UPGXObservableBase::ToJson() const
 FPGXValidationResult UPGXObservableBase::FromJson(const FPGXJsonValue& Json)
 {
 	// EN: initial observability baseline — validate envelope shape; concrete UPROPERTY reflection
-	//     into runtime state remains an explicit future extension.
+	//     into runtime state is outside the current module contract.
 	FPGXValidationResult Result;
 
 	if (Json.IsEmpty())
@@ -105,6 +105,7 @@ FPGXSchemaDescriptor UPGXObservableBase::GetSchemaDescriptor() const
 		//     a flat localized text. Detailed structured constraint extraction is 8.3.B
 		//     scope; baseline emits the property's full meta map summary.
 		FString ConstraintBuffer;
+#if WITH_METADATA
 		if (Property->HasMetaData(TEXT("ClampMin")))
 		{
 			ConstraintBuffer += FString::Printf(TEXT("ClampMin=%s "), *Property->GetMetaData(TEXT("ClampMin")));
@@ -117,6 +118,7 @@ FPGXSchemaDescriptor UPGXObservableBase::GetSchemaDescriptor() const
 		{
 			ConstraintBuffer += FString::Printf(TEXT("Categories=%s "), *Property->GetMetaData(TEXT("Categories")));
 		}
+#endif
 
 		Field.Constraints = FText::FromString(ConstraintBuffer);
 

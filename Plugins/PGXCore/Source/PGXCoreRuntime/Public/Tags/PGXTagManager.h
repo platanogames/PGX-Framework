@@ -76,7 +76,7 @@ public:
 	 *     a single-tag name would imply partial
 	 *     removal, but the behavior is a full-entry unregister across all its
 	 *     tags. No callers existed at rename time. To remove from a single
-	 *     tag only, a future dedicated method would be needed.
+	 *     tag only; this API does not provide an exact-tag-only removal method.
 	 *
 	 * ES: Remueve una entrada de TODOS los indices donde aparece (cada tag +
 	 *     categoria bajo los que se registro, via reverse-lookup). El

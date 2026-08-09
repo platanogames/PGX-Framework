@@ -2025,15 +2025,12 @@ void UPGXLoadingSubsystem::ApplyProfileConstraints(const FPGXResolvedProfile& Pr
 {
 	// EN: Read the platform-profile loading budget
 	//     LoadingBudgets and ASSIGN them to subsystem members so the runtime
-	//     gate (EvaluateCloseConditions for MinDuration; future async loader
-	//     for MaxConcurrent) can enforce them. Prior implementation read the
-	//     budgets into local vars and only logged them, leaving the gate on
-	//     the table.
+	//     gate enforces MinDuration through EvaluateCloseConditions. MaxConcurrent is
+	//     retained as the configured concurrency budget for loaders that consume it.
 	// ES: Leer LoadingBudgets del perfil de plataforma
 	//     de plataforma y ASIGNARLOS a miembros del subsistema para que el gate
-	//     runtime (EvaluateCloseConditions para MinDuration; futuro async loader
-	//     para MaxConcurrent) pueda enforcearlos. La impl previa leia los budgets
-	//     a vars locales y solo logueaba, dejando el gate sin cerrar.
+	//     runtime aplica MinDuration via EvaluateCloseConditions. MaxConcurrent
+	//     queda como budget configurado para loaders que lo consuman.
 	EnforcedMaxConcurrentAsyncLoads = 0;
 	EnforcedMinLoadingScreenDuration = 0.0f;
 

@@ -9,9 +9,9 @@ class SPGXTelemetryGraph;
 
 /**
  * EN: Editor utility functions for PGX panel UX standardization.
- *     Shared across all PGX editor panels (adopted from Panel Audit UX Design Rules).
+ *     Shared across all PGX editor panels to provide a consistent UX contract.
  * ES: Funciones utilitarias de editor para estandarizacion UX de paneles PGX.
- *     Compartidas entre todos los paneles de editor PGX (adoptadas de las Reglas UX de Panel Audit).
+ *     Compartidas entre todos los paneles de editor PGX para una UX consistente.
  */
 namespace PGXEditorUtils
 {

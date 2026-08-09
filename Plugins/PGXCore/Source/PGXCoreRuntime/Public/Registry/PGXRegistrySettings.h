@@ -26,8 +26,10 @@ class PGXCORERUNTIME_API UPGXRegistrySettings : public UPGXSettings, public IPGX
 public:
 	//~ Begin UDeveloperSettings Interface
 	FName GetSectionName() const override { return FName(TEXT("Registry")); }
+#if WITH_EDITOR
 	FText GetSectionText() const override;
 	FText GetSectionDescription() const override;
+#endif
 	//~ End UDeveloperSettings Interface
 
 	//~ Begin IPGXObservable (delegates to PGXCoreObservability helpers)

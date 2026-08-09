@@ -105,7 +105,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS")
 	void ResetBaseline();
 
-	/** EN: Set suppression mode — capture only, no analysis [R4] / ES: Establecer modo de supresion — solo captura, sin analisis [R4] */
+	/** EN: Set suppression mode — capture only, no analysis / ES: Establecer modo de supresion — solo captura, sin analisis */
 	UFUNCTION(BlueprintCallable, Category = "PGX|MGOS")
 	void SetSuppressed(bool bSuppress);
 
@@ -129,7 +129,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "PGX|MGOS|Query")
 	int64 GetCycleCount() const { return static_cast<int64>(NextCycleID - 1); }
 
-	/** EN: Check if in suppressed phase [R4] / ES: Verificar si esta en fase de supresion [R4] */
+	/** EN: Check if in suppressed phase / ES: Verificar si esta en fase de supresion */
 	UFUNCTION(BlueprintPure, Category = "PGX|MGOS|Query")
 	bool IsInSuppressedPhase() const { return bIsSuppressed; }
 
@@ -157,7 +157,7 @@ private:
 	void OnWorldCleanup(UWorld* World, bool bSessionEnded, bool bCleanupResources);
 
 	// ====================================================================
-	// Inter-Cycle Monitoring [R5]
+	// Inter-Cycle Monitoring
 	// ====================================================================
 
 	bool OnInterCycleCheck(float DeltaTime);
@@ -234,16 +234,16 @@ private:
 	bool bIsInitialized = false;
 	bool bIsSuppressed = false;
 
-	/** EN: Last UObject count for inter-cycle monitoring [R5] / ES: Ultimo conteo de UObjects para monitoreo inter-ciclo [R5] */
+	/** EN: Last UObject count for inter-cycle monitoring / ES: Ultimo conteo de UObjects para monitoreo inter-ciclo */
 	uint32 LastInterCycleUObjectCount = 0;
 
-	/** EN: Ticker handle for inter-cycle checks [R5] / ES: Handle del ticker para chequeos inter-ciclo [R5] */
+	/** EN: Ticker handle for inter-cycle checks / ES: Handle del ticker para chequeos inter-ciclo */
 	FTSTicker::FDelegateHandle InterCycleTickerHandle;
 
-	/** EN: Resolved excluded class names for fast lookup [R4] / ES: Nombres de clases excluidas resueltas para busqueda rapida [R4] */
+	/** EN: Resolved excluded class names for fast lookup / ES: Nombres de clases excluidas resueltas para busqueda rapida */
 	TSet<FName> ResolvedExcludedClasses;
 
-	/** EN: Resolved tracked classes for TObjectIterator [R3] / ES: Clases rastreadas resueltas para TObjectIterator [R3] */
+	/** EN: Resolved tracked classes for TObjectIterator / ES: Clases rastreadas resueltas para TObjectIterator */
 	TArray<UClass*> ResolvedTrackedClasses;
 
 	/** EN: Console commands / ES: Comandos de consola */

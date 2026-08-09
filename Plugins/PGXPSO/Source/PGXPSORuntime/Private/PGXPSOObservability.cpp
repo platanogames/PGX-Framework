@@ -45,6 +45,7 @@ namespace
 			return;
 		}
 		FString ConstraintBuffer;
+#if WITH_METADATA
 		if (Property->HasMetaData(TEXT("ClampMin")))
 		{
 			ConstraintBuffer += FString::Printf(TEXT("ClampMin=%s "), *Property->GetMetaData(TEXT("ClampMin")));
@@ -57,6 +58,7 @@ namespace
 		{
 			ConstraintBuffer += FString::Printf(TEXT("Categories=%s "), *Property->GetMetaData(TEXT("Categories")));
 		}
+#endif
 		OutField.Constraints = FText::FromString(ConstraintBuffer);
 	}
 }

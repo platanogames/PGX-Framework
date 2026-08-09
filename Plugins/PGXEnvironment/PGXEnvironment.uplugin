@@ -1,0 +1,18 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.0.1",
+  "FriendlyName": "PGX Environment",
+  "Description": "World-scoped zone registration with authored variable seeds, threshold evaluation, and runtime modifiers.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "EnabledByDefault": false,
+  "Modules": [
+    { "Name": "PGXEnvironmentRuntime", "Type": "Runtime", "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true }
+  ]
+}
