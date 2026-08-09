@@ -22,7 +22,7 @@
  *     constant (or returns a literal from `GetSchemaVersion()`). Bumped manually when the
  *     C++ struct changes in breaking ways. The bridge refuses writes when JSON schema
  *     version doesn't match the runtime version. Migration support remains a
- *     future extension.
+ *     capability not provided by this interface.
  *
  *     Validation: `FromJson()` runs `FPGXValidationResult` per-call. Soft-fail mode
  *     (warnings only, `bValid=true`) is opt-in for migration tooling.
@@ -37,7 +37,7 @@
  *       1. Interface contract (this file) — four pure-virtual methods.
  *       2. Companion types: `FPGXJsonValue`, `FPGXValidationResult`, `FPGXSchemaDescriptor`.
  *       3. `UPGXObservableBase` abstract default with reflection-driven UPROPERTY scaffold
- *          (a concrete JSON serialization-library binding remains a future extension).
+ *          (no concrete JSON serialization-library binding is provided).
  *       4. `FPGXObservabilityRegistry` auto-discovery + manual fallback.
  *
  * ES: Contrato para objetos expuestos al PGX Observability Framework. Cada DataAsset /

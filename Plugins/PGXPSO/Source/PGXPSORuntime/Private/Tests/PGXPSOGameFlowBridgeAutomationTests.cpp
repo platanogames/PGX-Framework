@@ -11,6 +11,7 @@
 #include "Messages/Tags/PGXBridgeTags.h"
 #include "Misc/AutomationTest.h"
 #include "Tags/PGXPSOTags.h"
+#include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 
 namespace PGXPSOGameFlowBridgeAutomation
@@ -20,8 +21,14 @@ namespace PGXPSOGameFlowBridgeAutomation
 		explicit FScopedGameInstanceFixture(FAutomationTestBase& InTest)
 			: Test(InTest)
 		{
+			if (!GEngine)
+			{
+				Test.AddError(TEXT("PGXPSO GameFlow bridge automation setup failed: engine is unavailable."));
+				return;
+			}
+
 			GameInstance = NewObject<UGameInstance>(
-				GetTransientPackage(),
+				GEngine,
 				UGameInstance::StaticClass(),
 				NAME_None,
 				RF_Transient);
@@ -32,7 +39,7 @@ namespace PGXPSOGameFlowBridgeAutomation
 			}
 
 			GameInstance->AddToRoot();
-			GameInstance->Init();
+			GameInstance->InitializeStandalone(TEXT("PGXPSOGameFlowBridgeAutomationWorld"));
 		}
 
 		~FScopedGameInstanceFixture()
@@ -223,6 +230,10 @@ bool FPGXPSOGameFlowBridgeInvalidPayloadAutomationTest::RunTest(const FString& /
 	FPGXMessage WrongPayload;
 	WrongPayload.MessageTag = TAG_PGX_Bridge_GameFlow_StateChanged.GetTag();
 	WrongPayload.Owner = MessageSubsystem;
+	AddExpectedError(
+		TEXT("Struct type mismatch on channel PGX.Message.Bridge.GameFlow.StateChanged"),
+		EAutomationExpectedErrorFlags::Contains,
+		1);
 	MessageSubsystem->BroadcastMessage<FPGXMessage>(
 		TAG_PGX_Bridge_GameFlow_StateChanged.GetTag(),
 		WrongPayload);

@@ -52,7 +52,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Windows", meta = (AdvancedDisplay, ClampMin = "4", ClampMax = "256"))
 	int32 HistoryWindowSize = 64;
 
-	/** EN: Reduced history window for test harness [R2] / ES: Ventana de historial reducida para test harness [R2] */
+	/** EN: Reduced history window for test harness / ES: Ventana de historial reducida para test harness */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Windows", meta = (AdvancedDisplay, ClampMin = "2", ClampMax = "16"))
 	int32 TestWindowSize = 4;
 
@@ -68,7 +68,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Windows", meta = (AdvancedDisplay, ClampMin = "1", ClampMax = "50"))
 	int32 TopKClasses = 10;
 
-	/** EN: Capture snapshot every N cycles (>1 for time-slicing) [R3] / ES: Capturar snapshot cada N ciclos (>1 para time-slicing) [R3] */
+	/** EN: Capture snapshot every N cycles (>1 for time-slicing) / ES: Capturar snapshot cada N ciclos (>1 para time-slicing) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Windows", meta = (AdvancedDisplay, ClampMin = "1", ClampMax = "10"))
 	int32 SnapshotFrequency = 1;
 
@@ -125,16 +125,16 @@ public:
 	// Classes
 	// ====================================================================
 
-	/** EN: Classes to always monitor via TObjectIterator<T> [R3] / ES: Clases a monitorear siempre via TObjectIterator<T> [R3] */
+	/** EN: Classes to always monitor via TObjectIterator<T> / ES: Clases a monitorear siempre via TObjectIterator<T> */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Classes", meta = (AdvancedDisplay))
 	TArray<TSoftClassPtr<UObject>> TrackedClasses;
 
-	/** EN: Classes exempt from accumulation incidents [R4] / ES: Clases exentas de incidentes de acumulacion [R4] */
+	/** EN: Classes exempt from accumulation incidents / ES: Clases exentas de incidentes de acumulacion */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PGX|MGOS|Classes", meta = (AdvancedDisplay))
 	TArray<TSoftClassPtr<UObject>> ExcludedClasses;
 
 	// ====================================================================
-	// InterCycle [R5]
+	// InterCycle
 	// ====================================================================
 
 	/** EN: Enable periodic inter-cycle monitoring / ES: Habilitar monitoreo periodico inter-ciclo */
@@ -150,7 +150,7 @@ public:
 	float CriticalGrowthThreshold = 10000.0f;
 
 	// ====================================================================
-	// SystemMemory [R1]
+	// SystemMemory
 	// ====================================================================
 
 	/** EN: Enable process memory tracking for non-UObject leak detection / ES: Habilitar rastreo de memoria de proceso para deteccion de leaks no-UObject */

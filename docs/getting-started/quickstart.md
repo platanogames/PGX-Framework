@@ -4,12 +4,12 @@
 > PGX is a Development Preview. Use a tagged release, expect `0.x` API changes
 > and read its known issues before integrating it into a project.
 
-## Current validated boundary
+## Current verification boundary
 
-The current release candidate has been compiled from a clean exported tree with
-Unreal Engine 5.6 on a Windows editor target. Packaged builds, other platforms
-and other engine versions are not yet part of the published compatibility
-claim.
+The complete exported snapshot passed clean Editor and Game rebuilds and 344/344
+Automation tests on Unreal Engine 5.6 with Windows Development targets. Packaged
+builds, other platforms and other engine versions are outside the current claim.
+See [Verification](../validation/verification.md) for exact counts and limits.
 
 ## Install for evaluation
 
@@ -18,8 +18,7 @@ claim.
 3. Copy the selected directories from `Plugins/` into your project's `Plugins/`
    directory without renaming them.
 4. Include `PGXCore` and every dependency declared by the selected `.uplugin`
-   files. Use the complete 12-plugin set for the currently verified
-   build boundary.
+   files. The verified 26-plugin result does not validate arbitrary subsets.
 5. Regenerate project files.
 6. Build your editor target before opening the project.
 7. Enable and configure one system at a time, keeping its settings and Data

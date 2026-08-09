@@ -5,12 +5,25 @@
 ```mermaid
 graph TD
   Core[PGXCore]
+  Ability[PGXAbility] --> Core
+  AI[PGXAI] --> Core
   Audio[PGXAudio] --> Core
+  Camera[PGXCamera] --> Core
+  Colony[PGXColony] --> Core
+  Crafting[PGXCrafting] --> Core
+  Environment[PGXEnvironment] --> Core
   GameFlow[PGXGameFlow] --> Core
+  Input[PGXInput] --> Core
+  Interaction[PGXInteraction] --> Core
+  Inventory[PGXInventory] --> Core
   Loading[PGXLoading] --> Core
   MGOS[PGXMGOS] --> Core
   PSO[PGXPSO] --> Core
   Save[PGXSave] --> Core
+  Spawn[PGXSpawn] --> Core
+  Trade[PGXTrade] --> Core
+  UI[PGXUI] --> Core
+  Vehicles[PGXVehicles] --> Core
   Docs[PGXDocs] --> Core
   Scaffold[PGXScaffold] --> Core
   Tutorials[PGXTutorials] --> Core
@@ -23,10 +36,23 @@ graph TD
   EditorTools --> PSO
   EditorTools --> Save
   EditorTools --> VersionControl
+  Harness[PGXSimHarness] --> Core
+  Harness --> EditorTools
+  Harness --> Docs
+  Harness --> GameFlow
+  Harness --> Save
+  Harness --> PSO
+  Harness --> Loading
+  Harness --> MGOS
+  Harness --> Audio
+  Harness --> Spawn
+  Harness --> AI
+  Harness --> Ability
 ```
 
 The arrows represent declared plugin dependencies. `PGXEditorTools` aggregates
-editor inspectors; it is not part of packaged runtime execution.
+editor inspectors, and `PGXSimHarness` composes selected systems for editor-side
+verification. Neither is part of packaged runtime execution.
 
 ## Core capabilities
 

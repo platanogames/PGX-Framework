@@ -76,7 +76,7 @@ public:
 	 *     collapse the distinction between plugin load and initialized state,
 	 *     preventing callers from observing the
 	 *     PluginLoaded state. False is the conservative, purpose-coherent
-	 *     default. No implementer breaks (no L2 plugin implements this yet).
+	 *     default and preserves compatibility for implementers that do not override it.
 	 *
 	 * ES: Reporta si PGXInitialize() ha sido llamado. Default retorna FALSE
 	 *     (fail-safe): una interfaz sin estado no puede observar el init, y un

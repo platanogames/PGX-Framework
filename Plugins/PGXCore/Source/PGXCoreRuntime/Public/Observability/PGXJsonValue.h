@@ -14,7 +14,7 @@ class FJsonValue;
  *     library binding remains intentionally decoupled from this value type. `JsonString` is
  *     the canonical persistent form; `CachedParsed` is a runtime-only TSharedPtr<FJsonValue>
  *     wrapper using UE's built-in `FJsonValue` (Json module) — this is a placeholder pattern
- *     that may be replaced by a future serialization-library integration.
+ *     used because no serialization-library binding is part of this module contract.
  *
  *     Serialization round-trip: `ToJson()` returns FPGXJsonValue with populated `JsonString`;
  *     `FromJson()` parses `JsonString` (lazy, into `CachedParsed`) and reflects fields back
@@ -23,7 +23,7 @@ class FJsonValue;
  *
  * ES: Envoltura JSON usada por el PGX Observability Framework. Envuelve la forma serializada
  *     (`JsonString`) mas una forma transitoria cacheada parseada opcional. La libreria JSON
- *     concreta se difiere a una integracion futura de serializacion.
+ *     concreta no forma parte del contrato actual del modulo.
  */
 USTRUCT(BlueprintType)
 struct PGXCORERUNTIME_API FPGXJsonValue
@@ -38,7 +38,7 @@ struct PGXCORERUNTIME_API FPGXJsonValue
 	 * EN: Transient cached parsed form. Non-UPROPERTY (runtime-only, not serialized). Lazy
 	 *     populated by FromJson() / parsing utilities; cleared by ToJson() / mutation. Wraps
 	 *     UE's built-in FJsonValue (Json module). Production JSON library decision deferred
-	 *     to a future serialization extension.
+	 *     without requiring a serialization-library extension.
 	 * ES: Forma cacheada parseada transitoria. No-UPROPERTY.
 	 */
 	TSharedPtr<FJsonValue> CachedParsed;

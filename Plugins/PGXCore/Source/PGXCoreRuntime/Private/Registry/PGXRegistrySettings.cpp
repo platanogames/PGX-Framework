@@ -6,6 +6,7 @@
 
 #define LOCTEXT_NAMESPACE "PGXRegistrySettings"
 
+#if WITH_EDITOR
 FText UPGXRegistrySettings::GetSectionText() const
 {
 	return LOCTEXT("SectionText", "Registry");
@@ -18,6 +19,7 @@ FText UPGXRegistrySettings::GetSectionDescription() const
 		"Controls DataTable scan roots, validation budgets, "
 		"tag namespace policy, and conflict resolution defaults.");
 }
+#endif
 
 #undef LOCTEXT_NAMESPACE
 

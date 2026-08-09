@@ -52,9 +52,9 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PGX_MGOS_Incident_PendingKillSaturation);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PGX_MGOS_Incident_BurstClean);
 // EN: Root set expansion / ES: Expansion del root set
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PGX_MGOS_Incident_RootExpansion);
-// EN: Non-UObject memory leak suspected [R1] / ES: Sospecha de leak de memoria no-UObject [R1]
+// EN: Non-UObject memory leak suspected / ES: Sospecha de leak de memoria no-UObject
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PGX_MGOS_Incident_NonUObjectLeakSuspected);
-// EN: GC pressure warning from inter-cycle monitoring [R5] / ES: Advertencia de presion GC del monitoreo inter-ciclo [R5]
+// EN: GC pressure warning from inter-cycle monitoring / ES: Advertencia de presion GC del monitoreo inter-ciclo
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_PGX_MGOS_Incident_GCPressureWarning);
 
 // -- System identity tag --

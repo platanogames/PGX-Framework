@@ -168,7 +168,7 @@ void SPGXTutorialOverlay::RebuildCallout()
 	// -- Action feedback (between title and description) --
 	if (bHasFeedback)
 	{
-		// EN: Feedback background — dimmed variants of PGX::Semantic tokens (success=Good, fail=Error) per Bucket VT fix 2026-05-21
+		// EN: Feedback background uses dimmed PGX::Semantic tokens (success=Good, fail=Error).
 		// ES: Fondo del feedback — variantes dimmed de tokens PGX::Semantic (success=Good, fail=Error)
 		FLinearColor FeedbackBg = ActionResult.bSuccess
 			? PGX::Semantic::Good * 0.5f

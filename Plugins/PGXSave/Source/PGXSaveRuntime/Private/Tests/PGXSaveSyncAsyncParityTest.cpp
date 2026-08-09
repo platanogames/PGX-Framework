@@ -8,8 +8,8 @@
 #include "PGXSaveSubsystem.h"
 #include "PGXSaveConfig.h"
 #include "PGXSaveGame.h"
+#include "PGXSaveSerializer.h"
 #include "Engine/GameInstance.h"
-#include "GameplayTagsManager.h"
 #include "HAL/PlatformTime.h"
 #include "Misc/AutomationTest.h"
 
@@ -47,11 +47,8 @@ PGX_TEST_GAME(FPGXSave_SyncAsyncParity_SyncAsyncParity)
 		return false;
 	}
 
-	UGameplayTagsManager& TagManager = UGameplayTagsManager::Get();
-	const FGameplayTag TestContextTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Context.AutomationTest_SyncAsyncParity"));
-	const FGameplayTag TestDomainTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Domain.AutomationTest_SyncAsyncParity"));
+	const FGameplayTag TestContextTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Context"));
+	const FGameplayTag TestDomainTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Domain"));
 
 	if (!TestContextTag.IsValid() || !TestDomainTag.IsValid())
 	{
@@ -156,9 +153,36 @@ PGX_TEST_GAME(FPGXSave_SyncAsyncParity_SyncAsyncParity)
 				? EPGXSaveResult::Success
 				: EPGXSaveResult::Failed;
 
+			// EN: Normalize only the timestamp stamped independently by each pipeline.
+			// ES: Normalizar solo el timestamp sellado independientemente por cada pipeline.
+			UPGXSaveGame* SyncSaveGame = bSyncRead
+				? UPGXSaveSerializer::DeserializeFromMemory(SyncBytes)
+				: nullptr;
+			UPGXSaveGame* AsyncSaveGame = bAsyncRead
+				? UPGXSaveSerializer::DeserializeFromMemory(AsyncBytes)
+				: nullptr;
+
+			const bool bDeserialized = SyncSaveGame != nullptr && AsyncSaveGame != nullptr;
+			TestTrue(TEXT("sync/async-parity persisted payloads deserialize"), bDeserialized);
+
+			TArray<uint8> CanonicalSyncBytes;
+			TArray<uint8> CanonicalAsyncBytes;
+			bool bSyncCanonicalized = false;
+			bool bAsyncCanonicalized = false;
+			if (bDeserialized)
+			{
+				SyncSaveGame->SaveTimestamp = FDateTime();
+				AsyncSaveGame->SaveTimestamp = FDateTime();
+				bSyncCanonicalized = UPGXSaveSerializer::SerializeToMemory(SyncSaveGame, CanonicalSyncBytes);
+				bAsyncCanonicalized = UPGXSaveSerializer::SerializeToMemory(AsyncSaveGame, CanonicalAsyncBytes);
+			}
+
+			TestTrue(TEXT("sync/async-parity sync payload canonicalizes"), bSyncCanonicalized);
+			TestTrue(TEXT("sync/async-parity async payload canonicalizes"), bAsyncCanonicalized);
+
 			FString DiffSummary;
 			const bool bEquivalent = PGXSaveTestHelpers::ComparePipelineOutcomes(
-				SyncResult, AsyncResult, SyncBytes, AsyncBytes, DiffSummary);
+				SyncResult, AsyncResult, CanonicalSyncBytes, CanonicalAsyncBytes, DiffSummary);
 
 			TestTrue(
 				FString::Printf(

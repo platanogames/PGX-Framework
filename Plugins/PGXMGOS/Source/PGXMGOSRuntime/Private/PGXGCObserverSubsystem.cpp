@@ -76,7 +76,7 @@ void UPGXGCObserverSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	// EN: Register console commands / ES: Registrar comandos de consola
 	RegisterConsoleCommands();
 
-	// EN: Start inter-cycle ticker if enabled [R5] / ES: Iniciar ticker inter-ciclo si esta habilitado [R5]
+	// EN: Start inter-cycle ticker if enabled / ES: Iniciar ticker inter-ciclo si esta habilitado
 	if (ActiveConfig && ActiveConfig->bEnableInterCycleMonitoring)
 	{
 		LastInterCycleUObjectCount = GUObjectArray.GetObjectArrayNum();
@@ -107,7 +107,7 @@ void UPGXGCObserverSubsystem::Deinitialize()
 {
 	bIsInitialized = false;
 
-	// EN: Clear inter-cycle ticker [R5] / ES: Limpiar ticker inter-ciclo [R5]
+	// EN: Clear inter-cycle ticker / ES: Limpiar ticker inter-ciclo
 	if (InterCycleTickerHandle.IsValid())
 	{
 		FTSTicker::GetCoreTicker().RemoveTicker(InterCycleTickerHandle);
@@ -201,7 +201,7 @@ void UPGXGCObserverSubsystem::OnPostGarbageCollect()
 		}
 	}
 
-	// EN: Profile evaluation (skip if suppressed [R4]) / ES: Evaluacion de perfil (omitir si esta suprimido [R4])
+	// EN: Profile evaluation (skip if suppressed) / ES: Evaluacion de perfil (omitir si esta suprimido)
 	if (!bIsSuppressed && CurrentBaseline.BaselineState == EPGXGCBaselineState::Valid)
 	{
 		EvaluateProfile(PostSnapshot, Diff);
@@ -216,7 +216,7 @@ void UPGXGCObserverSubsystem::OnPostGarbageCollect()
 	NextCycleID++;
 	CycleModCounter++;
 
-	// EN: Reset inter-cycle counter [R5] / ES: Resetear contador inter-ciclo [R5]
+	// EN: Reset inter-cycle counter / ES: Resetear contador inter-ciclo
 	LastInterCycleUObjectCount = static_cast<uint32>(PostSnapshot.TotalUObjectCount);
 }
 
@@ -253,7 +253,7 @@ void UPGXGCObserverSubsystem::OnWorldCleanup(UWorld* /*World*/, bool bSessionEnd
 }
 
 // ============================================================================
-// Inter-Cycle Monitoring [R5]
+// Inter-Cycle Monitoring
 // ============================================================================
 
 bool UPGXGCObserverSubsystem::OnInterCycleCheck(float /*DeltaTime*/)
@@ -299,7 +299,7 @@ FPGXGCSnapshot UPGXGCObserverSubsystem::CaptureSnapshot(EPGXGCPhase Phase)
 	// EN: O(1) global count / ES: Conteo global O(1)
 	Snapshot.TotalUObjectCount = GUObjectArray.GetObjectArrayNum();
 
-	// EN: Process memory [R1] / ES: Memoria del proceso [R1]
+	// EN: Process memory / ES: Memoria del proceso
 	Snapshot.ProcessMemoryMB = CaptureProcessMemory();
 
 	if (CurrentMode == EPGXGCObserverMode::Passive)
@@ -308,8 +308,8 @@ FPGXGCSnapshot UPGXGCObserverSubsystem::CaptureSnapshot(EPGXGCPhase Phase)
 		return Snapshot;
 	}
 
-	// EN: Snapshot mode — targeted iteration for TrackedClasses [R3]
-	// ES: Modo Snapshot — iteracion dirigida para TrackedClasses [R3]
+	// EN: Snapshot mode — targeted iteration for TrackedClasses
+	// ES: Modo Snapshot — iteracion dirigida para TrackedClasses
 	CaptureTrackedClassCounts(Snapshot);
 
 	const int32 Frequency = ActiveConfig ? ActiveConfig->SnapshotFrequency : 1;
@@ -385,8 +385,8 @@ FPGXGCSnapshot UPGXGCObserverSubsystem::CaptureSnapshot(EPGXGCPhase Phase)
 
 void UPGXGCObserverSubsystem::CaptureTrackedClassCounts(FPGXGCSnapshot& OutSnapshot)
 {
-	// EN: Single pass over all UObjects, accumulate counts per tracked class [R3]
-	// ES: Una sola pasada por todos los UObjects, acumular conteos por clase rastreada [R3]
+	// EN: Single pass over all UObjects, accumulate counts per tracked class
+	// ES: Una sola pasada por todos los UObjects, acumular conteos por clase rastreada
 	TMap<UClass*, int32> CountMap;
 	CountMap.Reserve(ResolvedTrackedClasses.Num());
 	for (UClass* TrackedClass : ResolvedTrackedClasses)

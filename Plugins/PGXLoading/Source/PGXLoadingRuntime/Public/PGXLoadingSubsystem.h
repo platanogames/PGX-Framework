@@ -349,16 +349,16 @@ private:
 	//     EvaluateCloseConditions MinTime so platforms that need a longer
 	//     guaranteed display (consoles, certification requirements) cannot have
 	//     their floor undercut by Profile or LoadingConfig overrides.
-	//     EnforcedMaxConcurrentAsyncLoads is stored for the future async-loader
-	//     implementation; it is consumed at the gate when real async loading lands.
+	//     EnforcedMaxConcurrentAsyncLoads retains the configured concurrency budget;
+	//     the current subsystem does not dispatch async load work that consumes it.
 	//     Both default 0 = "no platform constraint applied".
 	// ES: Enforcement de budgets definido por el perfil de plataforma. EnforcedMinLoadingScreenDuration actua como un FLOOR
 	//     sobre el MinTime de EvaluateCloseConditions para que plataformas que
 	//     necesitan un display garantizado mas largo (consolas, requisitos de
 	//     certificacion) no puedan ver su floor undercut por overrides de Profile
 	//     o LoadingConfig. EnforcedMaxConcurrentAsyncLoads se almacena para la
-	//     futura implementacion del async-loader; se consume en el gate cuando el
-	//     async loading real aterrice. Ambos default 0 = "sin restriccion de
+	//     budget de concurrencia configurado; el subsistema actual no despacha
+	//     trabajo async que lo consuma. Ambos default 0 = "sin restriccion de
 	//     plataforma aplicada".
 	float EnforcedMinLoadingScreenDuration = 0.0f;
 	int32 EnforcedMaxConcurrentAsyncLoads = 0;

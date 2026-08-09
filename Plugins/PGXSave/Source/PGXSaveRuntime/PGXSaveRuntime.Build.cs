@@ -29,16 +29,16 @@ public class PGXSaveRuntime : ModuleRules
 		//     module hosting the PGX_TEST macro family + FPGXTestUtils. The compound guard
 		//     aligns Build.cs with the test files' WITH_DEV_AUTOMATION_TESTS file-level guard:
 		//     any non-editor target that flips WithAutomationTests ON also receives the dep,
-		//     preventing the previous mismatch where tests would compile without their host
-		//     module being linked. (Property name on ReadOnlyTargetRules has no `b` prefix in
+		//     ensuring tests compile only when their host module is linked. (Property name on
+		//     ReadOnlyTargetRules has no `b` prefix in
 		//     UE 5.5+: Target.WithAutomationTests, not Target.bWithAutomationTests.)
 		// ES: Infraestructura de tests de automation — incluida cuando el target construye el
 		//     editor O habilita dev automation tests explicitamente. PGXCoreDeveloper es un
 		//     modulo DeveloperTool que aloja la familia de macros PGX_TEST + FPGXTestUtils. El
 		//     guard compuesto alinea Build.cs con el guard file-level WITH_DEV_AUTOMATION_TESTS
 		//     de los test files: cualquier target non-editor que active WithAutomationTests
-		//     tambien recibe la dep, previniendo el mismatch previo donde los tests compilarian
-		//     sin que su modulo host estuviera enlazado. (En ReadOnlyTargetRules el property no
+		//     tambien recibe la dep, asegurando que los tests solo compilen cuando su modulo host
+		//     esta enlazado. (En ReadOnlyTargetRules el property no
 		//     lleva prefix `b` en UE 5.5+: Target.WithAutomationTests, no bWithAutomationTests.)
 		if (Target.bBuildEditor || Target.WithAutomationTests)
 		{

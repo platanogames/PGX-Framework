@@ -6,14 +6,15 @@ models instead of introducing a separate application runtime.
 
 ## Included code
 
-This release contains 12 plugins and 23 modules. Its descriptors and `Build.cs`
+This release contains 26 plugins and 48 modules. Its descriptors and `Build.cs`
 files define dependency and loading boundaries.
 
 | Layer | Responsibility |
 |---|---|
 | Foundation | `PGXCore` supplies shared contracts, registries, messages, event handlers, configuration, observability and editor primitives. |
-| Runtime systems | Audio, game flow, loading, memory/GC observation, PSO warm-up and save/persistence. |
-| Editor experience | Integrated inspectors, documentation, scaffolding, tutorials and source-control workflows. |
+| Established systems | Audio, game flow, loading, memory/GC observation, PSO warm-up and save/persistence. |
+| Early system previews | Ability, AI, camera state, colony registry, crafting, environment, input, interaction, inventory, spawning, trade, UI state and vehicles. |
+| Editor experience | Integrated inspectors, documentation, scaffolding, tutorials, source-control workflows and the simulation harness. |
 
 Runtime and editor responsibilities are separated whenever the current Unreal
 module boundary permits it. Two specialized modules are `UncookedOnly`, and one
@@ -49,8 +50,9 @@ Core instead of linking to one another.
 
 The public repository is a curated, dependency-checked snapshot of the selected
 plugins and public documentation. A candidate must pass path and provenance
-checks, descriptor closure, exact file inventory checks and a clean exported-tree
-build before it can be proposed as a tagged preview.
+checks, descriptor closure, exact file inventory checks and clean exported-tree
+Editor and Game builds before it can be proposed as a tagged preview. The current
+snapshot has completed those build gates and its documented Automation run.
 
 Components absent from the release tree are outside its public API and support
 scope.

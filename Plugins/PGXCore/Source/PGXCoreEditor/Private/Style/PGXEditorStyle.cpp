@@ -118,7 +118,7 @@ void FPGXEditorStyle::Initialize()
 	StyleInstance->Set("PGXEditor.Icon.VersionControl.Large",  new IMAGE_BRUSH_SVG("Icons/19", Icon40x40));
 
 	// 30.svg — Clipboard with checkmark + test result lines → Test Dashboard
-	// (R5 HIGH fix 2026-05-21: was reusing Icons/10/Validate, reassigned to dedicated Icons/30)
+	// Test Dashboard uses its dedicated Icons/30 asset.
 	StyleInstance->Set("PGXEditor.Icon.TestDashboard",        new IMAGE_BRUSH_SVG("Icons/30", Icon20x20));
 	StyleInstance->Set("PGXEditor.Icon.TestDashboard.Large",  new IMAGE_BRUSH_SVG("Icons/30", Icon40x40));
 

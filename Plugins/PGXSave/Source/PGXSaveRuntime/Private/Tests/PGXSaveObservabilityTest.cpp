@@ -31,7 +31,8 @@ bool FPGXSave_ObservableConfigAutomationTest::RunTest(const FString& /*Parameter
 
 	const FPGXJsonValue Json = Config->ToJson();
 	TestFalse(TEXT("Save config ToJson non-empty"), Json.IsEmpty());
-	TestTrue(TEXT("Save config JSON contains type"), Json.JsonString.Contains(TEXT("UPGXSaveConfig")));
+	const FString ConfigTypeName = UPGXSaveConfig::StaticClass()->GetName();
+	TestTrue(TEXT("Save config JSON contains type"), Json.JsonString.Contains(ConfigTypeName));
 	TestTrue(TEXT("Save config JSON contains schema version"), Json.JsonString.Contains(TEXT("\"version\":\"1.0\"")));
 
 	const FPGXSchemaDescriptor Descriptor = Config->GetSchemaDescriptor();

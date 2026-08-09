@@ -76,7 +76,7 @@ private:
 		TSharedPtr<FPGXScaffoldPlanStepRow> Item,
 		const TSharedRef<STableViewBase>& OwnerTable);
 
-	/** EN: Check Live Coding state before future C++ generation / ES: Verificar Live Coding antes de la futura generacion C++ */
+	/** EN: Check Live Coding state before C++ generation / ES: Verificar Live Coding antes de generar C++ */
 	bool CheckLiveCodingWarning() const;
 
 	// ─── Navigation ───

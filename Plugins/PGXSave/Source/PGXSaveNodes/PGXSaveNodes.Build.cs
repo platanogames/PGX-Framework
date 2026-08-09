@@ -26,5 +26,10 @@ public class PGXSaveNodes : ModuleRules
 			"AssetRegistry",
 			"PGXSaveRuntime"
 		});
+
+		if (Target.bBuildEditor || Target.WithAutomationTests)
+		{
+			PrivateDependencyModuleNames.Add("PGXCoreDeveloper");
+		}
 	}
 }

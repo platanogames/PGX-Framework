@@ -15,6 +15,7 @@
 
 #define LOCTEXT_NAMESPACE "PGXConstructionSettings"
 
+#if WITH_EDITOR
 FText UPGXConstructionSettings::GetSectionText() const
 {
 	return LOCTEXT("SectionText", "Framework Construction");
@@ -27,6 +28,7 @@ FText UPGXConstructionSettings::GetSectionDescription() const
 		"Each slot defines the class source (Default/C++/Blueprint) and a construction DA "
 		"for component injections, system configs, and HUD layers applied during gameplay initialization.");
 }
+#endif
 
 bool UPGXConstructionSettings::ValidateClassSources(TArray<FText>& OutWarnings, bool bIncludeMapsModesCheck) const
 {

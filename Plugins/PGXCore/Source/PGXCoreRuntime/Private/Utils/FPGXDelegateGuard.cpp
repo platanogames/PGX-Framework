@@ -4,7 +4,7 @@
 // EN: FPGXDelegateGuard is header-only — the lambda-based remove callback
 //     pattern is fully resolved at compile time via TFunction<>. The .cpp
 //     exists only to make the file pair greppable in the build system and
-//     to provide a TU where future non-template helpers (e.g. static
+//     to provide a TU for non-template helpers (e.g. static
 //     MakeGuard() factory) can be added without breaking the header.
 //
 // ES: FPGXDelegateGuard es header-only — el patron de callback de remove

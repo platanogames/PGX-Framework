@@ -60,9 +60,9 @@ namespace
 		for (int32 Idx = 0; Idx < NumTicks; ++Idx)
 		{
 			// EN: Advance time by 1.5 s per tick so the 1 Hz refresh gate
-			//     fires every iteration (workaround for 1 Hz cadence).
+			//     fires every iteration under the 1 Hz cadence.
 			// ES: Avanzar tiempo 1.5 s por tick para que el gate de refresh
-			//     1 Hz dispare en cada iteracion (workaround para cadencia 1 Hz).
+			//     1 Hz dispare en cada iteracion bajo la cadencia de 1 Hz.
 			Widget->Tick(Geometry, BaseTime + 1.5 * (Idx + 1), 1.5f);
 			++Count;
 		}

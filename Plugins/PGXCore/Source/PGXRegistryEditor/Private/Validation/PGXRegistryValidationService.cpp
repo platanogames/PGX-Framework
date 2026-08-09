@@ -219,7 +219,7 @@ void FPGXRegistryValidationService::RunRDT010_InvalidCategoryTag(const UDataTabl
 {
 	// EN: Already covered by RDT002 for missing, this checks structural validity
 	// ES: Ya cubierto por RDT002 para faltante, esto verifica validez estructural
-	// RDT002 already catches !IsValid(), this rule is for future extended validation
+	// RDT002 already catches !IsValid(); this rule is the extension point for additional validation.
 }
 
 void FPGXRegistryValidationService::RunRDT011_InvalidItemTag(const UDataTable* Table,
@@ -322,9 +322,9 @@ void FPGXRegistryValidationService::RunRDT021_DuplicateItemKey(const UDataTable*
 	TArray<FPGXRegistryValidationIssue>& OutIssues) const
 {
 	// EN: TMap naturally prevents duplicate keys per row — this rule is satisfied by
-	//     the data structure itself. Included for completeness and future extensibility.
+	//     the data structure itself. Included as the explicit extension point.
 	// ES: TMap naturalmente previene claves duplicadas por fila — esta regla se satisface
-	//     por la estructura de datos misma. Incluida para completitud y extensibilidad futura.
+	//     por la estructura de datos misma. Incluida como punto de extension explicito.
 }
 
 void FPGXRegistryValidationService::RunRDT022_CrossTableConflict(const TArray<const UDataTable*>& Tables,

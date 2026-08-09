@@ -73,8 +73,8 @@ struct FPGXPluginSnapshot
  */
 inline FLinearColor GetHealthColor(EPGXSystemHealth Health)
 {
-	// EN: Delegate to PGX Semantic tokens (single source of truth) — Bucket B fix 2026-05-21.
-	// ES: Delegar a tokens PGX Semantic (single source of truth) — Bucket B fix 2026-05-21.
+	// EN: Delegate to PGX Semantic tokens as the single source of truth.
+	// ES: Delegar a tokens PGX Semantic como fuente unica de verdad.
 	switch (Health)
 	{
 	case EPGXSystemHealth::Active:   return PGX::Semantic::Good;

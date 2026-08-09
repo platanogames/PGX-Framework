@@ -5,8 +5,8 @@
 //     registered under naming `PGX.Message.<TestName>` so headless `Automation RunTests
 //     PGX.Message` discovers and runs them. Each wrapper acquires a UWorld via the engine's
 //     WorldContexts (PIE / Game / Editor) and forwards to the BPL static; OutIssues lines are
-//     emitted via FAutomationTestBase::AddInfo for postmortem visibility. compatibility retrofit
-//     (post audit AMBER methodological gap: BPL helpers were not Automation-discoverable).
+//     emitted via FAutomationTestBase::AddInfo for diagnostic visibility. These wrappers make
+//     the BPL helpers discoverable by Automation without changing their behavior.
 //
 // ES: Wrappers IMPLEMENT_SIMPLE_AUTOMATION_TEST sobre los BPL helpers de UPGXMessageTestUtility,
 //     registrados bajo naming `PGX.Message.<TestName>` para que `Automation RunTests PGX.Message`
@@ -15,59 +15,103 @@
 
 #include "CoreMinimal.h"
 #include "Engine/Engine.h"
+#include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "Messages/PGXMessageTestUtility.h"
+#include "Messages/PGXMessageSubsystem.h"
 #include "Misc/AutomationTest.h"
 
 #if WITH_DEV_AUTOMATION_TESTS
 
 namespace PGXMessageAutomationTestsInternal
 {
-	// EN: Acquire a UWorld from the engine's contexts. In headless commandlet mode without an
-	//     active map, this may return nullptr; the BPL helpers detect that and report
-	//     "MessageSubsystem not available" — the wrapper still runs and records the failure.
-	// ES: Obtener un UWorld desde los WorldContexts del engine. En commandlet headless sin mapa
-	//     activo, puede devolver nullptr; los BPL helpers reportan "MessageSubsystem not available".
-	static UWorld* AcquireTestWorld()
+	class FScopedMessageTestContext
 	{
-		if (!GEngine)
+	public:
+		FScopedMessageTestContext()
 		{
-			return nullptr;
-		}
-
-		// Prefer PIE world, then Game, then Editor as last resort.
-		const auto& WorldContexts = GEngine->GetWorldContexts();
-		UWorld* PIEWorld = nullptr;
-		UWorld* GameWorld = nullptr;
-		UWorld* EditorWorld = nullptr;
-
-		for (const FWorldContext& Ctx : WorldContexts)
-		{
-			UWorld* W = Ctx.World();
-			if (!W)
+			if (!GEngine)
 			{
-				continue;
+				return;
 			}
-			switch (Ctx.WorldType)
+
+			GameInstance = NewObject<UGameInstance>(GEngine, UGameInstance::StaticClass(), NAME_None, RF_Transient);
+			if (!GameInstance)
 			{
-			case EWorldType::PIE:    PIEWorld = W; break;
-			case EWorldType::Game:   GameWorld = W; break;
-			case EWorldType::Editor: EditorWorld = W; break;
-			default: break;
+				return;
+			}
+
+			GameInstance->AddToRoot();
+			GameInstance->InitializeStandalone();
+
+			World = UWorld::CreateWorld(EWorldType::Game, false);
+			if (World)
+			{
+				World->SetGameInstance(GameInstance);
 			}
 		}
 
-		if (PIEWorld)    return PIEWorld;
-		if (GameWorld)   return GameWorld;
-		return EditorWorld;
-	}
+		~FScopedMessageTestContext()
+		{
+			if (World)
+			{
+				World->SetGameInstance(nullptr);
+				World->DestroyWorld(false);
+				World = nullptr;
+			}
+			if (GameInstance)
+			{
+				GameInstance->Shutdown();
+				GameInstance->RemoveFromRoot();
+				GameInstance = nullptr;
+			}
+		}
+
+		bool IsValid() const
+		{
+			return World
+				&& GameInstance
+				&& World->GetGameInstance() == GameInstance
+				&& GameInstance->GetSubsystem<UPGXMessageSubsystem>() != nullptr;
+		}
+
+		UWorld* GetWorld() const { return World; }
+
+	private:
+		UWorld* World = nullptr;
+		UGameInstance* GameInstance = nullptr;
+	};
 
 	static void ForwardIssues(FAutomationTestBase& Test, const TArray<FString>& OutIssues)
 	{
 		for (const FString& Issue : OutIssues)
 		{
-			Test.AddInfo(Issue);
+			if (Issue.StartsWith(TEXT("FAIL:")))
+			{
+				Test.AddError(Issue);
+			}
+			else
+			{
+				Test.AddInfo(Issue);
+			}
 		}
+	}
+
+	using FMessageTestFunction = bool (*)(const UObject*, TArray<FString>&);
+
+	static bool RunIsolated(FAutomationTestBase& Test, FMessageTestFunction TestFunction)
+	{
+		FScopedMessageTestContext Fixture;
+		if (!Fixture.IsValid())
+		{
+			Test.AddError(TEXT("FAIL: isolated Message World/GameInstance fixture initialization failed"));
+			return false;
+		}
+
+		TArray<FString> OutIssues;
+		const bool bPassed = TestFunction(Fixture.GetWorld(), OutIssues);
+		ForwardIssues(Test, OutIssues);
+		return bPassed;
 	}
 }
 
@@ -81,11 +125,9 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_TypeMismatchRejectedAutomationTest,
 
 bool FPGXMessage_TypeMismatchRejectedAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::TypeMismatchRejectedTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	AddExpectedError(TEXT("Struct type mismatch on channel"), EAutomationExpectedErrorFlags::Contains, 1);
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::TypeMismatchRejectedTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_DoubleUnregisterSafeAutomationTest,
@@ -94,11 +136,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_DoubleUnregisterSafeAutomationTest,
 
 bool FPGXMessage_DoubleUnregisterSafeAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::DoubleUnregisterSafeTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::DoubleUnregisterSafeTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_CallbackRemovalSafeAutomationTest,
@@ -107,11 +146,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_CallbackRemovalSafeAutomationTest,
 
 bool FPGXMessage_CallbackRemovalSafeAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::CallbackRemovalSafeTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::CallbackRemovalSafeTest);
 }
 
 // ============================================================
@@ -124,11 +160,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_ExactParentNoChildAutomationTest,
 
 bool FPGXMessage_ExactParentNoChildAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::ExactParentNoChildTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::ExactParentNoChildTest);
 }
 
 #if WITH_EDITOR
@@ -138,9 +171,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_PartialMatchGlobalDisabledAutomatio
 
 bool FPGXMessage_PartialMatchGlobalDisabledAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
+	PGXMessageAutomationTestsInternal::FScopedMessageTestContext Fixture;
+	if (!Fixture.IsValid())
+	{
+		AddError(TEXT("FAIL: isolated Message World/GameInstance fixture initialization failed"));
+		return false;
+	}
 	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::PartialMatchGlobalDisabledTest(World, OutIssues);
+	const bool bPassed = UPGXMessageTestUtility::PartialMatchGlobalDisabledTest(Fixture.GetWorld(), OutIssues);
 	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
 	return bPassed;
 }
@@ -152,11 +190,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_ChannelIsolationAutomationTest,
 
 bool FPGXMessage_ChannelIsolationAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::ChannelIsolationTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::ChannelIsolationTest);
 }
 
 // ============================================================
@@ -169,11 +204,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_PayloadBackwardCompatAutomationTest
 
 bool FPGXMessage_PayloadBackwardCompatAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::PayloadBackwardCompatTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::PayloadBackwardCompatTest);
 }
 
 // ============================================================
@@ -187,9 +219,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_HistoryBoundedByPolicyAutomationTes
 
 bool FPGXMessage_HistoryBoundedByPolicyAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
+	PGXMessageAutomationTestsInternal::FScopedMessageTestContext Fixture;
+	if (!Fixture.IsValid())
+	{
+		AddError(TEXT("FAIL: isolated Message World/GameInstance fixture initialization failed"));
+		return false;
+	}
 	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::HistoryBoundedByPolicyTest(World, OutIssues);
+	const bool bPassed = UPGXMessageTestUtility::HistoryBoundedByPolicyTest(Fixture.GetWorld(), OutIssues);
 	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
 	return bPassed;
 }
@@ -200,9 +237,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_ClearHistoryAdditionalAutomationTes
 
 bool FPGXMessage_ClearHistoryAdditionalAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
+	PGXMessageAutomationTestsInternal::FScopedMessageTestContext Fixture;
+	if (!Fixture.IsValid())
+	{
+		AddError(TEXT("FAIL: isolated Message World/GameInstance fixture initialization failed"));
+		return false;
+	}
 	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::ClearHistoryAdditionalTest(World, OutIssues);
+	const bool bPassed = UPGXMessageTestUtility::ClearHistoryAdditionalTest(Fixture.GetWorld(), OutIssues);
 	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
 	return bPassed;
 }
@@ -213,9 +255,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_EmergencyHistoryFallbackAutomationT
 
 bool FPGXMessage_EmergencyHistoryFallbackAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
+	PGXMessageAutomationTestsInternal::FScopedMessageTestContext Fixture;
+	if (!Fixture.IsValid())
+	{
+		AddError(TEXT("FAIL: isolated Message World/GameInstance fixture initialization failed"));
+		return false;
+	}
 	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::EmergencyHistoryFallbackTest(World, OutIssues);
+	const bool bPassed = UPGXMessageTestUtility::EmergencyHistoryFallbackTest(Fixture.GetWorld(), OutIssues);
 	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
 	return bPassed;
 }
@@ -231,11 +278,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_FanOutTelemetryAutomationTest,
 
 bool FPGXMessage_FanOutTelemetryAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::FanOutTelemetryTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::FanOutTelemetryTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_NestedBroadcastOrderingAutomationTest,
@@ -244,11 +288,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_NestedBroadcastOrderingAutomationTe
 
 bool FPGXMessage_NestedBroadcastOrderingAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::NestedBroadcastOrderingTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::NestedBroadcastOrderingTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_TimeAccelBoundaryReadOnlyAutomationTest,
@@ -257,11 +298,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_TimeAccelBoundaryReadOnlyAutomation
 
 bool FPGXMessage_TimeAccelBoundaryReadOnlyAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::TimeAccelBoundaryReadOnlyTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::TimeAccelBoundaryReadOnlyTest);
 }
 
 // ============================================================
@@ -274,9 +312,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionPresenceAutom
 
 bool FPGXMessage_BridgePayloadExtensionPresenceAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
 	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::BridgePayloadExtensionPresenceTest(World, OutIssues);
+	const bool bPassed = UPGXMessageTestUtility::BridgePayloadExtensionPresenceTest(nullptr, OutIssues);
 	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
 	return bPassed;
 }
@@ -287,11 +324,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionRoundtripAuto
 
 bool FPGXMessage_BridgePayloadExtensionRoundtripAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::BridgePayloadExtensionRoundtripTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::BridgePayloadExtensionRoundtripTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionBackwardCompatAutomationTest,
@@ -300,11 +334,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionBackwardCompa
 
 bool FPGXMessage_BridgePayloadExtensionBackwardCompatAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::BridgePayloadExtensionBackwardCompatTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::BridgePayloadExtensionBackwardCompatTest);
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionRequestIdAutomationTest,
@@ -313,11 +344,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXMessage_BridgePayloadExtensionRequestIdAuto
 
 bool FPGXMessage_BridgePayloadExtensionRequestIdAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	UWorld* World = PGXMessageAutomationTestsInternal::AcquireTestWorld();
-	TArray<FString> OutIssues;
-	const bool bPassed = UPGXMessageTestUtility::BridgePayloadExtensionRequestIdTest(World, OutIssues);
-	PGXMessageAutomationTestsInternal::ForwardIssues(*this, OutIssues);
-	return bPassed;
+	return PGXMessageAutomationTestsInternal::RunIsolated(
+		*this, &UPGXMessageTestUtility::BridgePayloadExtensionRequestIdTest);
 }
 
 #endif // WITH_DEV_AUTOMATION_TESTS

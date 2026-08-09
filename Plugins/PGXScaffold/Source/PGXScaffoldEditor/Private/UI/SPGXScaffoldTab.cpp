@@ -804,7 +804,7 @@ void SPGXScaffoldTab::OnExecuteClicked()
 {
 	if (!CurrentPlan.IsValid() || !Executor.IsValid() || !Logger.IsValid()) { return; }
 
-	// EN: Check the Live Coding state for future C++ generation actions
+	// EN: Check Live Coding state for actions that generate C++.
 	// ES: Verificar el estado de Live Coding para futuras acciones de generacion C++
 	if (!CheckLiveCodingWarning()) { return; }
 
@@ -845,7 +845,7 @@ void SPGXScaffoldTab::OnExecuteClicked()
 }
 
 // ============================================================================
-// Live Coding warning for future C++ generation
+// Live Coding warning for C++ generation actions
 // ============================================================================
 
 bool SPGXScaffoldTab::CheckLiveCodingWarning() const

@@ -25,3 +25,13 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Category_Core,     "PGX.EventHandler
 UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Category_Gameplay, "PGX.EventHandler.Category.Gameplay");
 UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Category_Audio,    "PGX.EventHandler.Category.Audio");
 UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Category_UI,       "PGX.EventHandler.Category.UI");
+
+// -- Failure taxonomy --
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Validation_InvalidEventTag,   "PGX.EventHandler.Validation.InvalidEventTag");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Validation_PayloadMismatch,   "PGX.EventHandler.Validation.PayloadMismatch");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Validation_HandlerDisabled,   "PGX.EventHandler.Validation.HandlerDisabled");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Validation_CanExecuteFalse,   "PGX.EventHandler.Validation.CanExecuteFalse");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Result_HandlerNotFound,       "PGX.EventHandler.Result.HandlerNotFound");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Result_AcquireHandlerFailed,  "PGX.EventHandler.Result.AcquireHandlerFailed");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Result_ChainBudgetExceeded,   "PGX.EventHandler.Result.ChainBudgetExceeded");
+UE_DEFINE_GAMEPLAY_TAG(TAG_PGX_EventHandler_Result_ChainCycle,            "PGX.EventHandler.Result.ChainCycle");

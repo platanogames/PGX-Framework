@@ -11,8 +11,8 @@
 >
 > Las API, el empaquetado, los límites de compatibilidad y los flujos de
 > contribución pueden cambiar entre versiones `0.x`. En esta etapa PGX está
-> destinado a evaluación, aprendizaje y desarrollo, y **todavía no se recomienda
-> para proyectos en producción**.
+> destinado a evaluación, aprendizaje y desarrollo, y
+> **todavía no se recomienda para proyectos en producción**.
 
 [![Estado: Development Preview](https://img.shields.io/badge/estado-development_preview-orange.svg)](#vista-previa-de-desarrollo)
 [![Licencia: Apache-2.0](https://img.shields.io/badge/licencia-Apache--2.0-green.svg)](LICENSE.md)
@@ -28,7 +28,8 @@ Unreal, con puntos de extensión visibles en C++.
 
 | Área | Política actual |
 |---|---|
-| Etapa de publicación | Development Preview (`0.x`) |
+| Versión | `0.1.0` (`v0.1.0`), publicada el 2026-08-09 |
+| Etapa de publicación | Pre-release / Development Preview (`0.x`) |
 | Uso previsto | Evaluación de arquitectura y API, aprendizaje, pruebas y comentarios |
 | Estabilidad de API | Puede haber cambios incompatibles entre versiones preliminares |
 | Uso en producción | No recomendado actualmente |
@@ -39,10 +40,16 @@ de compilación se publican únicamente cuando han sido validados para una versi
 concreta. Consulta sus notas antes de evaluar PGX en un proyecto
 de Unreal Engine.
 
-El candidato actual se ha compilado desde un árbol exportado limpio con las
-herramientas de editor de Unreal Engine 5.6 para Windows. Ese resultado es
-evidencia de este candidato concreto; todavía no implica compatibilidad entre
-plataformas ni validación de un juego empaquetado.
+La instantánea preliminar verificada de `v0.1.0` contiene
+**26 plugins, 48 módulos de Unreal y 1.305 archivos de plugin exportados**. En
+Unreal Engine 5.6, con objetivos Windows Development, el árbol exportado superó
+estos controles:
+
+- recompilación limpia de Editor: 778/778 acciones superadas;
+- recompilación limpia de Game: 417/417 acciones superadas;
+- Automation de Editor: 232/232 superadas, sin fallos ni pruebas omitidas;
+- Automation de Game: 112/112 superadas, sin fallos ni pruebas omitidas;
+- Automation combinada: 344/344 superadas.
 
 ## Modelo de desarrollo y publicación
 
@@ -55,9 +62,10 @@ Las etiquetas publicadas se tratan como instantáneas inmutables. Las correccion
 y los cambios avanzan mediante una nueva versión en lugar de reescribir una
 existente.
 
-El material privado de trabajo, los componentes sin terminar, archivos generados,
-cachés y contenido sin un límite de redistribución verificado quedan fuera de la
-distribución pública.
+El material privado de trabajo, los componentes sin comportamiento, los archivos
+generados, las cachés y el contenido sin un límite de redistribución verificado
+quedan fuera. Un plugin incompleto puede incluirse cuando su alcance implementado
+y sus limitaciones se describan de forma explícita como parte de esta versión preliminar.
 
 Las incidencias y pull requests públicas forman parte del proceso de revisión. Tras la
 revisión, los cambios aceptados se reconcilian con la línea canónica de desarrollo
@@ -86,13 +94,17 @@ su API pública ni de su límite de soporte.
 
 ## Plugins incluidos
 
-El primer candidato público contiene **12 plugins y 23 módulos de Unreal**.
+La versión preliminar pública `v0.1.0` contiene **26 plugins y 48 módulos de Unreal**.
+El repositorio combina sistemas consolidados con versiones preliminares; la
+presencia de un plugin no significa que todas sus capacidades previstas estén implementadas.
 
-| Capa | Plugins |
+| Grupo de madurez | Plugins |
 |---|---|
 | Fundación | `PGXCore` |
-| Sistemas en ejecución | `PGXAudio`, `PGXGameFlow`, `PGXLoading`, `PGXMGOS`, `PGXPSO`, `PGXSave` |
-| Herramientas de editor | `PGXDocs`, `PGXEditorTools`, `PGXScaffold`, `PGXTutorials`, `PGXVersionControl` |
+| Sistemas preliminares consolidados | `PGXAudio`, `PGXGameFlow`, `PGXLoading`, `PGXMGOS`, `PGXPSO`, `PGXSave` |
+| Versiones preliminares funcionales | `PGXAbility`, `PGXCrafting`, `PGXInput`, `PGXInteraction`, `PGXInventory`, `PGXSpawn`, `PGXTrade` |
+| Versiones preliminares estructuradas | `PGXAI`, `PGXCamera`, `PGXColony`, `PGXEnvironment`, `PGXUI`, `PGXVehicles` |
+| Herramientas de editor y verificación | `PGXDocs`, `PGXEditorTools`, `PGXScaffold`, `PGXSimHarness`, `PGXTutorials`, `PGXVersionControl` |
 
 La mayoría de plugins funcionales dependen de `PGXCore`. `PGXEditorTools` es una
 capa de agregación exclusiva del editor que reúne los inspectores de los sistemas
@@ -111,9 +123,11 @@ plantilla de juego obligatoria.
 - El código fuente expone API de C++ y Blueprint, además de inspectores y
   validadores para los sistemas incluidos.
 
-Cada plugin declara sus dependencias, pero este candidato solo se ha compilado
-con el conjunto completo de 12 plugins. Antes de usar un subconjunto, valida sus
-descriptores y reglas de módulo.
+Cada plugin declara sus dependencias. La instantánea completa de 26 plugins ha
+superado los controles documentados de Editor y Game, pero cada subconjunto debe
+comprobarse contra sus descriptores y reglas de módulo. Consulta
+[Verificación](docs/validation/verification.md) para conocer la evidencia exacta
+y sus límites.
 
 ## Explorar la versión preliminar
 
@@ -123,7 +137,7 @@ descriptores y reglas de módulo.
 4. Revisa el [`CHANGELOG`](CHANGELOG.md) público para conocer los cambios de cada versión.
 5. Utiliza los formularios de incidencias para preguntas o hallazgos reproducibles.
 
-Para reproducir la compilación de editor validada en Windows, sigue la
+Para evaluar la ruta de editor actual en Windows, sigue la
 [guía de primeros pasos](docs/getting-started/quickstart.md). El proyecto de
 ejemplo mantenido y la guía para compilaciones empaquetadas siguen en preparación.
 
@@ -139,7 +153,7 @@ Empieza por:
 - [`docs/architecture/overview.md`](docs/architecture/overview.md): estructura del monorepo y límites entre plugins
 - [`docs/architecture/system-map.md`](docs/architecture/system-map.md): capas y flujos entre plugins
 - [`docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): topología exacta de plugins y módulos
-- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): responsabilidades y puntos de extensión de los 12 plugins
+- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): responsabilidades implementadas y límites de los 26 plugins
 - [`docs/validation/verification.md`](docs/validation/verification.md): comprobaciones realizadas y sus límites
 - [Wiki del proyecto](https://github.com/platanogames/PGX-Framework/wiki): arquitectura y flujos de trabajo ampliados
 - [`Plugins/`](Plugins/): descriptores, código fuente y documentación incluida
@@ -177,7 +191,7 @@ proyectos, recursos con licencia y registros no relacionados de los ejemplos.
 
 ## Seguridad y soporte
 
-No publiques posibles vulnerabilidades en una issue pública. Sigue
+No publiques posibles vulnerabilidades en una incidencia pública. Sigue
 [`SECURITY.md`](SECURITY.md) para utilizar el canal privado.
 
 Para preguntas de integración y solicitudes de soporte, sigue

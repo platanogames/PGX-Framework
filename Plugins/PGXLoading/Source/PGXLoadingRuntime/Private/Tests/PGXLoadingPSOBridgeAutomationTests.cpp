@@ -9,6 +9,7 @@
 #include "Messages/PGXMessageSubsystem.h"
 #include "Misc/AutomationTest.h"
 #include "Tags/PGXLoadingTags.h"
+#include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 
 namespace PGXLoadingPSOBridgeAutomation
@@ -18,8 +19,14 @@ namespace PGXLoadingPSOBridgeAutomation
 		explicit FScopedGameInstanceFixture(FAutomationTestBase& InTest)
 			: Test(InTest)
 		{
+			if (!GEngine)
+			{
+				Test.AddError(TEXT("PGXLoading PSO bridge automation setup failed: engine is unavailable."));
+				return;
+			}
+
 			GameInstance = NewObject<UGameInstance>(
-				GetTransientPackage(),
+				GEngine,
 				UGameInstance::StaticClass(),
 				NAME_None,
 				RF_Transient);
@@ -30,7 +37,7 @@ namespace PGXLoadingPSOBridgeAutomation
 			}
 
 			GameInstance->AddToRoot();
-			GameInstance->Init();
+			GameInstance->InitializeStandalone(TEXT("PGXLoadingPSOBridgeAutomationWorld"));
 		}
 
 		~FScopedGameInstanceFixture()
@@ -186,6 +193,10 @@ bool FPGXLoadingPSOBridgeInvalidPayloadAutomationTest::RunTest(const FString& /*
 	WrongPayload.MessageTag = TAG_PGX_Loading_PSO_Progress.GetTag();
 	WrongPayload.Owner = MessageSubsystem;
 	WrongPayload.Timestamp = 3.0;
+	AddExpectedError(
+		TEXT("Struct type mismatch on channel PGX.Loading.PSO.Progress"),
+		EAutomationExpectedErrorFlags::Contains,
+		1);
 	MessageSubsystem->BroadcastMessage<FPGXMessage>(
 		TAG_PGX_Loading_PSO_Progress.GetTag(),
 		WrongPayload);

@@ -46,8 +46,10 @@ class PGXCORERUNTIME_API UPGXConstructionSettings : public UPGXSettings
 public:
 	//~ Begin UDeveloperSettings Interface
 	FName GetSectionName() const override { return FName(TEXT("FrameworkConstruction")); }
+#if WITH_EDITOR
 	FText GetSectionText() const override;
 	FText GetSectionDescription() const override;
+#endif
 	//~ End UDeveloperSettings Interface
 
 	// ═══════════════════════════════════════════════════════════════════

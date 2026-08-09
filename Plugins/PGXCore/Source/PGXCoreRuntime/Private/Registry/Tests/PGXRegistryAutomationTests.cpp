@@ -11,16 +11,31 @@
 #include "Engine/World.h"
 #include "GameplayTagsManager.h"
 #include "Misc/AutomationTest.h"
+#include "NativeGameplayTags.h"
 #include "Registry/PGXDataRegistrySubsystem.h"
 #include "Registry/PGXRegistryTestUtility.h"
 #include "Registry/PGXRegistryTypes.h"
 #include "Tables/PGXTableTypes.h"
 
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_IndexDatabase, "PGX.Test.Registry.Automation.Index.Database");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_IndexCategory, "PGX.Test.Registry.Automation.Index.Category");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_IndexItem, "PGX.Test.Registry.Automation.Index.Item");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictDatabase, "PGX.Test.Registry.Automation.Conflict.Database");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFailItem, "PGX.Test.Registry.Automation.Conflict.FailOnConflict.Item");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFailFirst, "PGX.Test.Registry.Automation.Conflict.FailOnConflict.First");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFailLast, "PGX.Test.Registry.Automation.Conflict.FailOnConflict.Last");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFirstWinsItem, "PGX.Test.Registry.Automation.Conflict.FirstWins.Item");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFirstWinsFirst, "PGX.Test.Registry.Automation.Conflict.FirstWins.First");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictFirstWinsLast, "PGX.Test.Registry.Automation.Conflict.FirstWins.Last");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictLastWinsItem, "PGX.Test.Registry.Automation.Conflict.LastWins.Item");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictLastWinsFirst, "PGX.Test.Registry.Automation.Conflict.LastWins.First");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXRegistryAutomation_ConflictLastWinsLast, "PGX.Test.Registry.Automation.Conflict.LastWins.Last");
+
 namespace PGXRegistryAutomation
 {
-	FGameplayTag AddTestTag(const TCHAR* TagName)
+	FGameplayTag FindTestTag(const TCHAR* TagName)
 	{
-		return UGameplayTagsManager::Get().AddNativeGameplayTag(FName(TagName), FString(TEXT("PGX Registry automation test tag")));
+		return FGameplayTag::RequestGameplayTag(FName(TagName), false);
 	}
 
 	UGameInstance* FindGameInstance()
@@ -107,9 +122,9 @@ namespace PGXRegistryAutomation
 	void TestConflictPolicy(FAutomationTestBase& Test, UPGXDataRegistrySubsystem* Registry, FGameplayTag DatabaseTag,
 		EPGXRegistryConflictPolicy Policy, const TCHAR* PolicyName, FGameplayTag ExpectedCategory, bool bExpectedSecondIngest)
 	{
-		const FGameplayTag ItemTag = AddTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.Item"), PolicyName));
-		const FGameplayTag FirstCategory = AddTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.First"), PolicyName));
-		const FGameplayTag LastCategory = AddTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.Last"), PolicyName));
+		const FGameplayTag ItemTag = FindTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.Item"), PolicyName));
+		const FGameplayTag FirstCategory = FindTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.First"), PolicyName));
+		const FGameplayTag LastCategory = FindTestTag(*FString::Printf(TEXT("PGX.Test.Registry.Automation.Conflict.%s.Last"), PolicyName));
 
 		EnsureCleanDatabase(Registry, DatabaseTag);
 		UPGXObjectDataAsset* FirstAsset = MakeObjectAsset(*FString::Printf(TEXT("PGXRegistry_%s_First"), PolicyName), FirstCategory);
@@ -119,6 +134,10 @@ namespace PGXRegistryAutomation
 		UDataTable* LastTable = MakeRegistryTable(*FString::Printf(TEXT("PGXRegistry_%s_LastTable"), PolicyName), LastCategory, ItemTag, LastAsset);
 
 		Test.TestTrue(FString::Printf(TEXT("%s initial ingest succeeds"), PolicyName), Registry->IngestDataTable(DatabaseTag, FirstTable, Policy));
+		if (Policy == EPGXRegistryConflictPolicy::FailOnConflict)
+		{
+			Test.AddExpectedError(TEXT("Policy=FailOnConflict, skipping"), EAutomationExpectedErrorFlags::Contains, 1);
+		}
 		Test.TestEqual(FString::Printf(TEXT("%s second ingest result"), PolicyName), Registry->IngestDataTable(DatabaseTag, LastTable, Policy), bExpectedSecondIngest);
 
 		const FPGXRegistryEntry* Entry = Registry->FindEntry(DatabaseTag, ItemTag);
@@ -149,9 +168,9 @@ bool FPGXRegistry_IndexCoherenceAutomationTest::RunTest(const FString& /*Paramet
 		return true;
 	}
 
-	const FGameplayTag DatabaseTag = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Index.Database"));
-	const FGameplayTag CategoryTag = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Index.Category"));
-	const FGameplayTag ItemTag = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Index.Item"));
+	const FGameplayTag DatabaseTag = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Index.Database"));
+	const FGameplayTag CategoryTag = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Index.Category"));
+	const FGameplayTag ItemTag = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Index.Item"));
 	PGXRegistryAutomation::EnsureCleanDatabase(Registry, DatabaseTag);
 	const int32 ReverseIndexBaseline = Registry->GetCompositeReverseIndexCount();
 
@@ -193,10 +212,10 @@ bool FPGXRegistry_ConflictPolicyAutomationTest::RunTest(const FString& /*Paramet
 		return true;
 	}
 
-	const FGameplayTag DatabaseTag = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.Database"));
-	const FGameplayTag FailExpectedCategory = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.FailOnConflict.First"));
-	const FGameplayTag FirstWinsExpectedCategory = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.FirstWins.First"));
-	const FGameplayTag LastWinsExpectedCategory = PGXRegistryAutomation::AddTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.LastWins.Last"));
+	const FGameplayTag DatabaseTag = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.Database"));
+	const FGameplayTag FailExpectedCategory = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.FailOnConflict.First"));
+	const FGameplayTag FirstWinsExpectedCategory = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.FirstWins.First"));
+	const FGameplayTag LastWinsExpectedCategory = PGXRegistryAutomation::FindTestTag(TEXT("PGX.Test.Registry.Automation.Conflict.LastWins.Last"));
 
 	PGXRegistryAutomation::TestConflictPolicy(*this, Registry, DatabaseTag,
 		EPGXRegistryConflictPolicy::FailOnConflict, TEXT("FailOnConflict"), FailExpectedCategory, false);
@@ -228,6 +247,18 @@ bool FPGXRegistry_BenchmarkEntrypointSmokeAutomationTest::RunTest(const FString&
 		AddInfo(Issue);
 	}
 	TestTrue(TEXT("Large registry benchmark entrypoint smoke runs without heavy AAA counts"), bSmokePassed);
+
+	UGameplayTagsManager& TagManager = UGameplayTagsManager::Get();
+	const int32 TagNodeCountBefore = TagManager.GetNumGameplayTagNodes();
+	TArray<FString> UnprovisionedIssues;
+	const bool bUnprovisionedPassed = UPGXRegistryTestUtility::RunLargeRegistryBenchmark(WorldContextObject, 17, UnprovisionedIssues);
+	const int32 TagNodeCountAfter = TagManager.GetNumGameplayTagNodes();
+	TestFalse(TEXT("Out-of-pool benchmark fails when its tag is not project-provisioned"), bUnprovisionedPassed);
+	TestEqual(TEXT("Out-of-pool benchmark does not mutate the gameplay tag manager"), TagNodeCountAfter, TagNodeCountBefore);
+	TestTrue(TEXT("Out-of-pool benchmark reports the missing tag clearly"), UnprovisionedIssues.ContainsByPredicate([](const FString& Issue)
+	{
+		return Issue.Contains(TEXT("Stress item tag unavailable at index 16"));
+	}));
 	return true;
 }
 

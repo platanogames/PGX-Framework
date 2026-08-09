@@ -194,7 +194,7 @@ void UPGXMessageSubsystem::BroadcastMessageInternal(FGameplayTag Channel, const 
 	DispatchOne(Channel, StructType, MessageBytes, bIsTestOrigin);
 
 	// Drain queue FIFO. Each drained dispatch may enqueue more; they go to the back. Loop ends
-	// when the queue is empty (or a future drained dispatch hits the queue-cap drop path).
+	// when the queue is empty or a drained dispatch hits the queue-cap drop path.
 	while (PendingBroadcasts.Num() > 0)
 	{
 		FPGXPendingBroadcast Next = MoveTemp(PendingBroadcasts[0]);

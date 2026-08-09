@@ -251,7 +251,7 @@ private:
 	//     nesting attempt is rejected at entry while depth==N (before increment to N+1).
 	//     With deferred-dispatch this depth normally stays at 1 since nested
 	//     broadcasts queue rather than recurse; the guard remains as a sanity backstop should
-	//     DispatchOne be invoked through a future direct path.
+	//     DispatchOne be invoked directly.
 	//     Stats.MaxBroadcastDepth tracks high-water mark for inspector telemetry.
 	// ES: Profundidad actual de anidamiento. Con MaxBroadcastRecursionDepth=N: depths 1..N
 	//     ejecutan; el intento (N+1) es rechazado al entry mientras depth==N (antes del

@@ -22,8 +22,8 @@ void FPGXCoreRuntimeModule::StartupModule()
 	//     and registers all `UPGXObservableBase` subclasses + classes implementing
 	//     `IPGXObservable` directly. Idempotent — safe to re-invoke during hot-reload. The
 	//     registry header (`PGXObservabilityRegistry.h`) declares this lifecycle binding;
-	//     this call site fulfills the contract (AMBER cycle 1 fix — wire BootstrapDiscovery
-	//     to module startup, paired with Reset() in ShutdownModule).
+	//     this call site fulfills the contract by wiring BootstrapDiscovery to module startup,
+	//     paired with Reset() in ShutdownModule.
 	// ES: Bootstrap del Registry de Observability — auto-descubre subclases UPGXObservableBase
 	//     + implementaciones IPGXObservable directas. Idempotente.
 	FPGXObservabilityRegistry::BootstrapDiscovery();

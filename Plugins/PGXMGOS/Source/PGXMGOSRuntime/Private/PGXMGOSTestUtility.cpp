@@ -84,8 +84,8 @@ bool UPGXMGOSTestUtility::RunAllTests(TArray<FString>& OutIssues)
 
 void UPGXMGOSTestUtility::ForceGCCycle()
 {
-	// EN: Force a full garbage collection cycle [R2]
-	// ES: Forzar un ciclo completo de garbage collection [R2]
+	// EN: Force a full garbage collection cycle
+	// ES: Forzar un ciclo completo de garbage collection
 	CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS, true);
 }
 
@@ -134,7 +134,7 @@ bool UPGXMGOSTestUtility::RunQuickTest()
 	LogTestResult(FString::Printf(TEXT("Baseline state valid (%s)"), *UEnum::GetValueAsString(BaseState)), bBaseValid);
 	bAllPassed &= bBaseValid;
 
-	// EN: 5. Force a GC and verify ProcessMemory > 0 [R1] / ES: 5. Forzar GC y verificar ProcessMemory > 0 [R1]
+	// EN: 5. Force a GC and verify ProcessMemory > 0 / ES: 5. Forzar GC y verificar ProcessMemory > 0
 	ForceGCCycle();
 	const FPGXGCProfile Profile = Sub->GetCurrentProfile();
 	const bool bProfileValid = true; // EN: Any profile state is valid at this point
@@ -211,7 +211,7 @@ bool UPGXMGOSTestUtility::TestSnapshotCapture()
 
 	const int64 CycleBefore = Sub->GetCycleCount();
 
-	// EN: Force GC to trigger snapshot capture [R2] / ES: Forzar GC para disparar captura de snapshot [R2]
+	// EN: Force GC to trigger snapshot capture / ES: Forzar GC para disparar captura de snapshot
 	ForceGCCycle();
 
 	const int64 CycleAfter = Sub->GetCycleCount();
@@ -264,7 +264,7 @@ bool UPGXMGOSTestUtility::TestBaselineManagement()
 
 	// EN: Force enough GC cycles to have history, then capture / ES: Forzar suficientes ciclos GC para tener historial, luego capturar
 	Sub->SetMode(EPGXGCObserverMode::Passive);
-	for (int32 i = 0; i < 4; ++i) // EN: W_Test window [R2]
+	for (int32 i = 0; i < 4; ++i) // EN: deterministic observation window
 	{
 		ForceGCCycle();
 	}
@@ -283,7 +283,7 @@ bool UPGXMGOSTestUtility::TestBaselineManagement()
 		bAllPassed &= bHasUObj;
 
 		const bool bHasMem = (Baseline.BaselineProcessMemoryMB > 0.0f);
-		LogTestResult(TEXT("Baseline has ProcessMemory > 0 [R1]"), bHasMem);
+		LogTestResult(TEXT("Baseline has ProcessMemory > 0"), bHasMem);
 		bAllPassed &= bHasMem;
 	}
 
@@ -408,7 +408,7 @@ bool UPGXMGOSTestUtility::SimulateLeakDetection()
 	const EPGXGCObserverMode OriginalMode = Sub->GetMode();
 	Sub->SetMode(EPGXGCObserverMode::DeepTrack);
 
-	// EN: 2. Reset and force baseline capture [R2] / ES: 2. Resetear y forzar captura de baseline [R2]
+	// EN: 2. Reset and force baseline capture / ES: 2. Resetear y forzar captura de baseline
 	Sub->ResetBaseline();
 	for (int32 i = 0; i < 4; ++i)
 	{
@@ -437,7 +437,7 @@ bool UPGXMGOSTestUtility::SimulateLeakDetection()
 		ForceGCCycle();
 	}
 
-	// EN: 5. Final forced GC [R2] / ES: 5. GC final forzado [R2]
+	// EN: 5. Final forced GC / ES: 5. GC final forzado
 	ForceGCCycle();
 
 	// EN: 6. Check profile state and incidents / ES: 6. Verificar estado del perfil e incidentes

@@ -55,7 +55,7 @@ public:
 	 *     entry when current depth == N, before incrementing to N+1). Note: with the
 	 *     deferred-dispatch queue, nested broadcasts queue rather than
 	 *     recurse, so dispatch depth normally stays at 1 — the guard remains as a sanity
-	 *     backstop should DispatchOne be invoked through a future direct path.
+	 *     backstop when DispatchOne is invoked directly.
 	 *     Default 4 covers typical request->response->ack->finalize chains.
 	 *     This also keeps recursion and fan-out diagnostics bounded.
 	 * ES: Maximo de niveles anidados permitidos. Con N, los dispatches en depths 1..N ejecutan

@@ -702,13 +702,13 @@ FText SPGXMessageInspectorTab::GetWarningsSummaryText() const
 	// EN: Lightweight thresholds — adjustable as production data accumulates.
 	//     the configuration-source invariant forbids hardcoded values in production code; these
 	//     are inspector-only heuristics, not gameplay/runtime defaults, so the
-	//     literal threshold lives here pending a future Inspector settings DA
+	//     literal threshold lives here because no Inspector settings DA is exposed
 	//     if these need project-level tuning.
 	// ES: Thresholds livianos — ajustables conforme se acumule data productiva.
 	//     El invariante de fuente de configuracion prohibe valores hardcoded en codigo productivo;
 	//     estos son heuristicos solo-inspector, no defaults de runtime/gameplay,
-	//     asi que el literal threshold vive aqui pendiente de un futuro
-	//     Inspector settings DA si necesitan tuning a nivel proyecto.
+	//     asi que el literal threshold vive aqui porque no se expone un
+	//     Inspector settings DA para tuning a nivel proyecto.
 	constexpr int32 HighFanOutThreshold = 32;
 
 	TArray<FText> Lines;

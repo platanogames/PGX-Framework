@@ -41,6 +41,41 @@ UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_CatA,         "PGX.Test.Regist
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_CatB,         "PGX.Test.Registry.CatB");
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_CompositeCat, "PGX.Test.Registry.CompositeCat");
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_ConflictCat,  "PGX.Test.Registry.ConflictCat");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem00, "PGX.Test.Registry.Stress.Item0");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem01, "PGX.Test.Registry.Stress.Item1");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem02, "PGX.Test.Registry.Stress.Item2");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem03, "PGX.Test.Registry.Stress.Item3");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem04, "PGX.Test.Registry.Stress.Item4");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem05, "PGX.Test.Registry.Stress.Item5");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem06, "PGX.Test.Registry.Stress.Item6");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem07, "PGX.Test.Registry.Stress.Item7");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem08, "PGX.Test.Registry.Stress.Item8");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem09, "PGX.Test.Registry.Stress.Item9");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem10, "PGX.Test.Registry.Stress.Item10");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem11, "PGX.Test.Registry.Stress.Item11");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem12, "PGX.Test.Registry.Stress.Item12");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem13, "PGX.Test.Registry.Stress.Item13");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem14, "PGX.Test.Registry.Stress.Item14");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_PGXTestRegistry_StressItem15, "PGX.Test.Registry.Stress.Item15");
+
+static const FNativeGameplayTag* const GPGXRegistryStressItemTags[] = {
+	&TAG_PGXTestRegistry_StressItem00,
+	&TAG_PGXTestRegistry_StressItem01,
+	&TAG_PGXTestRegistry_StressItem02,
+	&TAG_PGXTestRegistry_StressItem03,
+	&TAG_PGXTestRegistry_StressItem04,
+	&TAG_PGXTestRegistry_StressItem05,
+	&TAG_PGXTestRegistry_StressItem06,
+	&TAG_PGXTestRegistry_StressItem07,
+	&TAG_PGXTestRegistry_StressItem08,
+	&TAG_PGXTestRegistry_StressItem09,
+	&TAG_PGXTestRegistry_StressItem10,
+	&TAG_PGXTestRegistry_StressItem11,
+	&TAG_PGXTestRegistry_StressItem12,
+	&TAG_PGXTestRegistry_StressItem13,
+	&TAG_PGXTestRegistry_StressItem14,
+	&TAG_PGXTestRegistry_StressItem15,
+};
 
 // ============================================================================
 // EN: Internal helpers
@@ -83,9 +118,14 @@ static FGameplayTag MakeTestTag(const FString& Suffix)
 
 static FGameplayTag MakeStressItemTag(int32 Index)
 {
-	return UGameplayTagsManager::Get().AddNativeGameplayTag(
+	if (Index >= 0 && Index < UE_ARRAY_COUNT(GPGXRegistryStressItemTags))
+	{
+		return GPGXRegistryStressItemTags[Index]->GetTag();
+	}
+
+	return FGameplayTag::RequestGameplayTag(
 		FName(*FString::Printf(TEXT("PGX.Test.Registry.Stress.Item%d"), Index)),
-		TEXT("PGX registry stress benchmark item"));
+		false);
 }
 
 static void CleanupTestDatabase(UPGXDataRegistrySubsystem* Sub, const FGameplayTag& DatabaseTag)
@@ -567,6 +607,21 @@ bool UPGXRegistryTestUtility::RunStressTest(const UObject* WorldContextObject, i
 
 	const FGameplayTag DbTag = MakeTestTag(TEXT("StressDB"));
 	const FGameplayTag CatTag = MakeTestTag(TEXT("StressCat"));
+	TArray<FGameplayTag> ItemTags;
+	ItemTags.Reserve(EntryCount);
+	for (int32 Index = 0; Index < EntryCount; ++Index)
+	{
+		const FGameplayTag ItemTag = MakeStressItemTag(Index);
+		if (!ItemTag.IsValid())
+		{
+			OutIssues.Add(FString::Printf(
+				TEXT("Stress item tag unavailable at index %d. The built-in pool provides 16 tags (indices 0-15); provision PGX.Test.Registry.Stress.Item%d in the project before requesting this benchmark size. Benchmark aborted before registry mutation."),
+				Index,
+				Index));
+			return false;
+		}
+		ItemTags.Add(ItemTag);
+	}
 
 	// EN: Ensure database exists (idempotent) / ES: Asegurar que database existe (idempotente)
 	if (!EnsureTestDatabase(Sub, DbTag, UPGXObjectDataAsset::StaticClass()))
@@ -581,7 +636,7 @@ bool UPGXRegistryTestUtility::RunStressTest(const UObject* WorldContextObject, i
 	int32 RegisteredCount = 0;
 	for (int32 i = 0; i < EntryCount; ++i)
 	{
-		FGameplayTag ItemTag = MakeStressItemTag(i);
+		const FGameplayTag ItemTag = ItemTags[i];
 		UPGXObjectDataAsset* Asset = NewObject<UPGXObjectDataAsset>(GetTransientPackage(), NAME_None, RF_Transient);
 		Asset->CategoryTag = CatTag;
 		if (Sub->RegisterAsset(DbTag, Asset, ItemTag))
@@ -601,7 +656,7 @@ bool UPGXRegistryTestUtility::RunStressTest(const UObject* WorldContextObject, i
 	int32 FoundCount = 0;
 	for (int32 i = 0; i < EntryCount; ++i)
 	{
-		FGameplayTag ItemTag = MakeStressItemTag(i);
+		const FGameplayTag ItemTag = ItemTags[i];
 		if (Sub->FindEntry(DbTag, ItemTag) != nullptr)
 		{
 			FoundCount++;

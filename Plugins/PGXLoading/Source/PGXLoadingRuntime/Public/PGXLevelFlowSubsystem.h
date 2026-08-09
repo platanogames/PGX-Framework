@@ -276,8 +276,7 @@ private:
 
 	// EN: Platform-profile budget enforcement (active platform-profile contract).
 	//     EnforcedStreamingPool_MB applies r.Streaming.PoolSize CVar when > 0
-	//     so platform LoadingBudgets streaming caps actually take effect (prior
-	//     impl logged the value and dropped it). EnforcedMaxLoadedSubLevels
+	//     so platform LoadingBudgets streaming caps take effect. EnforcedMaxLoadedSubLevels
 	//     gates RequestSubLevel: when > 0 and LoadedSubLevels.Num() reaches the
 	//     cap, the call returns LoadFailed with an explicit budget reason
 	//     instead of silently exceeding the platform limit. Both default 0 =

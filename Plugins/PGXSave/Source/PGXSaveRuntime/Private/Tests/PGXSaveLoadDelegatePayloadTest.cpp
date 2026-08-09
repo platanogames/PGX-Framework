@@ -9,7 +9,6 @@
 #include "PGXSaveConfig.h"
 #include "PGXSaveGame.h"
 #include "Engine/GameInstance.h"
-#include "GameplayTagsManager.h"
 #include "Delegates/IDelegateInstance.h"
 
 /**
@@ -38,11 +37,8 @@ PGX_TEST_GAME(FPGXSave_LoadDelegatePayload_LoadDelegatePayload)
 		return false;
 	}
 
-	UGameplayTagsManager& TagManager = UGameplayTagsManager::Get();
-	const FGameplayTag TestContextTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Context.AutomationTest_LoadDelegatePayload"));
-	const FGameplayTag TestDomainTag = TagManager.AddNativeGameplayTag(
-		TEXT("PGX.Save.Domain.AutomationTest_LoadDelegatePayload"));
+	const FGameplayTag TestContextTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Context"));
+	const FGameplayTag TestDomainTag = FGameplayTag::RequestGameplayTag(TEXT("PGX.Save.Domain"));
 
 	if (!TestContextTag.IsValid() || !TestDomainTag.IsValid())
 	{

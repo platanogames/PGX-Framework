@@ -209,6 +209,10 @@ PGX_TEST_GAME(FPGXGameFlow_LoadingBridgeInvalidPayloadAutomationTest)
 
 	FPGXBridgeGameFlowChanged WrongPayload;
 	WrongPayload.NewState = TAG_PGX_GameFlow_State_InWorld.GetTag();
+	AddExpectedError(
+		TEXT("Struct type mismatch on channel PGX.Loading.GameFlow.SetState"),
+		EAutomationExpectedErrorFlags::Contains,
+		1);
 	MessageSubsystem->BroadcastMessage<FPGXBridgeGameFlowChanged>(TAG_PGX_Loading_GameFlow_SetState.GetTag(), WrongPayload);
 
 	TestTrue(TEXT("Loading bridge invalid/mismatched payloads do not mutate GameFlow Global state"),

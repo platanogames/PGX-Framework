@@ -53,12 +53,12 @@ public:
 	/** EN: Discovery strategy ONLY consulted when `PSOConfigTable` is unset.
 	 *      The canonical resolution path is `PSOConfigTable` (DataTable, deterministic).
 	 *      `AssetRegistryScan` is the deprecated fallback used when no DataTable is
-	 *      assigned. `Manual` mode is reserved for future use and currently has no
+	 *      assigned. `Manual` mode is reserved and currently has no
 	 *      runtime implementation; selecting it falls through to AssetRegistry scan.
 	 *  ES: Estrategia de discovery SOLO consultada cuando `PSOConfigTable` esta vacio.
 	 *      El path canonico de resolucion es `PSOConfigTable` (DataTable, deterministico).
 	 *      `AssetRegistryScan` es el fallback deprecated usado cuando no hay DataTable
-	 *      asignada. `Manual` esta reservado para uso futuro y no tiene implementacion
+	 *      asignada. `Manual` esta reservado y no tiene implementacion
 	 *      en runtime; al seleccionarlo se cae a AssetRegistry scan. */
 	UPROPERTY(config, EditAnywhere, Category = "Discovery",
 		meta = (ToolTip = "Only consulted when PSOConfigTable is unset. AssetRegistryScan is the deprecated fallback path; Manual mode is reserved (no runtime impl)."))
@@ -66,7 +66,7 @@ public:
 
 	/** EN: [Reserved] Explicit Config DA paths for the Manual discovery mode. Manual mode has
 	 *      no runtime implementation today; this list is parsed but not consumed. Kept for the
-	 *      shape of the future Manual path so projects can populate it pre-emptively.
+	 *      shape of Manual mode even though the current runtime does not consume it.
 	 *  ES: [Reservado] Rutas explicitas a Config DAs para el modo Manual. Manual no tiene
 	 *      implementacion en runtime; esta lista se parsea pero no se consume. */
 	UPROPERTY(config, EditAnywhere, Category = "Discovery",

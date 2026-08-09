@@ -109,8 +109,8 @@ class PGXCOREEDITOR_API UPGXValidationSettings : public UObject
 public:
 	UPGXValidationSettings();
 
-	// EN: Temporary documented exceptions while L2 runtime edges are migrated to Message.
-	// ES: Excepciones documentadas temporales mientras los edges runtime L2 migran a Message.
+	// EN: Configured exceptions for explicitly documented L2 runtime edges.
+	// ES: Excepciones configuradas para edges runtime L2 documentados explicitamente.
 	UPROPERTY(EditAnywhere, Config, Category = "PGX|Validation|StarTopology")
 	TArray<FPGXAllowedL2Edge> AllowedL2Edges;
 };

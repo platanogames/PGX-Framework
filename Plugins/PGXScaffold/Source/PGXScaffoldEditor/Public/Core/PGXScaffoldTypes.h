@@ -30,11 +30,6 @@ enum class EPGXScaffoldActionType : uint8
 	CreateFolder,
 	CreateDataAsset,
 	CreateBlueprint,
-	// Phase 2:
-	// CreateCppHeader,
-	// CreateCppSource,
-	// ModifyBuildCs,
-	// PostAction
 };
 
 /** EN: Validation severity / ES: Severidad de validacion */

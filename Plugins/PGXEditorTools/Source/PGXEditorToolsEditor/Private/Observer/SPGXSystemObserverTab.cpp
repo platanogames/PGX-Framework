@@ -636,7 +636,7 @@ void SPGXSystemObserverTab::CollectCoreClasses()
 // ES: Patrones de observacion de este panel (4 fuentes de datos distintas, no una).
 //     Ninguna Collect* consume el registro de tipos IPGXObservable (es un catalogo
 //     de clases, no una vista runtime). El panel del ObservabilityRegistry (mostrar
-//     las clases registradas) es feature futura, no parte de este observer.
+//     las clases registradas) no forma parte de este observer.
 // ============================================================================
 
 void SPGXSystemObserverTab::CollectSubsystems()

@@ -89,26 +89,36 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(
 
 bool FPGXVersionControl_ValidatorUPropertyMatchLocationAutomationTest::RunTest(const FString& /*Parameters*/)
 {
-	const FString FilePath = PGXVersionControlWriteTempFile(
-		TEXT("PGXRawPointerFixture.h"),
-		TEXT("#pragma once\nclass UPGXRawPointerFixture\n{\n\tUPROPERTY()\n\tUObject* Good;\n\tUObject* Bad;\n};\n"));
-
 	FPGXCommitValidator Validator;
-	TArray<FString> FilePaths;
-	FilePaths.Add(FilePath);
-	const TArray<FPGXValidationIssue> Issues = Validator.Validate(FilePaths);
-
-	const FPGXValidationIssue* UPropertyIssue = Issues.FindByPredicate([](const FPGXValidationIssue& Issue)
+	const auto ValidateLineEnding = [this, &Validator](const TCHAR* FixtureName, const TCHAR* LineEnding)
 	{
-		return Issue.RuleId == TEXT("UProperty.MissingTag");
-	});
+		const TArray<FString> Lines = {
+			TEXT("#pragma once"),
+			TEXT("class UPGXRawPointerFixture"),
+			TEXT("{"),
+			TEXT("\tUPROPERTY()"),
+			TEXT("\tUObject* Good;"),
+			TEXT("\tUObject* Bad;"),
+			TEXT("};"),
+			TEXT("")};
+		const FString Content = FString::Join(Lines, LineEnding);
+		const FString FilePath = PGXVersionControlWriteTempFile(FixtureName, Content);
+		const TArray<FPGXValidationIssue> Issues = Validator.Validate({FilePath});
+		const FPGXValidationIssue* UPropertyIssue = Issues.FindByPredicate([](const FPGXValidationIssue& Issue)
+		{
+			return Issue.RuleId == TEXT("UProperty.MissingTag");
+		});
 
-	TestNotNull(TEXT("Second raw UObject pointer is flagged"), UPropertyIssue);
-	if (UPropertyIssue)
-	{
-		TestEqual(TEXT("Issue points at second raw pointer, not first occurrence"), UPropertyIssue->LineNumber, 6);
-		TestEqual(TEXT("UProperty issue confidence is heuristic partial"), static_cast<int32>(UPropertyIssue->Confidence), static_cast<int32>(EPGXValidationConfidence::HeuristicPartial));
-	}
+		TestNotNull(*FString::Printf(TEXT("%s: second raw UObject pointer is flagged"), FixtureName), UPropertyIssue);
+		if (UPropertyIssue)
+		{
+			TestEqual(*FString::Printf(TEXT("%s: issue points at second raw pointer"), FixtureName), UPropertyIssue->LineNumber, 6);
+			TestEqual(*FString::Printf(TEXT("%s: confidence is heuristic partial"), FixtureName), static_cast<int32>(UPropertyIssue->Confidence), static_cast<int32>(EPGXValidationConfidence::HeuristicPartial));
+		}
+	};
+
+	ValidateLineEnding(TEXT("PGXRawPointerFixtureLF.h"), TEXT("\n"));
+	ValidateLineEnding(TEXT("PGXRawPointerFixtureCRLF.h"), TEXT("\r\n"));
 	return true;
 }
 

@@ -206,7 +206,7 @@ struct PGXMGOSRUNTIME_API FPGXGCSnapshot
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	TArray<FPGXGCClassCount> TopClasses;
 
-	/** EN: Process memory usage in MB [R1] / ES: Uso de memoria del proceso en MB [R1] */
+	/** EN: Process memory usage in MB / ES: Uso de memoria del proceso en MB */
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	float ProcessMemoryMB = 0.0f;
 };
@@ -252,7 +252,7 @@ struct PGXMGOSRUNTIME_API FPGXGCSnapshotDiff
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	TArray<FPGXGCClassDelta> ClassDeltas;
 
-	/** EN: Change in process memory MB [R1] / ES: Cambio en memoria del proceso MB [R1] */
+	/** EN: Change in process memory MB / ES: Cambio en memoria del proceso MB */
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	float ProcessMemoryDeltaMB = 0.0f;
 };
@@ -406,7 +406,7 @@ struct PGXMGOSRUNTIME_API FPGXGCBaseline
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	int64 PendingKillCount = 0;
 
-	/** EN: Process memory at baseline in MB [R1] / ES: Memoria del proceso en baseline en MB [R1] */
+	/** EN: Process memory at baseline in MB / ES: Memoria del proceso en baseline en MB */
 	UPROPERTY(BlueprintReadOnly, Category = "PGX|MGOS")
 	float BaselineProcessMemoryMB = 0.0f;
 

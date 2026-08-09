@@ -12,6 +12,7 @@
 #include "Data/PGXLevelAudioConfig.h"
 #include "Data/PGXMusicPlaylist.h"
 #include "Data/PGXSoundDefinition.h"
+#include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Misc/AutomationTest.h"
 #include "Tags/PGXAudioTags.h"
@@ -28,8 +29,14 @@ namespace PGXAudioAutomation
 		explicit FScopedGameInstanceFixture(FAutomationTestBase& InTest)
 			: Test(InTest)
 		{
+			if (!GEngine)
+			{
+				Test.AddError(TEXT("PGXAudio automation setup failed: engine is unavailable."));
+				return;
+			}
+
 			GameInstance = NewObject<UGameInstance>(
-				GetTransientPackage(),
+				GEngine,
 				UGameInstance::StaticClass(),
 				NAME_None,
 				RF_Transient);
@@ -40,7 +47,7 @@ namespace PGXAudioAutomation
 			}
 
 			GameInstance->AddToRoot();
-			GameInstance->Init();
+			GameInstance->InitializeStandalone(TEXT("PGXAudioAutomationWorld"));
 		}
 
 		~FScopedGameInstanceFixture()
@@ -83,9 +90,9 @@ namespace PGXAudioAutomation
 		return Audio;
 	}
 
-	UPGXAudioSubsystem* MakeStandaloneAudio()
+	UPGXAudioSubsystem* MakeStandaloneAudio(FAutomationTestBase& Test, UGameInstance* GameInstance)
 	{
-		return NewObject<UPGXAudioSubsystem>(GetTransientPackage(), UPGXAudioSubsystem::StaticClass(), NAME_None, RF_Transient);
+		return FindAudio(Test, GameInstance);
 	}
 
 	UPGXAudioConfig* MakeConfig(const TCHAR* Name, int32 MaxEventHistorySize = 8)
@@ -181,7 +188,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_BackendSwitchTargetMismatchAutomation
 	"PGX.Audio.PhaseB.BackendSwitchTargetMismatch", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_BackendSwitchTargetMismatchAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
 	if (!Audio)
 	{
 		AddError(TEXT("PGXAudio target-mismatch setup failed: subsystem allocation failed."));
@@ -202,7 +210,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_ConsoleMutationGatedAutomationTest,
 	"PGX.Audio.PhaseB.ConsoleMutationGated", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_ConsoleMutationGatedAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	UPGXAudioConfig* Config = PGXAudioAutomation::MakeConfig(TEXT("PGXAudio_Automation_ConsolePolicy"));
 	Audio->InjectTestAudioConfig(Config);
 
@@ -223,7 +236,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_EventHistoryShippingPolicyAutomationT
 	"PGX.Audio.PhaseB.EventHistoryShippingPolicy", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_EventHistoryShippingPolicyAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	UPGXAudioConfig* Config = PGXAudioAutomation::MakeConfig(TEXT("PGXAudio_Automation_ShippingPolicy"));
 	Audio->InjectTestAudioConfig(Config);
 	Audio->ClearEventHistoryForTesting();
@@ -246,7 +264,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_EventHistoryBoundedAutomationTest,
 	"PGX.Audio.PhaseB.EventHistoryBounded", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_EventHistoryBoundedAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	UPGXAudioConfig* Config = PGXAudioAutomation::MakeConfig(TEXT("PGXAudio_Automation_HistoryBounded"), 3);
 	Audio->InjectTestAudioConfig(Config);
 	Audio->ClearEventHistoryForTesting();
@@ -270,7 +293,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_CachedSoundDefinitionLookupAutomation
 	"PGX.Audio.PhaseB.CachedSoundDefinitionLookup", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_CachedSoundDefinitionLookupAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	const FGameplayTag SoundTag = TAG_PGX_Audio_Event_Play.GetTag();
 	UPGXSoundDefinition* First = PGXAudioAutomation::MakeSoundDefinition(TEXT("PGXAudio_Automation_Sound_First"), SoundTag);
 	UPGXSoundDefinition* Duplicate = PGXAudioAutomation::MakeSoundDefinition(TEXT("PGXAudio_Automation_Sound_Duplicate"), SoundTag);
@@ -288,7 +316,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_NoSilentFailureOnInvalidVolumeAutomat
 	"PGX.Audio.PhaseB.NoSilentFailureOnInvalidVolume", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_NoSilentFailureOnInvalidVolumeAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	UPGXAudioConfig* Config = PGXAudioAutomation::MakeConfig(TEXT("PGXAudio_Automation_InvalidVolume"));
 	Audio->InjectTestAudioConfig(Config);
 	Audio->ClearEventHistoryForTesting();
@@ -308,7 +341,12 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPGXAudio_PlaySoundReturnsInvalidHandleOnFailur
 	"PGX.Audio.PhaseB.PlaySoundReturnsInvalidHandleOnFailure", PGX_AUDIO_AUTOMATION_FLAGS)
 bool FPGXAudio_PlaySoundReturnsInvalidHandleOnFailureAutomationTest::RunTest(const FString& Parameters)
 {
-	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio();
+	PGXAudioAutomation::FScopedGameInstanceFixture Fixture(*this);
+	UPGXAudioSubsystem* Audio = PGXAudioAutomation::MakeStandaloneAudio(*this, Fixture.Get());
+	if (!Audio)
+	{
+		return true;
+	}
 	UPGXAudioConfig* Config = PGXAudioAutomation::MakeConfig(TEXT("PGXAudio_Automation_PlayFailure"));
 	Audio->InjectTestAudioConfig(Config);
 	Audio->ClearEventHistoryForTesting();
