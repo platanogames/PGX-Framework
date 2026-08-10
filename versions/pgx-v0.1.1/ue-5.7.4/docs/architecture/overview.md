@@ -49,7 +49,7 @@ Core instead of linking to one another.
 ## Release architecture
 
 The public repository is a cumulative catalog on the `release` branch. Each
-curated, dependency-checked snapshot lives under `versions/vX.Y.Z/` with its
+curated, dependency-checked snapshot lives under `versions/pgx-vX.Y.Z/ue-<engine-version>/` with its
 plugins, documentation and samples. A candidate must pass path and provenance
 checks, descriptor closure, exact file inventory checks and clean exported-tree
 Editor and Game builds before it can be proposed as a tagged preview. The

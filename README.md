@@ -10,12 +10,14 @@ PGX is an open-source, modular Unreal Engine gameplay framework maintained as a 
 
 | Version | Status | Unreal Engine | Snapshot |
 |---|---|---|---|
-| [`v0.1.1`](versions/v0.1.1/README.md) | **Published** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentation](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
-| [`v0.1.0`](versions/v0.1.0/README.md) | Published | 5.6 | [Plugins](versions/v0.1.0/Plugins/) · [Documentation](versions/v0.1.0/docs/) |
+| [`v0.1.1`](versions/pgx-v0.1.1/ue-5.7.4/README.md) | **Published** | 5.7.4 | [Plugins](versions/pgx-v0.1.1/ue-5.7.4/Plugins/) · [Documentation](versions/pgx-v0.1.1/ue-5.7.4/docs/) · [PGXDemo](versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/) |
+| [`v0.1.0`](versions/pgx-v0.1.0/ue-5.6/README.md) | Published | 5.6 | [Plugins](versions/pgx-v0.1.0/ue-5.6/Plugins/) · [Documentation](versions/pgx-v0.1.0/ue-5.6/docs/) |
 
 PGX published `v0.1.1` as a GitHub pre-release on August 10, 2026. That release includes the [version-specific archive](https://github.com/platanogames/PGX-Framework/releases/tag/v0.1.1).
 
-Machine-readable catalog metadata is available in [`RELEASES.json`](RELEASES.json). Each version also contains its own `RELEASE.json` and [`SHA256SUMS`](versions/v0.1.1/SHA256SUMS).
+Machine-readable catalog metadata is available in [`RELEASES.json`](RELEASES.json). Each version also contains its own `RELEASE.json` and [`SHA256SUMS`](versions/pgx-v0.1.1/ue-5.7.4/SHA256SUMS).
+
+See the [compatibility matrix](COMPATIBILITY.md) for the canonical version paths and the recorded precision of each Unreal Engine boundary.
 
 ## Current snapshot: `v0.1.1`
 
@@ -32,13 +34,13 @@ Validated gates:
 - Sanitizer and secret findings: **0**.
 - Missing dependency-closure entries and dependency cycles: **0**.
 
-See the [version README](versions/v0.1.1/README.md), [verification boundary](versions/v0.1.1/docs/validation/verification.md), and [known issues](versions/v0.1.1/KNOWN_ISSUES.md) before evaluating it.
+See the [version README](versions/pgx-v0.1.1/ue-5.7.4/README.md), [verification boundary](versions/pgx-v0.1.1/ue-5.7.4/docs/validation/verification.md), and [known issues](versions/pgx-v0.1.1/ue-5.7.4/KNOWN_ISSUES.md) before evaluating it.
 
 ## Using a snapshot
 
 1. Select a version from the table above.
 2. Read that version's README, known issues, and verification boundary.
-3. Copy the required plugins from `versions/<version>/Plugins/` into your Unreal project's `Plugins/` directory, or open the included sample project where available.
+3. Copy the required plugins from `versions/pgx-v<version>/ue-<engine-version>/Plugins/` into your Unreal project's `Plugins/` directory, or open the included sample project where available.
 4. Enable only the plugins required by your project and review their declared dependencies.
 5. Generate project files and build against the Unreal Engine version documented by that snapshot.
 6. Verify downloaded files against the version's `SHA256SUMS` file.
@@ -54,6 +56,7 @@ See the [version README](versions/v0.1.1/README.md), [verification boundary](ver
 ## Project links
 
 - [Release history](CHANGELOG.md)
+- [Compatibility matrix](COMPATIBILITY.md)
 - [Known issues index](KNOWN_ISSUES.md)
 - [Public roadmap](ROADMAP.md)
 - [Contributing](CONTRIBUTING.md)

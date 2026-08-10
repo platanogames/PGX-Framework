@@ -5,20 +5,27 @@
   "project": "PGX Framework",
   "publication_candidate": null,
   "repository_status": "development-preview",
-  "schema_version": 2,
+  "schema_version": 3,
   "versions": [
     {
       "archive": {
-        "bytes": 2283424,
+        "bytes": 2283751,
         "contains_local_receipt": false,
         "entries": 1367,
-        "name": "PGX-Framework-v0.1.1.zip",
-        "remote_attached": true,
-        "sha256": "bd28d00a564d8620d0dfaec7e13fd3dcf925216141447405251917c26116b5e4"
+        "legacy_asset_name": "PGX-Framework-v0.1.1.zip",
+        "legacy_asset_remote_attached": true,
+        "name": "PGX-Framework-v0.1.1-UE5.7.4.zip",
+        "remote_attached": false,
+        "sha256": "bf61906249bfa342a796caff828933c21aae9e5ea0c7e4decaee0b0c76d1434f"
       },
-      "engine": "Unreal Engine 5.7.4",
+      "canonical_path": "versions/pgx-v0.1.1/ue-5.7.4",
+      "engine": {
+        "precision": "patch",
+        "version": "5.7.4"
+      },
+      "framework_version": "0.1.1",
       "intended_tag": "v0.1.1",
-      "path": "versions/v0.1.1",
+      "legacy_path": "versions/v0.1.1",
       "published_at": "2026-08-10T13:55:53Z",
       "remote_publication_verified": true,
       "source_export": {
@@ -33,40 +40,53 @@
       },
       "status": "published",
       "tag": "v0.1.1",
+      "title": "PGX Framework v0.1.1 — Unreal Engine 5.7.4 — Development Preview",
       "tracked_snapshot": {
-        "bytes": 7228410,
+        "bytes": 7229371,
         "catalog_metadata_files": 2,
         "files": 1367,
         "payload_files": 1365,
-        "release_json_sha256": "7a59ef121cdec11f32dda9c4799a244cfc987ef1eb68cd721126bdfdd97627f6",
-        "sha256sums_sha256": "c6abd75a9b50d9f614d25fe92e55a0d27907f0263c1bf1512e8a01892c121cae",
-        "tree_sha256": "ee87be94418938f7843418f52b6cd535b47ee7ee61bd4ed0305c761dcd840d4b"
-      },
-      "version": "0.1.1"
+        "release_json_sha256": "c11c4ec14d75bd4bf7982bf5961e6a68847a55dd843fc9ff43d3007218b36b95",
+        "sha256sums_sha256": "7bfd0e1c2237e7fd41ed5a6eabee3f6fa7f6a602939bcf040b3f5d22822d0ec0",
+        "tree_sha256": "9f1fb8f8dd8dc78888770a82197ef29fa17fa06f164b619d500559221c5ca57f"
+      }
     },
     {
-      "engine": "Unreal Engine 5.6",
+      "archive": {
+        "bytes": 2237865,
+        "contains_local_receipt": false,
+        "entries": 1334,
+        "name": "PGX-Framework-v0.1.0-UE5.6.zip",
+        "remote_attached": false,
+        "sha256": "a6cf88e93c4167de23d5ce97d51c416ff1e23bebd1019363ffb4ce60344fa48d"
+      },
+      "canonical_path": "versions/pgx-v0.1.0/ue-5.6",
+      "engine": {
+        "precision": "minor",
+        "version": "5.6"
+      },
+      "framework_version": "0.1.0",
       "historical_payload": {
         "bytes": 6929117,
         "files": 1332,
         "manifest_tree_sha256": "cda6f3e077506ebe23ac29432d22fa4f2d134ef9ddb243cef82911a248449b86"
       },
-      "path": "versions/v0.1.0",
+      "legacy_path": "versions/v0.1.0",
       "published_at": "2026-08-09",
       "remote_publication_verified": true,
       "source_commit": "d1974ab7257ec23cc0273e111f244e7f516dc237",
       "status": "published",
       "tag": "v0.1.0",
+      "title": "PGX Framework v0.1.0 — Unreal Engine 5.6 — Development Preview",
       "tracked_snapshot": {
-        "bytes": 7115845,
+        "bytes": 7116283,
         "catalog_metadata_files": 2,
         "files": 1334,
         "historical_files": 1332,
-        "release_json_sha256": "d39f1150ca9cf2543080a1713e471a5ce336331e4ecb53adc6b1d62bf2999634",
-        "sha256sums_sha256": "a63df866912c99573df3d75ef5761c5eb76bd20b773854123efe62405b21a4f2",
-        "tree_sha256": "0c063cda49fd01e428ca796948603431bf8ea567de0a97926e790314cf458d87"
-      },
-      "version": "0.1.0"
+        "release_json_sha256": "6e5e74a513a70a6cd7a1f7c4240c48f324ac90e4a543b38bc1cfb48053ce3f9e",
+        "sha256sums_sha256": "7eefe358057f6767a7ec43f6ac43c432c1b383429dacde9ba81c5ef6f244cf97",
+        "tree_sha256": "decc894d55598245d7a0fe8072a404eba4927f0d15eb009ee4244cd7865b5c6b"
+      }
     }
   ]
 }

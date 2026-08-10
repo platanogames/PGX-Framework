@@ -13,7 +13,7 @@ independently of the source worktree.
 ## Repository layout
 
 The public repository has one `release` branch. Each accepted snapshot lives at
-`versions/vX.Y.Z/` and contains its own plugins, documentation and samples. An
+`versions/pgx-vX.Y.Z/ue-<engine-version>/` and contains its own plugins, documentation and samples. An
 older version directory is preserved when a newer version is added.
 
 Git tags and GitHub Releases mark immutable publication boundaries. The

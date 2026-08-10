@@ -1,0 +1,33 @@
+{
+  "archive": {
+    "name": "PGX-Framework-v0.1.0-UE5.6.zip",
+    "remote_attached": false
+  },
+  "canonical_path": "versions/pgx-v0.1.0/ue-5.6",
+  "engine": {
+    "precision": "minor",
+    "version": "5.6"
+  },
+  "evidence_boundaries": {
+    "annotated_tag_immutable": true,
+    "archive_digest": "root RELEASES.json and external artifact evidence after deterministic build",
+    "canonical_archive_remote_attachment_verified": false,
+    "engine_patch_known": false,
+    "snapshot_manifest": "SHA256SUMS"
+  },
+  "framework_version": "0.1.0",
+  "historical_payload": {
+    "byte_count": 6929117,
+    "file_count": 1332,
+    "manifest_tree_sha256": "cda6f3e077506ebe23ac29432d22fa4f2d134ef9ddb243cef82911a248449b86",
+    "scope": "exact historical flat public tree before catalog metadata and later documentation navigation edits"
+  },
+  "legacy_path": "versions/v0.1.0",
+  "published_at": "2026-08-09",
+  "remote_publication_verified": true,
+  "schema_version": 2,
+  "source_commit": "d1974ab7257ec23cc0273e111f244e7f516dc237",
+  "status": "published",
+  "tag": "v0.1.0",
+  "title": "PGX Framework v0.1.0 — Unreal Engine 5.6 — Development Preview"
+}

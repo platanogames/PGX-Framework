@@ -1,8 +1,6 @@
-# PGX Framework
+# PGX Framework v0.1.1 — Unreal Engine 5.7.4
 
 **Extensiones profesionales para videojuegos en Unreal Engine 5**
-
-## Vista previa de desarrollo
 
 > [!WARNING]
 > **PGX se encuentra en desarrollo activo.** Esta vista previa pública permite
@@ -17,6 +15,8 @@
 [![Estado: Development Preview](https://img.shields.io/badge/estado-development_preview-orange.svg)](#vista-previa-de-desarrollo)
 [![Licencia: Apache-2.0](https://img.shields.io/badge/licencia-Apache--2.0-green.svg)](LICENSE.md)
 
+## Vista previa de desarrollo
+
 [English](README.md) | Español
 
 PGX reúne plugins para proyectos de Unreal Engine 5 que necesitan configuración
@@ -28,7 +28,8 @@ Unreal, con puntos de extensión visibles en C++.
 
 | Área | Política actual |
 |---|---|
-| Versión | `0.1.0` (`v0.1.0`), publicada el 2026-08-09 |
+| Versión actual | `0.1.1` (`v0.1.1`) |
+| Motor validado | Unreal Engine 5.7.4, con objetivos Windows Development |
 | Etapa de publicación | Pre-release / Development Preview (`0.x`) |
 | Uso previsto | Evaluación de arquitectura y API, aprendizaje, pruebas y comentarios |
 | Estabilidad de API | Puede haber cambios incompatibles entre versiones preliminares |
@@ -40,16 +41,16 @@ de compilación se publican únicamente cuando han sido validados para una versi
 concreta. Consulta sus notas antes de evaluar PGX en un proyecto
 de Unreal Engine.
 
-La instantánea preliminar verificada de `v0.1.0` contiene
-**26 plugins, 48 módulos de Unreal y 1.305 archivos de plugin exportados**. En
-Unreal Engine 5.6, con objetivos Windows Development, el árbol exportado superó
-estos controles:
+La instantánea preliminar verificada de `v0.1.1` contiene **26 plugins y 48 módulos de Unreal**
+en una única constelación compatible. En Unreal Engine
+5.7.4, con objetivos Windows Development, el candidato exportado superó estos
+controles:
 
-- recompilación limpia de Editor: 778/778 acciones superadas;
-- recompilación limpia de Game: 417/417 acciones superadas;
-- Automation de Editor: 232/232 superadas, sin fallos ni pruebas omitidas;
-- Automation de Game: 112/112 superadas, sin fallos ni pruebas omitidas;
-- Automation combinada: 344/344 superadas.
+- compilación limpia de Editor: 792/792 acciones superadas;
+- compilación limpia de Game: 414/414 acciones superadas;
+- Automation de Editor: 242/242 pruebas superadas;
+- Automation de Game: 115/115 pruebas superadas;
+- `PGX.Demo`: 3/3 pruebas superadas.
 
 ## Modelo de desarrollo y publicación
 
@@ -58,9 +59,10 @@ público recibe versiones revisadas que contienen únicamente
 el código fuente, documentación, pruebas y archivos de proyecto aprobados para
 distribución pública.
 
-Las etiquetas publicadas se tratan como instantáneas inmutables. Las correcciones
-y los cambios avanzan mediante una nueva versión en lugar de reescribir una
-existente.
+El repositorio público utiliza una única rama `release` y conserva cada
+instantánea aprobada en `versions/pgx-vX.Y.Z/ue-<engine-version>/`. Las etiquetas y las publicaciones
+de GitHub son límites inmutables. Las correcciones avanzan mediante una nueva
+versión en lugar de reescribir una existente.
 
 El material privado de trabajo, los componentes sin comportamiento, los archivos
 generados, las cachés y el contenido sin un límite de redistribución verificado
@@ -75,8 +77,13 @@ y se incluyen en una versión pública posterior.
 
 ```text
 PGX-Framework/
-├── Plugins/              Plugins de ejecución y de editor incluidos en PGX
-├── docs/                 Guías públicas versionadas
+├── versions/
+│   ├── v0.1.0/           Primera instantánea pública conservada
+│   └── v0.1.1/
+│       ├── Plugins/      Constelación de plugins de esta versión
+│       ├── Samples/
+│       │   └── PGXDemo/  Proyecto de ejemplo listo para abrir
+│       └── docs/         Documentación vinculada a la instantánea
 ├── .github/              Flujos de contribución y del repositorio
 ├── README.md             Presentación del proyecto en inglés
 ├── README.es.md          Presentación del proyecto en español
@@ -88,13 +95,13 @@ PGX-Framework/
 └── NOTICE                Atribución y límites de terceros
 ```
 
-El contenido de `Plugins/` define el alcance de cada versión pública. Los
-componentes que no estén presentes en una versión etiquetada no forman parte de
-su API pública ni de su límite de soporte.
+El contenido de cada directorio versionado define su API pública y su límite de
+soporte. Los componentes ausentes de `versions/pgx-v0.1.1/ue-5.7.4/` no forman parte de
+`v0.1.1`.
 
 ## Plugins incluidos
 
-La versión preliminar pública `v0.1.0` contiene **26 plugins y 48 módulos de Unreal**.
+La versión preliminar pública `v0.1.1` contiene **26 plugins y 48 módulos de Unreal**.
 El repositorio combina sistemas consolidados con versiones preliminares; la
 presencia de un plugin no significa que todas sus capacidades previstas estén implementadas.
 
@@ -129,17 +136,37 @@ comprobarse contra sus descriptores y reglas de módulo. Consulta
 [Verificación](docs/validation/verification.md) para conocer la evidencia exacta
 y sus límites.
 
-## Explorar la versión preliminar
+## Instalar o explorar v0.1.1
 
-1. Revisa el directorio [`Plugins/`](Plugins/).
+Para instalar con un límite inequívoco, descarga el artefacto específico de la
+versión adjunto a la publicación `v0.1.1` de GitHub. Los archivos de código
+fuente generados automáticamente por GitHub contienen el catálogo acumulado del
+monorepo, incluidas todas las versiones conservadas.
+
+1. Abre [`versions/pgx-v0.1.1/ue-5.7.4/`](./).
+2. Revisa [`versions/pgx-v0.1.1/ue-5.7.4/Plugins/`](Plugins/).
+3. Copia los plugins necesarios al directorio `Plugins/` de tu proyecto sin
+   renombrarlos.
+4. Incluye `PGXCore` y todas las dependencias declaradas por los descriptores.
+5. Regenera los archivos de proyecto y compila el objetivo previsto.
+
+Para inspeccionar una integración configurada, abre
+[`versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/PGXDemo.uproject`](Samples/PGXDemo/PGXDemo.uproject).
+El ejemplo demuestra Message, GameFlow, Save e InputBuffer. Los otros 22 plugins
+están presentes para validar dependencias, carga y enlazado; su presencia no
+significa que el ejemplo demuestre su comportamiento durante la ejecución.
+
+Para revisar el código fuente:
+
+1. Revisa el directorio versionado `Plugins/`.
 2. Abre el descriptor de un plugin para inspeccionar sus módulos y dependencias.
 3. Consulta su árbol `Source/` y la documentación incluida con ese plugin.
 4. Revisa el [`CHANGELOG`](CHANGELOG.md) público para conocer los cambios de cada versión.
 5. Utiliza los formularios de incidencias para preguntas o hallazgos reproducibles.
 
 Para evaluar la ruta de editor actual en Windows, sigue la
-[guía de primeros pasos](docs/getting-started/quickstart.md). El proyecto de
-ejemplo mantenido y la guía para compilaciones empaquetadas siguen en preparación.
+[guía de primeros pasos](docs/getting-started/quickstart.md). La
+validación empaquetada y Shipping permanece fuera del alcance actual.
 
 ## Documentación
 
@@ -149,14 +176,15 @@ API permanece vinculada a la instantánea que describe.
 
 Empieza por:
 
-- [`docs/getting-started/quickstart.md`](docs/getting-started/quickstart.md): lista de comprobación para evaluar la versión preliminar
-- [`docs/architecture/overview.md`](docs/architecture/overview.md): estructura del monorepo y límites entre plugins
-- [`docs/architecture/system-map.md`](docs/architecture/system-map.md): capas y flujos entre plugins
-- [`docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): topología exacta de plugins y módulos
-- [`docs/plugins/catalog.md`](docs/plugins/catalog.md): responsabilidades implementadas y límites de los 26 plugins
-- [`docs/validation/verification.md`](docs/validation/verification.md): comprobaciones realizadas y sus límites
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/getting-started/quickstart.md`](docs/getting-started/quickstart.md): lista de comprobación para evaluar la versión preliminar
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/overview.md`](docs/architecture/overview.md): estructura del monorepo y límites entre plugins
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/system-map.md`](docs/architecture/system-map.md): capas y flujos entre plugins
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): topología exacta de plugins y módulos
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/plugins/catalog.md`](docs/plugins/catalog.md): responsabilidades implementadas y límites de los 26 plugins
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/validation/verification.md`](docs/validation/verification.md): comprobaciones realizadas y sus límites
 - [Wiki del proyecto](https://github.com/platanogames/PGX-Framework/wiki): arquitectura y flujos de trabajo ampliados
-- [`Plugins/`](Plugins/): descriptores, código fuente y documentación incluida
+- [`versions/pgx-v0.1.1/ue-5.7.4/Plugins/`](Plugins/): descriptores, código fuente y documentación incluida
+- [`versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/`](Samples/PGXDemo/): proyecto de ejemplo configurado
 - [`CHANGELOG.md`](CHANGELOG.md): cambios públicos e historial de versiones
 - [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md): limitaciones verificadas de la versión preliminar
 - [`ROADMAP.md`](ROADMAP.md): hitos públicos hacia un contrato estable

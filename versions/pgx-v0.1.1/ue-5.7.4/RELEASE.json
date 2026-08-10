@@ -1,14 +1,22 @@
 {
-  "catalog_metadata": {
-    "added_files": [
-      "RELEASE.json",
-      "SHA256SUMS"
-    ],
-    "sha256sums_scope": "every tracked snapshot file except SHA256SUMS, sorted by UTF-8 relative path",
-    "tracked_snapshot_files_after_metadata": 1367
+  "archive": {
+    "legacy_asset_name": "PGX-Framework-v0.1.1.zip",
+    "name": "PGX-Framework-v0.1.1-UE5.7.4.zip",
+    "remote_attached": false
   },
-  "engine": "Unreal Engine 5.7.4",
-  "intended_tag": "v0.1.1",
+  "canonical_path": "versions/pgx-v0.1.1/ue-5.7.4",
+  "engine": {
+    "precision": "patch",
+    "version": "5.7.4"
+  },
+  "evidence_boundaries": {
+    "annotated_tag_immutable": true,
+    "archive_digest": "root RELEASES.json and external artifact evidence after deterministic build",
+    "canonical_archive_remote_attachment_verified": false,
+    "snapshot_manifest": "SHA256SUMS"
+  },
+  "framework_version": "0.1.1",
+  "legacy_path": "versions/v0.1.1",
   "local_receipt": {
     "path": "export-report.json",
     "reason": "Local release-control receipt excluded by the exported public .gitignore.",
@@ -16,10 +24,10 @@
     "signature": "8ba917e948561a0c4000c42657c3ed2e15ba09d8f86cf1bd160de4cb1f02f827",
     "tracked_in_snapshot": false
   },
-  "publication_boundary": "Validated and assembled locally; no remote publication or readback is claimed.",
-  "published_at": null,
-  "remote_publication_verified": false,
-  "schema_version": 1,
+  "publication_boundary": "The annotated tag and existing GitHub release are verified. The engine-explicit replacement archive remains local until independent remote attachment readback.",
+  "published_at": "2026-08-10T13:55:53Z",
+  "remote_publication_verified": true,
+  "schema_version": 2,
   "source_export": {
     "bytes_including_local_receipt": 7563943,
     "files_including_local_receipt": 1366,
@@ -28,8 +36,9 @@
     "source": "export-g",
     "tree_sha256": "23deadbba619277434df816868f98d1e95ca1d280c80672556ce723b04e61084"
   },
-  "status": "ready-for-publication",
-  "tag": null,
+  "status": "published",
+  "tag": "v0.1.1",
+  "title": "PGX Framework v0.1.1 — Unreal Engine 5.7.4 — Development Preview",
   "validation": {
     "binary_byte_preserved_files": 7,
     "demo_asset_verification": "7/7",
@@ -45,6 +54,5 @@
     "sanitizer_findings": 0,
     "secret_findings": 0,
     "text_lf_files": 1358
-  },
-  "version": "0.1.1"
+  }
 }

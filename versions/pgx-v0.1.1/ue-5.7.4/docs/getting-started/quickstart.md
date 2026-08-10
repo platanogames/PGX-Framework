@@ -17,7 +17,7 @@ the current claim. See [Verification](../validation/verification.md) for limits.
 1. Prefer the version-specific artifact attached to the `v0.1.1` GitHub Release.
    GitHub automatic source archives contain the cumulative version catalog.
 2. Close the Unreal Editor.
-3. From `versions/v0.1.1/`, copy the selected directories from `Plugins/` into
+3. From `versions/pgx-v0.1.1/ue-5.7.4/`, copy the selected directories from `Plugins/` into
    your project's `Plugins/` directory without renaming them.
 4. Include `PGXCore` and every dependency declared by the selected `.uplugin`
    files. The verified 26-plugin result does not validate arbitrary subsets.
@@ -31,7 +31,7 @@ the declared dependency or disable the plugin that requires it.
 
 ## Open the example project
 
-Open `versions/v0.1.1/Samples/PGXDemo/PGXDemo.uproject` to inspect the complete
+Open `versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/PGXDemo.uproject` to inspect the complete
 constellation in a configured project. The example demonstrates Message,
 GameFlow, Save and InputBuffer. The other 22 plugins are present for dependency,
 loading and linking checks rather than runtime demonstrations.

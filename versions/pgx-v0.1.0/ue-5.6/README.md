@@ -1,8 +1,6 @@
-# PGX Framework
+# PGX Framework v0.1.0 — Unreal Engine 5.6
 
 **Professional Game Extensions for Unreal Engine 5**
-
-## Development Preview
 
 > [!WARNING]
 > **PGX is under active development.** This public preview is available so
@@ -15,6 +13,8 @@
 
 [![Status: Development Preview](https://img.shields.io/badge/status-development_preview-orange.svg)](#development-preview)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
+
+## Development Preview
 
 English | [Español](README.es.md)
 

@@ -10,12 +10,14 @@ PGX es un framework modular y de código abierto para Unreal Engine, mantenido c
 
 | Versión | Estado | Unreal Engine | Instantánea |
 |---|---|---|---|
-| [`v0.1.1`](versions/v0.1.1/README.es.md) | **Publicada** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentación](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
-| [`v0.1.0`](versions/v0.1.0/README.es.md) | Publicada | 5.6 | [Plugins](versions/v0.1.0/Plugins/) · [Documentación](versions/v0.1.0/docs/) |
+| [`v0.1.1`](versions/pgx-v0.1.1/ue-5.7.4/README.es.md) | **Publicada** | 5.7.4 | [Plugins](versions/pgx-v0.1.1/ue-5.7.4/Plugins/) · [Documentación](versions/pgx-v0.1.1/ue-5.7.4/docs/) · [PGXDemo](versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/) |
+| [`v0.1.0`](versions/pgx-v0.1.0/ue-5.6/README.es.md) | Publicada | 5.6 | [Plugins](versions/pgx-v0.1.0/ue-5.6/Plugins/) · [Documentación](versions/pgx-v0.1.0/ue-5.6/docs/) |
 
 PGX publicó `v0.1.1` como versión preliminar en GitHub el 10 de agosto de 2026. La publicación incluye el [archivo específico de la versión](https://github.com/platanogames/PGX-Framework/releases/tag/v0.1.1).
 
-Los metadatos del catálogo legibles por herramientas están en [`RELEASES.json`](RELEASES.json). Cada versión también contiene su propio `RELEASE.json` y un fichero [`SHA256SUMS`](versions/v0.1.1/SHA256SUMS).
+Los metadatos del catálogo legibles por herramientas están en [`RELEASES.json`](RELEASES.json). Cada versión también contiene su propio `RELEASE.json` y un fichero [`SHA256SUMS`](versions/pgx-v0.1.1/ue-5.7.4/SHA256SUMS).
+
+Consulta la [matriz de compatibilidad](COMPATIBILITY.md) para ver las rutas canónicas y la precisión registrada de cada límite de Unreal Engine.
 
 ## Instantánea actual: `v0.1.1`
 
@@ -32,13 +34,13 @@ Controles validados:
 - Hallazgos del saneador y de secretos: **0**.
 - Dependencias ausentes en el cierre y ciclos de dependencias: **0**.
 
-Consulta el [README de la versión](versions/v0.1.1/README.es.md), sus [límites de verificación](versions/v0.1.1/docs/validation/verification.md) y sus [problemas conocidos](versions/v0.1.1/KNOWN_ISSUES.md) antes de evaluarla.
+Consulta el [README de la versión](versions/pgx-v0.1.1/ue-5.7.4/README.es.md), sus [límites de verificación](versions/pgx-v0.1.1/ue-5.7.4/docs/validation/verification.md) y sus [problemas conocidos](versions/pgx-v0.1.1/ue-5.7.4/KNOWN_ISSUES.md) antes de evaluarla.
 
 ## Cómo utilizar una instantánea
 
 1. Selecciona una versión en la tabla anterior.
 2. Lee su README, sus problemas conocidos y sus límites de verificación.
-3. Copia los plugins necesarios desde `versions/<versión>/Plugins/` al directorio `Plugins/` de tu proyecto de Unreal, o abre el proyecto de ejemplo incluido cuando esté disponible.
+3. Copia los plugins necesarios desde `versions/pgx-v<versión>/ue-<versión-del-motor>/Plugins/` al directorio `Plugins/` de tu proyecto de Unreal, o abre el proyecto de ejemplo incluido cuando esté disponible.
 4. Activa solo los plugins que necesites y revisa sus dependencias declaradas.
 5. Genera los archivos del proyecto y compila con la versión de Unreal Engine documentada en esa instantánea.
 6. Comprueba los archivos descargados con el fichero `SHA256SUMS` de la versión.
@@ -54,6 +56,7 @@ Consulta el [README de la versión](versions/v0.1.1/README.es.md), sus [límites
 ## Enlaces del proyecto
 
 - [Historial de versiones](CHANGELOG.md)
+- [Matriz de compatibilidad](COMPATIBILITY.md)
 - [Índice de problemas conocidos](KNOWN_ISSUES.md)
 - [Roadmap público](ROADMAP.md)
 - [Cómo contribuir](CONTRIBUTING.md)

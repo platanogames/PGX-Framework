@@ -15,7 +15,7 @@ No changes recorded.
 
 ### Added
 
-- A versioned public catalog under `versions/vX.Y.Z/` on the single `release`
+- A versioned public catalog under `versions/pgx-vX.Y.Z/ue-<engine-version>/` on the single `release`
   branch.
 - `Samples/PGXDemo`, a ready-to-open Unreal Engine 5.7.4 project that
   demonstrates Message, GameFlow, Save and InputBuffer.

@@ -1,4 +1,4 @@
-# PGX Framework
+# PGX Framework v0.1.1 — Unreal Engine 5.7.4
 
 **Professional Game Extensions for Unreal Engine 5**
 
@@ -57,7 +57,7 @@ source, documentation, tests, and project files approved for public
 distribution.
 
 The public repository uses one `release` branch and keeps each approved snapshot
-under `versions/vX.Y.Z/`. Published tags and GitHub Releases are immutable
+under `versions/pgx-vX.Y.Z/ue-<engine-version>/`. Published tags and GitHub Releases are immutable
 boundaries. Fixes move forward through a new version rather than rewriting an
 existing snapshot.
 
@@ -93,7 +93,7 @@ PGX-Framework/
 ```
 
 The contents of a version directory define that snapshot's public API and
-support boundary. Components absent from `versions/v0.1.1/` are not part of
+support boundary. Components absent from `versions/pgx-v0.1.1/ue-5.7.4/` are not part of
 `v0.1.1`.
 
 ## Included plugins
@@ -139,15 +139,15 @@ For the clearest installation boundary, download the version-specific artifact
 attached to the `v0.1.1` GitHub Release. GitHub's automatic source archives
 contain the cumulative monorepo catalog, including every preserved version.
 
-1. Open [`versions/v0.1.1/`](./).
-2. Browse [`versions/v0.1.1/Plugins/`](Plugins/).
+1. Open [`versions/pgx-v0.1.1/ue-5.7.4/`](./).
+2. Browse [`versions/pgx-v0.1.1/ue-5.7.4/Plugins/`](Plugins/).
 3. Copy the required plugin directories into your project's `Plugins/`
    directory without renaming them.
 4. Include `PGXCore` and every dependency declared by the selected descriptors.
 5. Regenerate project files and build the intended target.
 
 To inspect a configured integration, open
-[`versions/v0.1.1/Samples/PGXDemo/PGXDemo.uproject`](Samples/PGXDemo/PGXDemo.uproject).
+[`versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/PGXDemo.uproject`](Samples/PGXDemo/PGXDemo.uproject).
 The sample demonstrates Message, GameFlow, Save and InputBuffer. The other 22
 plugins are present for dependency, loading and linking validation; their
 presence is not a claim that the sample demonstrates their runtime behavior.
@@ -172,15 +172,15 @@ snapshot it describes.
 
 Start with:
 
-- [`versions/v0.1.1/docs/getting-started/quickstart.md`](docs/getting-started/quickstart.md): preview evaluation checklist
-- [`versions/v0.1.1/docs/architecture/overview.md`](docs/architecture/overview.md): monorepo and plugin boundaries
-- [`versions/v0.1.1/docs/architecture/system-map.md`](docs/architecture/system-map.md): layers and cross-plugin flows
-- [`versions/v0.1.1/docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): exact plugin and module topology
-- [`versions/v0.1.1/docs/plugins/catalog.md`](docs/plugins/catalog.md): implemented responsibilities and limits for all 26 plugins
-- [`versions/v0.1.1/docs/validation/verification.md`](docs/validation/verification.md): verified checks and their limits
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/getting-started/quickstart.md`](docs/getting-started/quickstart.md): preview evaluation checklist
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/overview.md`](docs/architecture/overview.md): monorepo and plugin boundaries
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/system-map.md`](docs/architecture/system-map.md): layers and cross-plugin flows
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/architecture/modules-and-dependencies.md`](docs/architecture/modules-and-dependencies.md): exact plugin and module topology
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/plugins/catalog.md`](docs/plugins/catalog.md): implemented responsibilities and limits for all 26 plugins
+- [`versions/pgx-v0.1.1/ue-5.7.4/docs/validation/verification.md`](docs/validation/verification.md): verified checks and their limits
 - [Project Wiki](https://github.com/platanogames/PGX-Framework/wiki): extended architecture and workflow guides
-- [`versions/v0.1.1/Plugins/`](Plugins/): plugin descriptors, source, and included plugin docs
-- [`versions/v0.1.1/Samples/PGXDemo/`](Samples/PGXDemo/): configured example project
+- [`versions/pgx-v0.1.1/ue-5.7.4/Plugins/`](Plugins/): plugin descriptors, source, and included plugin docs
+- [`versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/`](Samples/PGXDemo/): configured example project
 - [`CHANGELOG.md`](CHANGELOG.md): public changes and release history
 - [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md): verified preview limitations
 - [`ROADMAP.md`](ROADMAP.md): public milestones toward a stable contract

@@ -3,8 +3,9 @@
 ## Start here
 
 - Read the [repository overview](README.md) and select the exact version you are using.
+- Confirm its Unreal Engine boundary in the [compatibility matrix](COMPATIBILITY.md).
 - Review the version-specific README, verification boundary, and [known issues index](KNOWN_ISSUES.md).
-- For the current release-ready snapshot, start with the [`v0.1.1` quickstart](versions/v0.1.1/docs/getting-started/quickstart.md).
+- For the current published snapshot, start with the [`PGX v0.1.1 · Unreal Engine 5.7.4` quickstart](versions/pgx-v0.1.1/ue-5.7.4/docs/getting-started/quickstart.md).
 - Search existing GitHub issues before opening a new question.
 
 ## Good support requests
