@@ -1,0 +1,27 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "2.0.0",
+  "FriendlyName": "PGX PSO System",
+  "Description": "Pipeline State Object warm-up and recording system. Data-driven PSO precaching via Config DataAssets, batched material loading, deduplication, and editor tools for Active Audit workflows.",
+  "Category": "PGX Framework",
+  "CreatedBy": "PGX",
+  "CanContainContent": true,
+  "IsBetaVersion": false,
+  "EnabledByDefault": false,
+  "Modules": [
+    {
+      "Name": "PGXPSORuntime",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "PGXPSOEditor",
+      "Type": "Editor",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    { "Name": "PGXCore", "Enabled": true }
+  ]
+}

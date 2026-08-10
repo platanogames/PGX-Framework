@@ -1,42 +1,15 @@
-# Changelog
+# Release history
 
-Public release changes for PGX Framework are recorded here.
+This root index tracks the version catalog. Detailed notes remain inside each version snapshot.
 
-PGX follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses
-Semantic Versioning for tagged public snapshots. During the `0.x` Development
-Preview, incompatible API changes may occur between releases and will be called
-out explicitly.
+## Ready for publication
 
-## [Unreleased]
+### [`v0.1.1`](versions/v0.1.1/CHANGELOG.md)
 
-No changes recorded.
+Development Preview snapshot for Unreal Engine 5.7.4, including 26 plugins and the PGXDemo sample project. Local export, build, automation, sanitation, dependency, metadata, and archive gates are complete. Remote publication and readback remain pending.
 
-## [0.1.0] - 2026-08-09
+## Published
 
-### Added
+### [`v0.1.0`](versions/v0.1.0/CHANGELOG.md) — 2026-08-09
 
-- Bilingual Development Preview documentation.
-- Public monorepo structure for the expanded 26-plugin, 48-module preview.
-- Functional and structured preview systems for ability, AI, camera, colony,
-  crafting, environment, input, interaction, inventory, spawning, trade, UI and vehicles.
-- PGXSimHarness as an editor verification and demonstration tool.
-- Release-boundary documentation, known-issues tracking, roadmap, and third-party notices.
-- Architecture maps, dependency reference, runtime flows, plugin catalog and
-  verification boundary.
-
-### Changed
-
-- The public distribution model now uses reviewed, immutable release snapshots
-  produced from the canonical development monorepo.
-- Historical `stub` labels now distinguish functional previews, structured
-  previews, concept shells and true stubs.
-
-### Security
-
-- Public release preparation now requires path, provenance, dependency, license,
-  secret, and clean-clone validation before a tag can be created.
-
-## Release status
-
-`0.1.0` is the first source-bearing public release. Its Git tag is `v0.1.0`, and
-the GitHub release is marked as a pre-release / Development Preview.
+First source-bearing Development Preview release for Unreal Engine 5.6.

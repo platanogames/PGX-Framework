@@ -1,0 +1,36 @@
+name: Feature proposal
+description: Propose a focused improvement to a public PGX surface.
+title: "[Proposal]: "
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and use case
+      description: Describe the Unreal workflow or architectural gap, not only a preferred solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed public contract
+      description: Explain the API, editor, configuration, or documentation surface you would add or change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and trade-offs
+  - type: input
+    id: revision
+    attributes:
+      label: PGX revision evaluated
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope checks
+      options:
+        - label: I searched existing issues and the public roadmap.
+          required: true
+        - label: The proposal does not include private source, credentials, or licensed assets.
+          required: true

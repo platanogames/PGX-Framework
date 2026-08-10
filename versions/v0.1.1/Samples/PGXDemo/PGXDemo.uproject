@@ -1,0 +1,132 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.7",
+  "Category": "Samples",
+  "Description": "Minimal PGX Framework UE 5.7.4 development preview.",
+  "DisableEnginePluginsByDefault": true,
+  "AdditionalPluginDirectories": [
+    "../../Plugins"
+  ],
+  "Modules": [
+    {
+      "Name": "PGXDemo",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "PGXDemoEditor",
+      "Type": "Editor",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+	{
+	  "Name": "ACLPlugin",
+	  "Enabled": true
+	},
+    {
+      "Name": "PGXCore",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXGameFlow",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXSave",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXPSO",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXLoading",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXMGOS",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXAudio",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXDocs",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXVersionControl",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXTutorials",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXScaffold",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXEditorTools",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXSimHarness",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXCamera",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXUI",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXInput",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXInteraction",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXInventory",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXAbility",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXSpawn",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXAI",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXColony",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXCrafting",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXEnvironment",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXTrade",
+      "Enabled": true
+    },
+    {
+      "Name": "PGXVehicles",
+      "Enabled": true
+    }
+  ]
+}

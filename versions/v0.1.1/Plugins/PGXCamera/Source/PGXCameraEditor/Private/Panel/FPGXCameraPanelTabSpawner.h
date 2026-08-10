@@ -1,0 +1,24 @@
+// Copyright PGX Framework. All Rights Reserved.
+
+#pragma once
+
+#include "CoreMinimal.h"
+
+class SDockTab;
+class FSpawnTabArgs;
+
+/**
+ * EN: NomadTab spawner for the PGX Camera observability panel (Config DataAsset inspection).
+ * ES: Spawner de NomadTab para el panel PGX Camera (Config DataAsset inspection).
+ */
+class FPGXCameraPanelTabSpawner
+{
+public:
+	static void Register();
+	static void Unregister();
+
+	static const FName TabId;
+
+private:
+	static TSharedRef<SDockTab> SpawnTab(const FSpawnTabArgs& Args);
+};

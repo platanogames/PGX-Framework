@@ -1,0 +1,50 @@
+{
+  "catalog_metadata": {
+    "added_files": [
+      "RELEASE.json",
+      "SHA256SUMS"
+    ],
+    "sha256sums_scope": "every tracked snapshot file except SHA256SUMS, sorted by UTF-8 relative path",
+    "tracked_snapshot_files_after_metadata": 1367
+  },
+  "engine": "Unreal Engine 5.7.4",
+  "intended_tag": "v0.1.1",
+  "local_receipt": {
+    "path": "export-report.json",
+    "reason": "Local release-control receipt excluded by the exported public .gitignore.",
+    "sha256": "363a55ff2cf10593c886d933270f5b9100c811e0b1407ba5d9e16f0797c455df",
+    "signature": "8ba917e948561a0c4000c42657c3ed2e15ba09d8f86cf1bd160de4cb1f02f827",
+    "tracked_in_snapshot": false
+  },
+  "publication_boundary": "Validated and assembled locally; no remote publication or readback is claimed.",
+  "published_at": null,
+  "remote_publication_verified": false,
+  "schema_version": 1,
+  "source_export": {
+    "bytes_including_local_receipt": 7563943,
+    "files_including_local_receipt": 1366,
+    "report_planned_payload_bytes": 7036759,
+    "report_planned_payload_files": 1365,
+    "source": "export-g",
+    "tree_sha256": "23deadbba619277434df816868f98d1e95ca1d280c80672556ce723b04e61084"
+  },
+  "status": "ready-for-publication",
+  "tag": null,
+  "validation": {
+    "binary_byte_preserved_files": 7,
+    "demo_asset_verification": "7/7",
+    "demo_automation": "3/3",
+    "dependency_closure_missing": 0,
+    "dependency_cycles": 0,
+    "editor_automation": "242/242",
+    "editor_build_actions": 792,
+    "game_automation": "115/115",
+    "game_build_actions": 414,
+    "git_filter_byte_changes": 0,
+    "independent_auditor": "GO",
+    "sanitizer_findings": 0,
+    "secret_findings": 0,
+    "text_lf_files": 1358
+  },
+  "version": "0.1.1"
+}

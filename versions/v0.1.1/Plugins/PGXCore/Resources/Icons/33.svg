@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- PGX Loading — circular loader + transition arrow (loading + level flow) -->
+  <path d="M12 3 a9 9 0 1 1 -7 13.5"/>
+  <polyline points="3 13 5 17 9 15"/>
+  <path d="M14 9 L17 12 L14 15"/>
+  <line x1="9" y1="12" x2="17" y2="12"/>
+</svg>

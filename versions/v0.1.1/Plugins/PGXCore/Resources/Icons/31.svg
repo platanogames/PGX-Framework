@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Environment icon — stylized tree (trunk + foliage layers) suggesting biome/world -->
+  <path d="M12 3 L7 9 L9.5 9 L5 15 L9 15 L4 21 L20 21 L15 15 L19 15 L14.5 9 L17 9 Z"/>
+  <line x1="12" y1="21" x2="12" y2="17"/>
+</svg>

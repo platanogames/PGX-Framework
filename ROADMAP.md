@@ -1,27 +1,28 @@
-# Roadmap
+# Public roadmap
 
-PGX is moving through public preview releases toward a stable `1.0` contract.
-The roadmap describes outcomes rather than fixed dates.
+PGX evolves through versioned Development Preview snapshots. Dates and scope remain provisional until a release passes its export, sanitation, build, automation, documentation, provenance, metadata, and publication gates.
 
-## Public Preview
+## `v0.1.1`: ready for publication
 
-- Publish the curated 26-plugin monorepo as a tagged preview.
-- Preserve the verified clean exported-tree editor build for each release.
-- Publish a minimal example project and verification walkthrough.
-- Establish public issue, contribution, security, and release workflows.
-- Document known limitations and migration notes for every preview.
-- Expand the bilingual Wiki from the versioned architecture sources.
-- Mature early previews without representing unfinished capabilities as complete.
+Completed locally:
 
-## Stabilization
+- Unreal Engine 5.7.4 plugin constellation and sample project.
+- Editor and Game builds.
+- Full PGX Editor, Game, and PGXDemo automation.
+- Sanitizer, secret, dependency-closure, provenance, and documentation gates.
+- Per-version release metadata, checksums, and deterministic archive assembly.
 
-- Freeze the supported Unreal Engine version matrix.
-- Define API deprecation and compatibility policies.
-- Expand automated and editor-level verification for the public plugin set.
-- Process external issues and pull requests through the canonical development
-  line and publish the accepted changes in subsequent releases.
+Remaining publication boundary:
 
-## 1.0
+- Commit and push the `release` catalog.
+- Create and verify the intended tag and release artifact.
+- Confirm remote branch, archive checksum, links, and GitHub readback.
 
-`1.0` will represent a stable public API and distribution contract. It does not
-mean that every planned PGX plugin or feature is complete.
+## Later previews
+
+- Expand executable examples for partially implemented plugins.
+- Stabilize public API contracts and compatibility policy.
+- Improve packaging and version-specific download workflows.
+- Incorporate community feedback without mutating published snapshots.
+
+See [`RELEASES.json`](RELEASES.json) for machine-readable status.

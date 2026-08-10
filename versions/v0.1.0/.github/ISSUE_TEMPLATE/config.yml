@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Public wiki
+    url: https://github.com/platanogames/PGX-Framework/wiki
+    about: Review architecture, systems, tooling, FAQ, and licensing documentation.
+  - name: Security report
+    url: https://github.com/platanogames/PGX-Framework/security
+    about: Review the security policy before reporting a vulnerability.
