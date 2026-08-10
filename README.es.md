@@ -10,16 +10,16 @@ PGX es un framework modular y de código abierto para Unreal Engine, mantenido c
 
 | Versión | Estado | Unreal Engine | Instantánea |
 |---|---|---|---|
-| [`v0.1.1`](versions/v0.1.1/README.es.md) | **Lista para publicar** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentación](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
+| [`v0.1.1`](versions/v0.1.1/README.es.md) | **Publicada** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentación](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
 | [`v0.1.0`](versions/v0.1.0/README.es.md) | Publicada | 5.6 | [Plugins](versions/v0.1.0/Plugins/) · [Documentación](versions/v0.1.0/docs/) |
 
-`v0.1.1` ha superado localmente sus controles de publicación y está ensamblada en este catálogo. No se afirma que su publicación remota, etiqueta, artefacto de release o lectura de GitHub se hayan completado hasta finalizar ese paso.
+PGX publicó `v0.1.1` como versión preliminar en GitHub el 10 de agosto de 2026. La publicación incluye el [archivo específico de la versión](https://github.com/platanogames/PGX-Framework/releases/tag/v0.1.1).
 
 Los metadatos del catálogo legibles por herramientas están en [`RELEASES.json`](RELEASES.json). Cada versión también contiene su propio `RELEASE.json` y un fichero [`SHA256SUMS`](versions/v0.1.1/SHA256SUMS).
 
 ## Instantánea actual: `v0.1.1`
 
-La instantánea lista para publicar contiene **26 plugins**, su código y documentación públicos y un proyecto de demostración listo para abrir con Unreal Engine 5.7.4.
+La instantánea publicada contiene **26 plugins**, su código y documentación públicos y un proyecto de demostración listo para abrir con Unreal Engine 5.7.4.
 
 Controles validados:
 

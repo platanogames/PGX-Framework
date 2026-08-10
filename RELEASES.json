@@ -1,9 +1,9 @@
 {
   "catalog_branch": "release",
   "current_snapshot": "0.1.1",
-  "latest_remotely_published": "0.1.0",
+  "latest_remotely_published": "0.1.1",
   "project": "PGX Framework",
-  "publication_candidate": "0.1.1",
+  "publication_candidate": null,
   "repository_status": "development-preview",
   "schema_version": 2,
   "versions": [
@@ -13,14 +13,14 @@
         "contains_local_receipt": false,
         "entries": 1367,
         "name": "PGX-Framework-v0.1.1.zip",
-        "remote_attached": false,
+        "remote_attached": true,
         "sha256": "bd28d00a564d8620d0dfaec7e13fd3dcf925216141447405251917c26116b5e4"
       },
       "engine": "Unreal Engine 5.7.4",
       "intended_tag": "v0.1.1",
       "path": "versions/v0.1.1",
-      "published_at": null,
-      "remote_publication_verified": false,
+      "published_at": "2026-08-10T13:55:53Z",
+      "remote_publication_verified": true,
       "source_export": {
         "bytes_including_local_receipt": 7563943,
         "files_including_local_receipt": 1366,
@@ -31,8 +31,8 @@
         "report_planned_payload_files": 1365,
         "tree_sha256": "23deadbba619277434df816868f98d1e95ca1d280c80672556ce723b04e61084"
       },
-      "status": "ready-for-publication",
-      "tag": null,
+      "status": "published",
+      "tag": "v0.1.1",
       "tracked_snapshot": {
         "bytes": 7228410,
         "catalog_metadata_files": 2,

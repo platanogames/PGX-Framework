@@ -10,16 +10,16 @@ PGX is an open-source, modular Unreal Engine gameplay framework maintained as a 
 
 | Version | Status | Unreal Engine | Snapshot |
 |---|---|---|---|
-| [`v0.1.1`](versions/v0.1.1/README.md) | **Ready for publication** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentation](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
+| [`v0.1.1`](versions/v0.1.1/README.md) | **Published** | 5.7.4 | [Plugins](versions/v0.1.1/Plugins/) · [Documentation](versions/v0.1.1/docs/) · [PGXDemo](versions/v0.1.1/Samples/PGXDemo/) |
 | [`v0.1.0`](versions/v0.1.0/README.md) | Published | 5.6 | [Plugins](versions/v0.1.0/Plugins/) · [Documentation](versions/v0.1.0/docs/) |
 
-`v0.1.1` has passed its local release gates and is assembled in this catalog. Its remote publication, tag, release artifact, and GitHub readback are not claimed until the publication step completes.
+PGX published `v0.1.1` as a GitHub pre-release on August 10, 2026. That release includes the [version-specific archive](https://github.com/platanogames/PGX-Framework/releases/tag/v0.1.1).
 
 Machine-readable catalog metadata is available in [`RELEASES.json`](RELEASES.json). Each version also contains its own `RELEASE.json` and [`SHA256SUMS`](versions/v0.1.1/SHA256SUMS).
 
 ## Current snapshot: `v0.1.1`
 
-The release-ready snapshot contains **26 plugins**, their public source and documentation, and a ready-to-open Unreal Engine 5.7.4 demonstration project.
+The published snapshot contains **26 plugins**, their public source and documentation, and a ready-to-open Unreal Engine 5.7.4 demonstration project.
 
 Validated gates:
 
