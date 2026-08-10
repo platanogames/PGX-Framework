@@ -55,7 +55,8 @@ See the [version README](versions/pgx-v0.1.1/ue-5.7.4/README.md), [verification 
 
 ## Project links
 
-- [Official PGX Framework website and documentation](https://github.com/platanogames/PGX-Framework/wiki)
+- [Official PGX Framework website](https://platanogames.github.io/PGXFramework/)
+- [Extended documentation on the GitHub Wiki](https://github.com/platanogames/PGX-Framework/wiki)
 - [Release history](CHANGELOG.md)
 - [Compatibility matrix](COMPATIBILITY.md)
 - [Known issues index](KNOWN_ISSUES.md)
