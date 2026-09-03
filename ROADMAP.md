@@ -21,4 +21,14 @@ Completed:
 - Improve packaging and version-specific download workflows.
 - Incorporate community feedback without mutating published snapshots.
 
+## Authoring surfaces
+
+v0.1.1 authors in C++ and Blueprints over DataAssets, through the same flow:
+enable the plugin, fill the DataAsset, call the API or place Blueprint nodes.
+
+Verse is the next authoring surface, aligned with Epic's direction for Unreal
+Engine. No published snapshot contains a Verse runtime and no date is
+committed. When it lands, it builds on the same DataAsset flow. It is not a
+genre kit and it is not part of any vertical roadmap page.
+
 See [`RELEASES.json`](RELEASES.json) for machine-readable status.
