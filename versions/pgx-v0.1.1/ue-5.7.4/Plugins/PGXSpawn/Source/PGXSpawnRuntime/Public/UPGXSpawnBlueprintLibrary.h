@@ -1,4 +1,5 @@
-// Copyright PGX Framework. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
 // Blueprint facade — BlueprintLibrary with static accessors for PGXSpawn.
 
 #pragma once

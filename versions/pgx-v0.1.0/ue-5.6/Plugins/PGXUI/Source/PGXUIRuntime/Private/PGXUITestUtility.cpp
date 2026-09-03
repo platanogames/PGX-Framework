@@ -1,4 +1,5 @@
-// Copyright PGX Framework. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
 
 #include "PGXUITestUtility.h"
 #include "PGXNotificationProfile.h"

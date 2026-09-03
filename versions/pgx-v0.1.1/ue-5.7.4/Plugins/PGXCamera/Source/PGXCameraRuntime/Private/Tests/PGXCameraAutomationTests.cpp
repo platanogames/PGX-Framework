@@ -1,4 +1,5 @@
-// Copyright PGX Framework. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
 // Camera automation covers mode switching, data asset defaults and active-mode queries.
 
 #if WITH_DEV_AUTOMATION_TESTS

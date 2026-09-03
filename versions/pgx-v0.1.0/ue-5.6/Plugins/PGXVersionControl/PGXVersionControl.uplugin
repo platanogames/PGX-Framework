@@ -1,11 +1,13 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0.0",
+	"VersionName": "0.1.0",
+	"EngineVersion": "5.6",
 	"FriendlyName": "PGX Version Control",
 	"Description": "Git overlay with changelists, auto-tagging, commit templates, and pre-commit validation",
 	"Category": "PGX Framework",
 	"CreatedBy": "PGX Framework",
+	"CreatedByURL": "https://github.com/platanogames/PGX-Framework",
 	"EnabledByDefault": false,
 	"CanContainContent": false,
 	"Modules": [

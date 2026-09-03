@@ -1,4 +1,5 @@
-// Copyright PGX Framework. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
 //
 // EN: IMPLEMENT_SIMPLE_AUTOMATION_TEST wrappers around UPGXColonyTestUtility BPL helpers,
 //     registered under naming `PGX.Colony.<TestName>` so headless `Automation RunTests

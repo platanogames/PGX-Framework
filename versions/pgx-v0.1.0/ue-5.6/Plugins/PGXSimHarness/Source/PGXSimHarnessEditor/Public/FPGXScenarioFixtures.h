@@ -1,4 +1,5 @@
-// Copyright PGX Framework. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026 Platano Games
 //
 // EN: Live Level A / Level B scenarios are runtime fixtures spawned via SpawnActor
 //     into a caller-supplied UWorld, so they do not require authored .umap assets. Level A = light scenario (ground marker + spawn
