@@ -4,6 +4,10 @@
 
 PGX es un framework modular y de código abierto para Unreal Engine, mantenido como un monorepo versionado. Cada versión se conserva como una instantánea autónoma para que los desarrolladores puedan inspeccionar, comparar y evaluar superficies exactas de plugins, documentación y proyectos de ejemplo sin cambiar de rama.
 
+
+PGX reúne sistemas y herramientas de Unreal bajo un flujo común de configuración, extensión y diagnóstico. Usas C++ y Blueprints sobre los mismos DataAssets, con el estado de los subsistemas visible desde el editor.
+
+**Pruébalo:** abre [`Samples/PGXDemo`](versions/pgx-v0.1.1/ue-5.7.4/Samples/PGXDemo/) — pulsa E, cambia el estado, guarda un contador, reinicia, léelo de vuelta.
 [English](README.md) | Español
 
 ## Versiones
